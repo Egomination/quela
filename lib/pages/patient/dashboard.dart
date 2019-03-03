@@ -6,6 +6,13 @@ import 'package:quela/pages/patient/bottombar.dart';
 class PatientDashboard extends StatelessWidget {
   PatientDashboard({Key key}) : super(key: key);
 
+  List<Map<String, dynamic>> _testData = [
+    {"title": "Info 1", "data": "10", "colour": "#FD9F45"},
+    {"title": "Info 2", "data": "12", "colour": "#3DA5FA"},
+    {"title": "Info 3", "data": "15", "colour": "#F56185"},
+    {"title": "Info 4", "data": "17", "colour": "#35BFAF"}
+  ];
+
   Widget patientAppBar() {
     return AppBar(
       backgroundColor: HexColor("#3E4271"),
@@ -22,91 +29,30 @@ class PatientDashboard extends StatelessWidget {
         child: Card(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: <Widget>[
-              Container(
-                width: 80.0,
-                child: Column(
-                  children: <Widget>[
-                    Text(
-                      "Info 1",
-                      style: TextStyle(fontSize: 20.0),
-                    ),
-                    SizedBox(height: 10),
-                    Text(
-                      "10",
-                      style: TextStyle(
-                        fontSize: 24.0,
-                        color: HexColor("#FD9F45"),
-                        fontWeight: FontWeight.bold,
+            children: _testData
+                .map(
+                  (section) => Container(
+                        width: 80.0,
+                        child: Column(
+                          children: <Widget>[
+                            Text(
+                              section["title"],
+                              style: TextStyle(fontSize: 20.0),
+                            ),
+                            SizedBox(height: 10),
+                            Text(
+                              section["data"],
+                              style: TextStyle(
+                                fontSize: 24.0,
+                                color: HexColor(section["colour"]),
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-              ),
-              VerticalDivider(),
-              Container(
-                width: 80.0,
-                child: Column(
-                  children: <Widget>[
-                    Text(
-                      "Info 2",
-                      style: TextStyle(fontSize: 20.0),
-                    ),
-                    SizedBox(height: 10),
-                    Text(
-                      "10",
-                      style: TextStyle(
-                        fontSize: 24.0,
-                        color: HexColor("#3DA5FA"),
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              VerticalDivider(),
-              Container(
-                width: 80.0,
-                child: Column(
-                  children: <Widget>[
-                    Text(
-                      "Info 3",
-                      style: TextStyle(fontSize: 20.0),
-                    ),
-                    SizedBox(height: 10),
-                    Text(
-                      "10",
-                      style: TextStyle(
-                        fontSize: 24.0,
-                        color: HexColor("#F56185"),
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              VerticalDivider(),
-              Container(
-                width: 80.0,
-                child: Column(
-                  children: <Widget>[
-                    Text(
-                      "Info 4",
-                      style: TextStyle(fontSize: 20.0),
-                    ),
-                    SizedBox(height: 10),
-                    Text(
-                      "10",
-                      style: TextStyle(
-                        fontSize: 24.0,
-                        color: HexColor("#35BFAF"),
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
+                )
+                .toList(),
           ),
         ),
       ),
