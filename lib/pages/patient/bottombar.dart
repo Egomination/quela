@@ -9,6 +9,7 @@ class PatientBottomBar extends StatefulWidget {
 }
 
 class _PatientBottomBarState extends State<PatientBottomBar> {
+  // FIXME: Local state. Needs to be global / state management
   int _currentPage = 0;
 
   @override
@@ -23,9 +24,9 @@ class _PatientBottomBarState extends State<PatientBottomBar> {
         setState(() {
           _currentPage = position;
           if (_currentPage == 0) {
-            Navigator.pushNamed(context, "/patient");
+            Navigator.pushReplacementNamed(context, "/patient");
           } else if (_currentPage == 1) {
-            Navigator.pushNamed(context, "/patient/alarms");
+            Navigator.pushReplacementNamed(context, "/patient/alarms");
           }
         });
       },
