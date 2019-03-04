@@ -68,12 +68,32 @@ class PatientCard extends StatelessWidget {
           onTap: onTap,
           child: Card(
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
                 (prefixBadge)
-                    ? Container(
-                        width: 10.0,
-                        height: 60.0,
-                        color: _dataStatus["statusColour"],
+                    ? Row(
+                        children: <Widget>[
+                          Container(
+                            margin: EdgeInsets.only(right: 10.0),
+                            width: 10.0,
+                            height: 60.0,
+                            color: _dataStatus["statusColour"],
+                          ),
+                          Column(
+                            children: <Widget>[
+                              Text(
+                                "Status",
+                                style: TextStyle(fontSize: 22.0),
+                              ),
+                              Row(
+                                children: <Widget>[
+                                  _dataStatus["icon"],
+                                  _dataStatus["text"],
+                                ],
+                              ),
+                            ],
+                          ),
+                        ],
                       )
                     : Container(),
                 (icon != null)
@@ -83,43 +103,31 @@ class PatientCard extends StatelessWidget {
                         height: 50.0,
                         child: _dataStatus["icon"],
                       )
-                    : Container(
-                        margin: EdgeInsets.only(left: 10.0),
-                        child: Column(
-                          children: <Widget>[
-                            Text(
-                              "Status",
-                              style: TextStyle(fontSize: 22.0),
-                            ),
-                            //SizedBox(height: 8),
-                            Row(
-                              children: <Widget>[
-                                _dataStatus["icon"],
-                                _dataStatus["text"],
-                              ],
-                            ),
-                          ],
+                    : Container(),
+                Expanded(
+                  flex: 1,
+                  child: Container(
+                    margin: prefixBadge
+                        ? EdgeInsets.only(left: 60.0)
+                        : EdgeInsets.only(left: 145.0),
+                    child: Row(
+                      children: <Widget>[
+                        Text(
+                          title + " - ",
+                          style: TextStyle(
+                            fontSize: 22.0,
+                          ),
                         ),
-                      ),
-                Container(
-                  margin: EdgeInsets.only(left: 70.0),
-                  child: Row(
-                    children: <Widget>[
-                      Text(
-                        title + " - ",
-                        style: TextStyle(
-                          fontSize: 22.0,
+                        Text(
+                          data,
+                          style: TextStyle(
+                            fontSize: 22.0,
+                            color: HexColor("#3E4271"),
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                      ),
-                      Text(
-                        data,
-                        style: TextStyle(
-                          fontSize: 22.0,
-                          color: HexColor("#3E4271"),
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
                 (reverseIcon != null)
@@ -129,10 +137,29 @@ class PatientCard extends StatelessWidget {
                       )
                     : Container(),
                 (suffixBadge)
-                    ? Container(
-                        width: 10.0,
-                        height: 60.0,
-                        color: _dataStatus["statusColour"],
+                    ? Row(
+                        children: <Widget>[
+                          Column(
+                            children: <Widget>[
+                              Text(
+                                "Status",
+                                style: TextStyle(fontSize: 22.0),
+                              ),
+                              Row(
+                                children: <Widget>[
+                                  _dataStatus["icon"],
+                                  _dataStatus["text"],
+                                ],
+                              ),
+                            ],
+                          ),
+                          Container(
+                            margin: EdgeInsets.only(left: 10.0),
+                            width: 10.0,
+                            height: 60.0,
+                            color: _dataStatus["statusColour"],
+                          ),
+                        ],
                       )
                     : Container(),
               ],

@@ -4,13 +4,16 @@ class PatientInfo {
   String colour;
   String min;
   String max;
-
+  bool prefix;
+  bool suffix;
   PatientInfo({
     this.title,
     this.data,
     this.colour,
     this.min,
     this.max,
+    this.prefix,
+    this.suffix,
   });
 }
 
@@ -29,11 +32,15 @@ var patients2 = <PatientInfo>[
     data: "25",
     min: "10",
     max: "30",
+    prefix: true,
+    suffix: false,
   ),
   PatientInfo(
     title: "Info 2",
     data: "5",
     min: "10",
     max: "30",
+    prefix: false,
+    suffix: true,
   ),
 ];

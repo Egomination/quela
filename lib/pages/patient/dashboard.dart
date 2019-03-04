@@ -66,9 +66,8 @@ class PatientDashboard extends StatelessWidget {
               data: card.data,
               minVal: card.min,
               maxVal: card.max,
-              // TODO: For now static
-              prefixBadge: true,
-              suffixBadge: false,
+              prefixBadge: card.prefix,
+              suffixBadge: card.suffix,
             );
           },
         ).toList(),
