@@ -54,6 +54,36 @@ class PatientDashboard extends StatelessWidget {
     );
   }
 
+  Widget patientStatusDecider(String data, String minVal, String maxVal) {
+    int _data = int.parse(data);
+    int _minVal = int.parse(minVal);
+    int _maxVal = int.parse(maxVal);
+
+    if (_data > _minVal && _data < _maxVal) {
+      // Good State
+      return Row(
+        children: <Widget>[
+          Icon(
+            Icons.check_circle,
+            color: Colors.green,
+          ),
+          Text("OK"),
+        ],
+      );
+    } else {
+      // Bad State
+      return Row(
+        children: <Widget>[
+          Icon(
+            Icons.remove_circle,
+            color: Colors.red,
+          ),
+          Text("Not OK"),
+        ],
+      );
+    }
+  }
+
   Widget patientCard(
       Icon icon, String title, String data, String minVal, String maxVal) {
     return SizedBox(
@@ -92,15 +122,7 @@ class PatientDashboard extends StatelessWidget {
                     style: TextStyle(fontSize: 22.0),
                   ),
                   SizedBox(height: 8),
-                  Row(
-                    children: <Widget>[
-                      Icon(
-                        Icons.check_circle,
-                        color: Colors.green,
-                      ),
-                      Text("OK"),
-                    ],
-                  ),
+                  patientStatusDecider(data, minVal, maxVal),
                 ],
               ),
             ),
@@ -123,6 +145,8 @@ class PatientDashboard extends StatelessWidget {
               ),
               card.title,
               card.data,
+              card.min,
+              card.max,
             );
           },
         ).toList(),
