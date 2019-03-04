@@ -3,6 +3,7 @@ import 'package:quela/pages/patient/mock_data.dart';
 
 import 'package:quela/utils/colour.dart';
 import 'package:quela/pages/patient/bottombar.dart';
+import 'package:quela/pages/patient/card.dart';
 
 class PatientDashboard extends StatelessWidget {
   PatientDashboard({Key key}) : super(key: key);
@@ -54,99 +55,20 @@ class PatientDashboard extends StatelessWidget {
     );
   }
 
-  Widget patientStatusDecider(String data, String minVal, String maxVal) {
-    int _data = int.parse(data);
-    int _minVal = int.parse(minVal);
-    int _maxVal = int.parse(maxVal);
-
-    if (_data > _minVal && _data < _maxVal) {
-      // Good State
-      return Row(
-        children: <Widget>[
-          Icon(
-            Icons.check_circle,
-            color: Colors.green,
-          ),
-          Text("OK"),
-        ],
-      );
-    } else {
-      // Bad State
-      return Row(
-        children: <Widget>[
-          Icon(
-            Icons.remove_circle,
-            color: Colors.red,
-          ),
-          Text("Not OK"),
-        ],
-      );
-    }
-  }
-
-  Widget patientCard(
-      Icon icon, String title, String data, String minVal, String maxVal) {
-    return SizedBox(
-      height: 80.0,
-      child: Card(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            icon,
-            Row(
-              children: <Widget>[
-                Container(
-                  //margin: EdgeInsets.only(right: 5.0),
-                  child: Text(
-                    title + " - ",
-                    style: TextStyle(fontSize: 22.0),
-                  ),
-                ),
-                //SizedBox(height: 8),
-                Text(
-                  data,
-                  style: TextStyle(
-                    fontSize: 22.0,
-                    color: HexColor("#3E4271"),
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ],
-            ),
-            Container(
-              margin: EdgeInsets.only(right: 15.0),
-              child: Column(
-                children: <Widget>[
-                  Text(
-                    "Status",
-                    style: TextStyle(fontSize: 22.0),
-                  ),
-                  SizedBox(height: 8),
-                  patientStatusDecider(data, minVal, maxVal),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
   Widget patientTables() {
     return Container(
       margin: EdgeInsets.only(top: 20.0),
       child: Column(
         children: patients2.map(
           (card) {
-            return patientCard(
-              Icon(
-                Icons.add,
-                size: 50.0,
-              ),
-              card.title,
-              card.data,
-              card.min,
-              card.max,
+            return PatientCard(
+              title: card.title,
+              data: card.data,
+              minVal: card.min,
+              maxVal: card.max,
+              // TODO: For now static
+              prefixBadge: true,
+              suffixBadge: false,
             );
           },
         ).toList(),
