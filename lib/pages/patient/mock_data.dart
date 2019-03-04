@@ -2,23 +2,15 @@ class PatientInfo {
   String title;
   String data;
   String colour;
-  String min;
-  String max;
-  bool prefix;
-  bool suffix;
   PatientInfo({
     this.title,
     this.data,
     this.colour,
-    this.min,
-    this.max,
-    this.prefix,
-    this.suffix,
   });
 }
 
 // Important Info Section
-var patients = <PatientInfo>[
+List patients = <PatientInfo>[
   PatientInfo(title: "Pulse", data: "25", colour: "#FD9F45"),
   PatientInfo(title: "Temperature", data: "10", colour: "#3DA5FA"),
   PatientInfo(title: "Air Pressure", data: "15", colour: "#F56185"),
@@ -26,21 +18,21 @@ var patients = <PatientInfo>[
 ];
 
 // All Info Section
-var patients2 = <PatientInfo>[
-  PatientInfo(
-    title: "Heart",
-    data: "25",
-    min: "10",
-    max: "30",
-    prefix: true,
-    suffix: false,
-  ),
-  PatientInfo(
-    title: "Info 2",
-    data: "5",
-    min: "10",
-    max: "30",
-    prefix: false,
-    suffix: true,
-  ),
+List<Map<String, dynamic>> patients2 = [
+  {
+    "title": "Heart",
+    "data": "25",
+    "min": "10",
+    "max": "30",
+    "prefix": true,
+    "suffix": false,
+  },
+  {
+    "title": "Info 2",
+    "data": "5",
+    "min": "10",
+    "max": "30",
+    "prefix": false,
+    "suffix": true,
+  },
 ];

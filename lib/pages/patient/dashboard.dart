@@ -56,21 +56,19 @@ class PatientDashboard extends StatelessWidget {
   }
 
   Widget patientTables() {
-    return Container(
-      margin: EdgeInsets.only(top: 20.0),
-      child: Column(
-        children: patients2.map(
-          (card) {
-            return PatientCard(
-              title: card.title,
-              data: card.data,
-              minVal: card.min,
-              maxVal: card.max,
-              prefixBadge: card.prefix,
-              suffixBadge: card.suffix,
-            );
-          },
-        ).toList(),
+    return Flexible(
+      child: ListView.builder(
+        itemCount: 2,
+        itemBuilder: (BuildContext context, int index) {
+          return PatientCard(
+            title: patients2[index]["title"],
+            data: patients2[index]["data"],
+            minVal: patients2[index]["min"],
+            maxVal: patients2[index]["max"],
+            prefixBadge: index.isEven,
+            suffixBadge: index.isOdd,
+          );
+        },
       ),
     );
   }

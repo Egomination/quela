@@ -62,108 +62,105 @@ class PatientCard extends StatelessWidget {
         patientStatusDecider(data, minVal, maxVal);
 
     return Container(
-      child: Container(
-        margin: EdgeInsets.all(10.0),
-        child: InkWell(
-          onTap: onTap,
-          child: Card(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: <Widget>[
-                (prefixBadge)
-                    ? Row(
-                        children: <Widget>[
-                          Container(
-                            margin: EdgeInsets.only(right: 10.0),
-                            width: 10.0,
-                            height: 60.0,
-                            color: _dataStatus["statusColour"],
-                          ),
-                          Column(
-                            children: <Widget>[
-                              Text(
-                                "Status",
-                                style: TextStyle(fontSize: 22.0),
-                              ),
-                              Row(
-                                children: <Widget>[
-                                  _dataStatus["icon"],
-                                  _dataStatus["text"],
-                                ],
-                              ),
-                            ],
-                          ),
-                        ],
-                      )
-                    : Container(),
-                (icon != null)
-                    ? Container(
-                        margin: EdgeInsets.all(5.0),
-                        width: 50.0,
-                        height: 50.0,
-                        child: _dataStatus["icon"],
-                      )
-                    : Container(),
-                Expanded(
-                  flex: 1,
-                  child: Container(
-                    margin: prefixBadge
-                        ? EdgeInsets.only(left: 60.0)
-                        : EdgeInsets.only(left: 145.0),
-                    child: Row(
+      margin: EdgeInsets.all(10.0),
+      child: InkWell(
+        onTap: onTap,
+        child: Card(
+          child: Row(
+            children: <Widget>[
+              (prefixBadge)
+                  ? Row(
                       children: <Widget>[
-                        Text(
-                          title + " - ",
-                          style: TextStyle(
-                            fontSize: 22.0,
-                          ),
+                        Container(
+                          margin: EdgeInsets.only(right: 10.0),
+                          width: 10.0,
+                          height: 60.0,
+                          color: _dataStatus["statusColour"],
                         ),
-                        Text(
-                          data,
-                          style: TextStyle(
-                            fontSize: 22.0,
-                            color: HexColor("#3E4271"),
-                            fontWeight: FontWeight.bold,
-                          ),
+                        Column(
+                          children: <Widget>[
+                            Text(
+                              "Status",
+                              style: TextStyle(fontSize: 22.0),
+                            ),
+                            Row(
+                              children: <Widget>[
+                                _dataStatus["icon"],
+                                _dataStatus["text"],
+                              ],
+                            ),
+                          ],
                         ),
                       ],
-                    ),
+                    )
+                  : Container(),
+              (icon != null)
+                  ? Container(
+                      margin: EdgeInsets.all(5.0),
+                      width: 50.0,
+                      height: 50.0,
+                      child: _dataStatus["icon"],
+                    )
+                  : Container(),
+              Expanded(
+                flex: 1,
+                child: Container(
+                  margin: prefixBadge
+                      ? EdgeInsets.only(left: 60.0)
+                      : EdgeInsets.only(left: 145.0),
+                  child: Row(
+                    children: <Widget>[
+                      Text(
+                        title + " - ",
+                        style: TextStyle(
+                          fontSize: 22.0,
+                        ),
+                      ),
+                      Text(
+                        data,
+                        style: TextStyle(
+                          fontSize: 22.0,
+                          color: HexColor("#3E4271"),
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-                (reverseIcon != null)
-                    ? Container(
-                        margin: EdgeInsets.only(right: 10.0),
-                        child: _dataStatus["icon"],
-                      )
-                    : Container(),
-                (suffixBadge)
-                    ? Row(
-                        children: <Widget>[
-                          Column(
-                            children: <Widget>[
-                              Text(
-                                "Status",
-                                style: TextStyle(fontSize: 22.0),
-                              ),
-                              Row(
-                                children: <Widget>[
-                                  _dataStatus["icon"],
-                                  _dataStatus["text"],
-                                ],
-                              ),
-                            ],
-                          ),
-                          Container(
-                            margin: EdgeInsets.only(left: 10.0),
-                            width: 10.0,
-                            height: 60.0,
-                            color: _dataStatus["statusColour"],
-                          ),
-                        ],
-                      )
-                    : Container(),
-              ],
-            ),
+              ),
+              (reverseIcon != null)
+                  ? Container(
+                      margin: EdgeInsets.only(right: 10.0),
+                      child: _dataStatus["icon"],
+                    )
+                  : Container(),
+              (suffixBadge)
+                  ? Row(
+                      children: <Widget>[
+                        Column(
+                          children: <Widget>[
+                            Text(
+                              "Status",
+                              style: TextStyle(fontSize: 22.0),
+                            ),
+                            Row(
+                              children: <Widget>[
+                                _dataStatus["icon"],
+                                _dataStatus["text"],
+                              ],
+                            ),
+                          ],
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(left: 10.0),
+                          width: 10.0,
+                          height: 60.0,
+                          color: _dataStatus["statusColour"],
+                        ),
+                      ],
+                    )
+                  : Container(),
+            ],
           ),
         ),
       ),
