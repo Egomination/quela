@@ -54,23 +54,85 @@ class PatientDashboard extends StatelessWidget {
     );
   }
 
-  /*Widget patientTable() {
-    return Container(
-      margin: EdgeInsets.only(top: 20.0),
-      child: SizedBox(
-        width: 400.0,
-        child: Card(
-          child: PatientDataTableSample(),
+  Widget patientCard(Icon icon, String title, String data) {
+    return SizedBox(
+      height: 80.0,
+      child: Card(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            icon,
+            Row(
+              children: <Widget>[
+                Container(
+                  //margin: EdgeInsets.only(right: 5.0),
+                  child: Text(
+                    "Heart" + " - ",
+                    style: TextStyle(fontSize: 22.0),
+                  ),
+                ),
+                //SizedBox(height: 8),
+                Text(
+                  "10",
+                  style: TextStyle(
+                    fontSize: 22.0,
+                    color: HexColor("#3E4271"),
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            ),
+            Container(
+              margin: EdgeInsets.only(right: 15.0),
+              child: Column(
+                children: <Widget>[
+                  Text(
+                    "Status",
+                    style: TextStyle(fontSize: 22.0),
+                  ),
+                  SizedBox(height: 8),
+                  Row(
+                    children: <Widget>[
+                      Icon(
+                        Icons.check_circle,
+                        color: Colors.green,
+                      ),
+                      Text("OK")
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ],
         ),
       ),
     );
-  }*/
+  }
+
+  Widget patientTables() {
+    return Container(
+      margin: EdgeInsets.only(top: 20.0),
+      child: Column(
+        children: <Widget>[
+          patientCard(
+              Icon(
+                Icons.add,
+                size: 50.0,
+              ),
+              "Test",
+              "10"),
+        ],
+      ),
+    );
+  }
 
   Widget patientBody() {
     return Column(
       children: <Widget>[
+        Text("Main Informations"),
         patientInformer(),
-        //patientTable(),
+        Text("Other Informations"),
+        patientTables(),
       ],
     );
   }

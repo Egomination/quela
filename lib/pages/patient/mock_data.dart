@@ -21,15 +21,15 @@ var patients = <PatientInfo>[
 // All Info Section
 var patients2 = <PatientInfo>[
   PatientInfo(
-    title: "Pulse",
+    title: "Info 1",
     data: "25",
   ),
   PatientInfo(
-    title: "Temperature",
+    title: "Info 2",
     data: "10",
   ),
   PatientInfo(
-    title: "Air Pressure",
+    title: "Info 3",
     data: "15",
   ),
   PatientInfo(
