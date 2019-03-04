@@ -3,7 +3,6 @@ import 'package:quela/pages/patient/mock_data.dart';
 
 import 'package:quela/utils/colour.dart';
 import 'package:quela/pages/patient/bottombar.dart';
-import 'package:quela/pages/patient/table.dart';
 
 class PatientDashboard extends StatelessWidget {
   PatientDashboard({Key key}) : super(key: key);
@@ -55,7 +54,7 @@ class PatientDashboard extends StatelessWidget {
     );
   }
 
-  Widget patientTable() {
+  /*Widget patientTable() {
     return Container(
       margin: EdgeInsets.only(top: 20.0),
       child: SizedBox(
@@ -65,13 +64,13 @@ class PatientDashboard extends StatelessWidget {
         ),
       ),
     );
-  }
+  }*/
 
   Widget patientBody() {
     return Column(
       children: <Widget>[
         patientInformer(),
-        patientTable(),
+        //patientTable(),
       ],
     );
   }
