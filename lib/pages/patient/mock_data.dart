@@ -2,11 +2,15 @@ class PatientInfo {
   String title;
   String data;
   String colour;
+  String min;
+  String max;
 
   PatientInfo({
     this.title,
     this.data,
     this.colour,
+    this.min,
+    this.max,
   });
 }
 
@@ -21,27 +25,15 @@ var patients = <PatientInfo>[
 // All Info Section
 var patients2 = <PatientInfo>[
   PatientInfo(
-    title: "Info 1",
+    title: "Heart",
     data: "25",
+    min: "10",
+    max: "30",
   ),
   PatientInfo(
     title: "Info 2",
-    data: "10",
-  ),
-  PatientInfo(
-    title: "Info 3",
-    data: "15",
-  ),
-  PatientInfo(
-    title: "Info 4",
     data: "5",
-  ),
-  PatientInfo(
-    title: "Info 5",
-    data: "5",
-  ),
-  PatientInfo(
-    title: "Info 6",
-    data: "5",
+    min: "10",
+    max: "30",
   ),
 ];

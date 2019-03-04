@@ -54,7 +54,8 @@ class PatientDashboard extends StatelessWidget {
     );
   }
 
-  Widget patientCard(Icon icon, String title, String data) {
+  Widget patientCard(
+      Icon icon, String title, String data, String minVal, String maxVal) {
     return SizedBox(
       height: 80.0,
       child: Card(
@@ -67,13 +68,13 @@ class PatientDashboard extends StatelessWidget {
                 Container(
                   //margin: EdgeInsets.only(right: 5.0),
                   child: Text(
-                    "Heart" + " - ",
+                    title + " - ",
                     style: TextStyle(fontSize: 22.0),
                   ),
                 ),
                 //SizedBox(height: 8),
                 Text(
-                  "10",
+                  data,
                   style: TextStyle(
                     fontSize: 22.0,
                     color: HexColor("#3E4271"),
@@ -97,7 +98,7 @@ class PatientDashboard extends StatelessWidget {
                         Icons.check_circle,
                         color: Colors.green,
                       ),
-                      Text("OK")
+                      Text("OK"),
                     ],
                   ),
                 ],
@@ -113,15 +114,18 @@ class PatientDashboard extends StatelessWidget {
     return Container(
       margin: EdgeInsets.only(top: 20.0),
       child: Column(
-        children: <Widget>[
-          patientCard(
+        children: patients2.map(
+          (card) {
+            return patientCard(
               Icon(
                 Icons.add,
                 size: 50.0,
               ),
-              "Test",
-              "10"),
-        ],
+              card.title,
+              card.data,
+            );
+          },
+        ).toList(),
       ),
     );
   }
