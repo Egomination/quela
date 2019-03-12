@@ -19,7 +19,6 @@ class ScreenBuilder extends StatelessWidget {
         );
       },
     );
-    ;
   }
 }
 
