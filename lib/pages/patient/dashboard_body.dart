@@ -1,20 +1,29 @@
 import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
+import 'package:quela/bloc/bloc.dart';
+import 'package:quela/bloc/patient_dashboard_bloc.dart';
+import 'package:quela/models/patient.dart';
 import 'package:quela/utils/hex_code.dart';
 
 class ScreenBuilder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraint) {
-        return new GridView.builder(
-          itemCount: 4,
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            childAspectRatio: constraint.maxWidth / constraint.maxHeight,
-          ),
-          itemBuilder: (context, index) {
-            return cd[index];
+    DashboardBloc _bloc = BlocProvider.of(context);
+    return StreamBuilder<Patient>(
+      stream: _bloc.patient,
+      builder: (BuildContext context, AsyncSnapshot<Patient> snapshot) {
+        return LayoutBuilder(
+          builder: (context, constraint) {
+            return GridView.builder(
+              itemCount: 4,
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                childAspectRatio: constraint.maxWidth / constraint.maxHeight,
+              ),
+              itemBuilder: (context, index) {
+                return cd[index];
+              },
+            );
           },
         );
       },
