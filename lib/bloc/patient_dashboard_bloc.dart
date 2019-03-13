@@ -1,4 +1,4 @@
-import 'dart:core';
+import 'dart:async';
 
 import 'package:flutter_graphql/flutter_graphql.dart';
 import 'package:quela/bloc/bloc.dart';
@@ -15,7 +15,6 @@ class DashboardBloc implements BlocBase {
   }
 
   void _handleApiCall() async {
-    print("Here!");
     // Linking api url
     HttpLink link = HttpLink(uri: "http://192.168.1.108:4000");
     // Gql client
@@ -37,7 +36,6 @@ class DashboardBloc implements BlocBase {
       print(response.errors.toString());
     }
 
-    print(response.data['getPatient']);
     _controller.sink.add(Patient.fromJson(response.data['getPatient']));
   }
 

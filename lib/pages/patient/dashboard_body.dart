@@ -12,6 +12,19 @@ class ScreenBuilder extends StatelessWidget {
     return StreamBuilder<Patient>(
       stream: _bloc.patient,
       builder: (BuildContext context, AsyncSnapshot<Patient> snapshot) {
+        final Patient data = snapshot.data;
+        final List<Map<String, String>> vals = [
+          {"Temperature": data.valTemperature},
+          {"Pulse": data.valPulse},
+          {"Air Pressure": data.valAirPressure},
+          {"Blood Pressure": data.valBloodPressure},
+        ];
+        final List<IconData> icons = [
+          Icons.wifi_tethering,
+          Icons.ac_unit,
+          Icons.airline_seat_flat,
+          Icons.blur_on,
+        ];
         return LayoutBuilder(
           builder: (context, constraint) {
             return GridView.builder(
@@ -21,7 +34,12 @@ class ScreenBuilder extends StatelessWidget {
                 childAspectRatio: constraint.maxWidth / constraint.maxHeight,
               ),
               itemBuilder: (context, index) {
-                return cd[index];
+                return CardBuilder(
+                  icon: icons[index],
+                  frontText: vals[index].keys.elementAt(0),
+                  backHeader: vals[index].values.elementAt(0),
+                  //backText: "",
+                );
               },
             );
           },
@@ -83,31 +101,3 @@ class CardBuilder extends StatelessWidget {
     );
   }
 }
-
-// TODO: Replace this with the actual data
-List cd = [
-  CardBuilder(
-    icon: Icons.wifi_tethering,
-    frontText: "HeartBeat",
-    backHeader: "88",
-    //backText: "",
-  ),
-  CardBuilder(
-    icon: Icons.ac_unit,
-    frontText: "Temperature",
-    backHeader: "37",
-    //backText: "",
-  ),
-  CardBuilder(
-    icon: Icons.airline_seat_flat,
-    frontText: "Pressure",
-    backHeader: "1",
-    //backText: "",
-  ),
-  CardBuilder(
-    icon: Icons.blur_on,
-    frontText: "Blood pressure",
-    backHeader: "12/8",
-    //backText: "",
-  ),
-];
