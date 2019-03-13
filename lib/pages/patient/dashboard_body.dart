@@ -12,6 +12,11 @@ class ScreenBuilder extends StatelessWidget {
     return StreamBuilder<Patient>(
       stream: _bloc.patient,
       builder: (BuildContext context, AsyncSnapshot<Patient> snapshot) {
+        if (!snapshot.hasData) {
+          return Center(child: CircularProgressIndicator());
+        }
+
+        // Those variables are for providing the 'dynamic' feels of the UI
         final Patient data = snapshot.data;
         final List<Map<String, String>> vals = [
           {"Temperature": data.valTemperature},
