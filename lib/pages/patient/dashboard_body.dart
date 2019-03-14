@@ -77,14 +77,27 @@ class CardBuilder extends StatelessWidget {
         direction: FlipDirection.VERTICAL,
         front: Container(
           decoration: BoxDecoration(
+	          // TODO: Make it frontText aware. Like with an extra param to set
+	          // custom threshold
             color: Colors.white,
             //borderRadius: BorderRadius.all(Radius.circular(8.0)),
           ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Icon(icon),
-              Text(frontText, style: Theme.of(context).textTheme.body1),
+	            Icon(
+		            icon,
+		            color: int.parse(backHeader) > 20 ? Colors.red : Colors.black,
+	            ),
+	            Text(frontText,
+			            style: int.parse(backHeader) > 20
+					            ? TextStyle(
+				            color: Colors.red,
+			            )
+					            : Theme
+					            .of(context)
+					            .textTheme
+					            .body1),
             ],
           ),
         ),
@@ -96,7 +109,16 @@ class CardBuilder extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Text(backHeader, style: Theme.of(context).textTheme.headline),
+	            Text(backHeader,
+			            style: int.parse(backHeader) > 20
+					            ? TextStyle(
+				            color: Colors.red,
+				            fontSize: 24.0,
+			            )
+					            : Theme
+					            .of(context)
+					            .textTheme
+					            .headline),
               //Text(backText, style: Theme.of(context).textTheme.body1),
             ],
           ),
