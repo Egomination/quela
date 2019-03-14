@@ -1,20 +1,51 @@
 import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
+import 'package:quela/bloc/bloc.dart';
+import 'package:quela/bloc/patient_dashboard_bloc.dart';
+import 'package:quela/models/patient.dart';
 import 'package:quela/utils/hex_code.dart';
 
 class ScreenBuilder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraint) {
-        return new GridView.builder(
-          itemCount: 4,
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            childAspectRatio: constraint.maxWidth / constraint.maxHeight,
-          ),
-          itemBuilder: (context, index) {
-            return cd[index];
+    DashboardBloc _bloc = BlocProvider.of(context);
+    return StreamBuilder<Patient>(
+      stream: _bloc.patient,
+      builder: (context, snapshot) {
+        if (!snapshot.hasData) {
+          return Center(child: CircularProgressIndicator());
+        }
+        // Those variables are for providing the 'dynamic' feels of the UI
+        final Patient data = snapshot.data;
+        final List<Map<String, String>> vals = [
+          {"Temperature": data.valTemperature},
+          {"Pulse": data.valPulse},
+          {"Air Pressure": data.valAirPressure},
+          {"Blood Pressure": data.valBloodPressure},
+        ];
+        final List<IconData> icons = [
+          Icons.wifi_tethering,
+          Icons.ac_unit,
+          Icons.airline_seat_flat,
+          Icons.blur_on,
+        ];
+        return LayoutBuilder(
+          builder: (context, constraint) {
+            return GridView.builder(
+              itemCount: 4,
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                childAspectRatio: constraint.maxWidth / constraint.maxHeight,
+              ),
+              itemBuilder: (context, index) {
+                return CardBuilder(
+                  icon: icons[index],
+                  frontText: vals[index].keys.elementAt(0),
+                  backHeader: vals[index].values.elementAt(0),
+                  //backText: "",
+                );
+              },
+            );
           },
         );
       },
@@ -46,14 +77,27 @@ class CardBuilder extends StatelessWidget {
         direction: FlipDirection.VERTICAL,
         front: Container(
           decoration: BoxDecoration(
+	          // TODO: Make it frontText aware. Like with an extra param to set
+	          // custom threshold
             color: Colors.white,
             //borderRadius: BorderRadius.all(Radius.circular(8.0)),
           ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Icon(icon),
-              Text(frontText, style: Theme.of(context).textTheme.body1),
+	            Icon(
+		            icon,
+		            color: int.parse(backHeader) > 20 ? Colors.red : Colors.black,
+	            ),
+	            Text(frontText,
+			            style: int.parse(backHeader) > 20
+					            ? TextStyle(
+				            color: Colors.red,
+			            )
+					            : Theme
+					            .of(context)
+					            .textTheme
+					            .body1),
             ],
           ),
         ),
@@ -65,7 +109,16 @@ class CardBuilder extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Text(backHeader, style: Theme.of(context).textTheme.headline),
+	            Text(backHeader,
+			            style: int.parse(backHeader) > 20
+					            ? TextStyle(
+				            color: Colors.red,
+				            fontSize: 24.0,
+			            )
+					            : Theme
+					            .of(context)
+					            .textTheme
+					            .headline),
               //Text(backText, style: Theme.of(context).textTheme.body1),
             ],
           ),
@@ -74,31 +127,3 @@ class CardBuilder extends StatelessWidget {
     );
   }
 }
-
-// TODO: Replace this with the actual data
-List cd = [
-  CardBuilder(
-    icon: Icons.wifi_tethering,
-    frontText: "HeartBeat",
-    backHeader: "88",
-    //backText: "",
-  ),
-  CardBuilder(
-    icon: Icons.ac_unit,
-    frontText: "Temperature",
-    backHeader: "37",
-    //backText: "",
-  ),
-  CardBuilder(
-    icon: Icons.airline_seat_flat,
-    frontText: "Pressure",
-    backHeader: "1",
-    //backText: "",
-  ),
-  CardBuilder(
-    icon: Icons.blur_on,
-    frontText: "Blood pressure",
-    backHeader: "12/8",
-    //backText: "",
-  ),
-];
