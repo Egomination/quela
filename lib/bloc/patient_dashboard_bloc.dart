@@ -53,12 +53,14 @@ query search(\$id: String!) {
     surname
     email
     profile_pic
-    val_temperature
-    val_airPressure
-    val_bloodPressure
-    val_pulse
     doctorID{
       name
+    }
+    values {
+      name 
+      val_curr
+      val_min 
+      val_max
     }
   }
 }

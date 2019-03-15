@@ -17,12 +17,6 @@ class ScreenBuilder extends StatelessWidget {
         }
         // Those variables are for providing the 'dynamic' feels of the UI
         final Patient data = snapshot.data;
-        final List<Map<String, String>> vals = [
-          {"Temperature": data.valTemperature},
-          {"Pulse": data.valPulse},
-          {"Air Pressure": data.valAirPressure},
-          {"Blood Pressure": data.valBloodPressure},
-        ];
         final List<IconData> icons = [
           Icons.wifi_tethering,
           Icons.ac_unit,
@@ -40,9 +34,10 @@ class ScreenBuilder extends StatelessWidget {
               itemBuilder: (context, index) {
                 return CardBuilder(
                   icon: icons[index],
-                  frontText: vals[index].keys.elementAt(0),
-                  backHeader: vals[index].values.elementAt(0),
-                  //backText: "",
+                  frontText: data.values[index].name,
+                  backHeader: data.values[index].valCurr,
+                  thresholdMin: data.values[index].valMin,
+                  thresholdMax: data.values[index].valMax,
                 );
               },
             );
@@ -55,14 +50,18 @@ class ScreenBuilder extends StatelessWidget {
 
 class CardBuilder extends StatelessWidget {
   CardBuilder({
-    this.icon,
-    this.frontText,
-    this.backHeader,
+    @required this.icon,
+    @required this.frontText,
+    @required this.backHeader,
+    @required this.thresholdMin,
+    @required this.thresholdMax,
   });
 
   final IconData icon;
   final String frontText;
   final String backHeader;
+  final String thresholdMin;
+  final String thresholdMax;
 
   // NOTE FOR DEVELOPERS: If you want to remove padding between cards, change
   // this return to Container and comment out elevation. Color is little bit tricky,
@@ -77,27 +76,31 @@ class CardBuilder extends StatelessWidget {
         direction: FlipDirection.VERTICAL,
         front: Container(
           decoration: BoxDecoration(
-	          // TODO: Make it frontText aware. Like with an extra param to set
-	          // custom threshold
             color: Colors.white,
             //borderRadius: BorderRadius.all(Radius.circular(8.0)),
           ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-	            Icon(
-		            icon,
-		            color: int.parse(backHeader) > 20 ? Colors.red : Colors.black,
-	            ),
-	            Text(frontText,
-			            style: int.parse(backHeader) > 20
-					            ? TextStyle(
-				            color: Colors.red,
-			            )
-					            : Theme
-					            .of(context)
-					            .textTheme
-					            .body1),
+              Icon(
+                icon,
+                color: int.parse(backHeader) > int.parse(thresholdMax) ||
+                    int.parse(backHeader) < int.parse(thresholdMin)
+                    ? Colors.red
+                    : Colors.black,
+              ),
+              Text(
+                frontText,
+                style: int.parse(backHeader) > int.parse(thresholdMax) ||
+                    int.parse(backHeader) < int.parse(thresholdMin)
+                    ? TextStyle(
+                  color: Colors.red,
+                )
+                    : Theme
+                    .of(context)
+                    .textTheme
+                    .body1,
+              ),
             ],
           ),
         ),
@@ -109,16 +112,19 @@ class CardBuilder extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-	            Text(backHeader,
-			            style: int.parse(backHeader) > 20
-					            ? TextStyle(
-				            color: Colors.red,
-				            fontSize: 24.0,
-			            )
-					            : Theme
-					            .of(context)
-					            .textTheme
-					            .headline),
+              Text(
+                backHeader,
+                style: int.parse(backHeader) > int.parse(thresholdMax) ||
+                    int.parse(backHeader) < int.parse(thresholdMin)
+                    ? TextStyle(
+                  color: Colors.red,
+                  fontSize: 24.0,
+                )
+                    : Theme
+                    .of(context)
+                    .textTheme
+                    .headline,
+              ),
               //Text(backText, style: Theme.of(context).textTheme.body1),
             ],
           ),

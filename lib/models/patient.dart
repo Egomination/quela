@@ -20,11 +20,8 @@ class Patient {
   String surname;
   String email;
   String profilePic;
-  String valTemperature;
-  String valAirPressure;
-  String valBloodPressure;
-  String valPulse;
   DoctorId doctorId;
+  List<Value> values;
 
   Patient({
     this.tc,
@@ -32,11 +29,8 @@ class Patient {
     this.surname,
     this.email,
     this.profilePic,
-    this.valTemperature,
-    this.valAirPressure,
-    this.valBloodPressure,
-    this.valPulse,
     this.doctorId,
+    this.values,
   });
 
   factory Patient.fromJson(Map<String, dynamic> json) => new Patient(
@@ -45,11 +39,9 @@ class Patient {
         surname: json["surname"],
         email: json["email"],
         profilePic: json["profile_pic"],
-        valTemperature: json["val_temperature"],
-        valAirPressure: json["val_airPressure"],
-        valBloodPressure: json["val_bloodPressure"],
-        valPulse: json["val_pulse"],
         doctorId: DoctorId.fromJson(json["doctorID"]),
+    values:
+    new List<Value>.from(json["values"].map((x) => Value.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -58,11 +50,8 @@ class Patient {
         "surname": surname,
         "email": email,
         "profile_pic": profilePic,
-        "val_temperature": valTemperature,
-        "val_airPressure": valAirPressure,
-        "val_bloodPressure": valBloodPressure,
-        "val_pulse": valPulse,
         "doctorID": doctorId.toJson(),
+    "values": new List<dynamic>.from(values.map((x) => x.toJson())),
       };
 }
 
@@ -79,5 +68,35 @@ class DoctorId {
 
   Map<String, dynamic> toJson() => {
         "name": name,
+      };
+}
+
+class Value {
+  String name;
+  String valCurr;
+  String valMin;
+  String valMax;
+
+  Value({
+    this.name,
+    this.valCurr,
+    this.valMin,
+    this.valMax,
+  });
+
+  factory Value.fromJson(Map<String, dynamic> json) =>
+      new Value(
+        name: json["name"],
+        valCurr: json["val_curr"],
+        valMin: json["val_min"],
+        valMax: json["val_max"],
+      );
+
+  Map<String, dynamic> toJson() =>
+      {
+        "name": name,
+        "val_curr": valCurr,
+        "val_min": valMin,
+        "val_max": valMax,
       };
 }
