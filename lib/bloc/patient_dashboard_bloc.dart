@@ -16,7 +16,7 @@ class DashboardBloc implements BlocBase {
 
   void _handleApiCall() async {
     // Linking api url
-    HttpLink link = HttpLink(uri: "http://192.168.1.108:4000");
+    HttpLink link = HttpLink(uri: "https://quela-api.herokuapp.com/");
     // Gql client
     GraphQLClient client = GraphQLClient(
       link: link,
