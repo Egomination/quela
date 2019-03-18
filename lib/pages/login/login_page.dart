@@ -6,7 +6,9 @@ class LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Flutter login demo"),
+        title: Center(
+          child: Text("Quela Login"),
+        ),
       ),
       body: LoginForm(),
     );
