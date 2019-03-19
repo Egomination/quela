@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "396529873028",
+    "firebase_url": "https://quela-cda20.firebaseio.com",
+    "project_id": "quela-cda20",
+    "storage_bucket": "quela-cda20.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:396529873028:android:0511c10c63375237",
+        "android_client_info": {
+          "package_name": "com.egomination.quela"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "396529873028-0qsdr46ndfem6skcihelthhom940672q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC7TBqLrYEe0Ij5gNE7eWLpbpWxy4IWMsw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
