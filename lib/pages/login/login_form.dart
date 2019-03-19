@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 
+import 'package:quela/utils/auth.dart';
+
 class LoginForm extends StatefulWidget {
+  final auth = new Auth();
+
   @override
   State<StatefulWidget> createState() => _LoginFormState();
 }
@@ -31,11 +35,17 @@ class _LoginFormState extends State<LoginForm> {
   }
 
   // Auth from Firebase
-  void _submit() {
+  void _submit() async {
+    String userId = "";
+
     setState(() {
       _errorMessage = "";
     });
-    _validateForm();
+
+    if (_validateForm()) {
+      userId = await widget.auth.signIn(_email, _password);
+      print('Signed in: $userId');
+    }
   }
 
   Widget _circularProgress() {
