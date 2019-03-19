@@ -6,18 +6,24 @@ class LoginForm extends StatefulWidget {
 }
 
 class _LoginFormState extends State<LoginForm> {
+  final _formKey = GlobalKey<FormState>();
   bool _isLoading;
 
   String _email;
   String _password;
+  String _errorMessage;
 
   @override
   void initState() {
     super.initState();
     _isLoading = false;
+    _errorMessage = "";
   }
 
-  Widget _showCircularProgress() {
+  // Auth from Firebase
+  void _validateAndSubmit() {}
+
+  Widget _circularProgress() {
     if (_isLoading) {
       return Center(child: CircularProgressIndicator());
     }
@@ -27,7 +33,7 @@ class _LoginFormState extends State<LoginForm> {
     );
   }
 
-  Widget _showLogo() {
+  Widget _logo() {
     return Padding(
       padding: EdgeInsets.fromLTRB(0.0, 70.0, 0.0, 0.0),
       child: CircleAvatar(
@@ -38,7 +44,7 @@ class _LoginFormState extends State<LoginForm> {
     );
   }
 
-  Widget _showEmailInput() {
+  Widget _emailInput() {
     return Padding(
       padding: EdgeInsets.fromLTRB(0.0, 30.0, 0.0, 0.0),
       child: TextFormField(
@@ -56,7 +62,7 @@ class _LoginFormState extends State<LoginForm> {
     );
   }
 
-  Widget _showPasswordInput() {
+  Widget _passwordInput() {
     return Padding(
       padding: EdgeInsets.fromLTRB(0.0, 20.0, 0.0, 0.0),
       child: TextFormField(
@@ -74,16 +80,34 @@ class _LoginFormState extends State<LoginForm> {
     );
   }
 
-  Widget _showForm() {
+  Widget _loginButton() {
+    return Padding(
+        padding: EdgeInsets.fromLTRB(0.0, 45.0, 0.0, 0.0),
+        child: MaterialButton(
+          elevation: 5.0,
+          minWidth: 200.0,
+          height: 42.0,
+          color: Colors.blue,
+          child: Text(
+            'Login',
+            style: TextStyle(fontSize: 20.0, color: Colors.white),
+          ),
+          onPressed: _validateAndSubmit,
+        ));
+  }
+
+  Widget _form() {
     return Container(
       padding: EdgeInsets.all(16.0),
       child: Form(
+        key: _formKey,
         child: ListView(
           shrinkWrap: true,
           children: <Widget>[
-            _showLogo(),
-            _showEmailInput(),
-            _showPasswordInput(),
+            _logo(),
+            _emailInput(),
+            _passwordInput(),
+            _loginButton(),
           ],
         ),
       ),
@@ -95,8 +119,8 @@ class _LoginFormState extends State<LoginForm> {
     return Stack(
       children: <Widget>[
         // Show CP if loading
-        _showCircularProgress(),
-        _showForm(),
+        _circularProgress(),
+        _form(),
       ],
     );
   }
