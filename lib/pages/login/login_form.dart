@@ -39,12 +39,29 @@ class _LoginFormState extends State<LoginForm> {
     String userId = "";
 
     setState(() {
+      _isLoading = true;
       _errorMessage = "";
     });
 
     if (_validateForm()) {
-      userId = await widget.auth.signIn(_email, _password);
-      print('Signed in: $userId');
+      try {
+        userId = await widget.auth.signIn(_email, _password);
+        print('Signed in: $userId');
+
+        setState(() {
+          _isLoading = false;
+        });
+      } catch (err) {
+        print('Error: $err');
+        setState(() {
+          _isLoading = false;
+          _errorMessage = err.message;
+        });
+      }
+    } else {
+      setState(() {
+        _isLoading = false;
+      });
     }
   }
 
@@ -114,13 +131,16 @@ class _LoginFormState extends State<LoginForm> {
   // For Firebase errors
   Widget _errorMessageField() {
     if (_errorMessage.length > 0 && _errorMessage != null) {
-      return Text(
-        _errorMessage,
-        style: TextStyle(
-            fontSize: 13.0,
-            color: Colors.red,
-            height: 1.0,
-            fontWeight: FontWeight.w300),
+      return Padding(
+        padding: EdgeInsets.fromLTRB(45.0, 35.0, 45.0, 0.0),
+        child: Text(
+          _errorMessage,
+          style: TextStyle(
+              fontSize: 18.0,
+              color: Colors.red,
+              height: 1.0,
+              fontWeight: FontWeight.w300),
+        ),
       );
     } else {
       return Container(
@@ -159,8 +179,8 @@ class _LoginFormState extends State<LoginForm> {
             _logo(),
             _emailInput(),
             _passwordInput(),
-            _loginButton(),
             _errorMessageField(),
+            _loginButton(),
           ],
         ),
       ),
