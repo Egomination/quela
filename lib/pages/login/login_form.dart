@@ -20,8 +20,23 @@ class _LoginFormState extends State<LoginForm> {
     _errorMessage = "";
   }
 
+  // Form validation before sumbit
+  bool _validateForm() {
+    final form = _formKey.currentState;
+    if (form.validate()) {
+      form.save();
+      return true;
+    }
+    return false;
+  }
+
   // Auth from Firebase
-  void _validateAndSubmit() {}
+  void _submit() {
+    setState(() {
+      _errorMessage = "";
+    });
+    _validateForm();
+  }
 
   Widget _circularProgress() {
     if (_isLoading) {
@@ -58,6 +73,9 @@ class _LoginFormState extends State<LoginForm> {
             color: Colors.grey,
           ),
         ),
+        validator: (value) =>
+            value.isEmpty ? 'Email field can\'t be empty' : null,
+        onSaved: (value) => _email = value,
       ),
     );
   }
@@ -76,24 +94,48 @@ class _LoginFormState extends State<LoginForm> {
             color: Colors.grey,
           ),
         ),
+        validator: (value) =>
+            value.isEmpty ? 'Password field can\'t be empty' : null,
+        onSaved: (value) => _password = value,
       ),
     );
   }
 
+  // For Firebase errors
+  Widget _errorMessageField() {
+    if (_errorMessage.length > 0 && _errorMessage != null) {
+      return Text(
+        _errorMessage,
+        style: TextStyle(
+            fontSize: 13.0,
+            color: Colors.red,
+            height: 1.0,
+            fontWeight: FontWeight.w300),
+      );
+    } else {
+      return Container(
+        height: 0.0,
+      );
+    }
+  }
+
   Widget _loginButton() {
     return Padding(
-        padding: EdgeInsets.fromLTRB(0.0, 45.0, 0.0, 0.0),
-        child: MaterialButton(
-          elevation: 5.0,
-          minWidth: 200.0,
-          height: 42.0,
+      padding: EdgeInsets.fromLTRB(70.0, 35.0, 70.0, 0.0),
+      child: OutlineButton(
+        borderSide: BorderSide(
           color: Colors.blue,
-          child: Text(
-            'Login',
-            style: TextStyle(fontSize: 20.0, color: Colors.white),
-          ),
-          onPressed: _validateAndSubmit,
-        ));
+        ),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(30.0),
+        ),
+        child: Text(
+          'Login',
+          style: TextStyle(fontSize: 18.0, color: Colors.blue),
+        ),
+        onPressed: _submit,
+      ),
+    );
   }
 
   Widget _form() {
@@ -108,6 +150,7 @@ class _LoginFormState extends State<LoginForm> {
             _emailInput(),
             _passwordInput(),
             _loginButton(),
+            _errorMessageField(),
           ],
         ),
       ),
