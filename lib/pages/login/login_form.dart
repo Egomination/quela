@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:quela/utils/auth.dart';
 
 class LoginForm extends StatefulWidget {
-  final auth = new Auth();
+  LoginForm({Key key, this.auth}) : super(key: key);
+
+  final Auth auth;
 
   @override
   State<StatefulWidget> createState() => _LoginFormState();
