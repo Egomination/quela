@@ -22,21 +22,24 @@ class DashboardBloc implements BlocBase {
       link: link,
       cache: InMemoryCache(),
     );
+    try {
+      final QueryResult response = await client
+          .query(
+        QueryOptions(
+          document: search,
+          variables: <String, dynamic>{'id': 'pV6PGqbsE2asoGqu7k8c'},
+        ),
+      )
+          .timeout(const Duration(seconds: 10));
 
-    final QueryResult response = await client
-        .query(
-          QueryOptions(
-            document: search,
-            variables: <String, dynamic>{'id': 'pV6PGqbsE2asoGqu7k8c'},
-          ),
-        )
-        .timeout(const Duration(seconds: 10));
+      if (response.errors != null) {
+        print(response.errors.toString());
+      }
 
-    if (response.errors != null) {
-      print(response.errors.toString());
+      _controller.sink.add(Patient.fromJson(response.data['getPatient']));
+    } catch (e) {
+      print(e.toString());
     }
-
-    _controller.sink.add(Patient.fromJson(response.data['getPatient']));
   }
 
   @override
