@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:quela/pages/patient/dashboard_builder.dart';
 import 'package:quela/pages/patient/voip.dart';
+
+import 'package:quela/utils/auth.dart';
 import 'package:quela/utils/hex_code.dart';
 
 class PatientPage extends StatelessWidget {
+  PatientPage({Key key, this.auth, this.uuid}) : super(key: key);
+
+  final Auth auth;
+  final String uuid;
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -12,7 +19,7 @@ class PatientPage extends StatelessWidget {
         //backgroundColor: Colors.black,
         body: TabBarView(
           children: <Widget>[
-            PatientDashboardBuilder(),
+            PatientDashboardBuilder(uuid: uuid, auth: auth),
             VoipConnection(),
           ],
         ),

@@ -1,18 +1,19 @@
 import 'dart:async';
-
 import 'package:flutter_graphql/flutter_graphql.dart';
+import 'package:rxdart/rxdart.dart';
 import 'package:quela/bloc/bloc.dart';
 import 'package:quela/models/patient.dart';
-import 'package:rxdart/rxdart.dart';
 
 class DashboardBloc implements BlocBase {
+  DashboardBloc({this.uuid}) {
+    _handleApiCall();
+  }
+
+  final String uuid;
+
   BehaviorSubject<Patient> _controller = BehaviorSubject<Patient>();
 
   Stream<Patient> get patient => _controller;
-
-  DashboardBloc() {
-    _handleApiCall();
-  }
 
   void _handleApiCall() async {
     // Linking api url

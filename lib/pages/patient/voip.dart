@@ -9,7 +9,7 @@ class VoipConnection extends StatefulWidget {
   static String tag = 'call';
 
   // Needs to be set in here.
-  final String ip = '192.168.1.108';
+  final String ip = '192.168.160.73';
 
   VoipConnection({Key key}) : super(key: key);
 

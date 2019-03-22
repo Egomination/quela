@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+
 import 'package:quela/pages/patient/patient_page.dart';
+import 'package:quela/pages/login/login_page.dart';
 
 void main() => runApp(MyApp());
 
@@ -12,9 +14,8 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       routes: {
-        //"/": (BuildContext context) => LoginPage(),
-        "/": (BuildContext context) => PatientPage(),
-        //"/patient/alarms": (BuildContext context) => PatientAlarm(),
+        // "/": (BuildContext context) => PatientPage(),
+        "/": (BuildContext context) => LoginPage(),
       },
     );
   }
