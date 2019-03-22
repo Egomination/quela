@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:quela/pages/patient/dashboard_builder.dart';
+import 'package:quela/pages/patient/voip.dart';
 
 import 'package:quela/utils/auth.dart';
 import 'package:quela/utils/hex_code.dart';
@@ -19,7 +20,7 @@ class PatientPage extends StatelessWidget {
         body: TabBarView(
           children: <Widget>[
             PatientDashboardBuilder(uuid: uuid, auth: auth),
-            Container(),
+            VoipConnection(),
           ],
         ),
         bottomNavigationBar: TabBar(
@@ -31,8 +32,8 @@ class PatientPage extends StatelessWidget {
               text: "Dashboard",
             ),
             Tab(
-              icon: Icon(Icons.alarm),
-              text: "Alarms",
+              icon: Icon(Icons.video_call),
+              text: "Call",
             ),
           ],
         ),
