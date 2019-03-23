@@ -5,7 +5,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_graphql/flutter_graphql.dart';
 
 import 'package:quela/pages/login/login_form.dart';
-import 'package:quela/pages/login/login_router.dart';
 import 'package:quela/utils/auth.dart';
 
 class LoginPage extends StatelessWidget {
@@ -41,7 +40,7 @@ class LoginPage extends StatelessWidget {
       stream: FirebaseAuth.instance.onAuthStateChanged,
       builder: (BuildContext context, snapshot) {
         if (snapshot.hasData) {
-          return LoginRouter(uuid: snapshot.data.uid, auth: auth);
+          return null;
         }
         return LoginForm(auth: auth);
       },
