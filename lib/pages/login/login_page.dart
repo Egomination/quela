@@ -1,39 +1,58 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_graphql/flutter_graphql.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:quela/pages/login/login_form.dart';
-import 'package:quela/utils/auth.dart';
+import 'package:quela/bloc/auth/auth.dart';
+import 'package:quela/bloc/auth/auth_block.dart';
+import 'package:quela/bloc/login/login_block.dart';
 
-class LoginPage extends StatelessWidget {
-  final auth = new Auth();
+class LoginPage extends StatefulWidget {
+  final Auth auth;
 
-  final String check = """
-  query check(\$id: String!) {
-    checkType(id: \$id)
-  }
-  """
-      .replaceAll('\n', ' ');
+  LoginPage({Key key, @required this.auth})
+      : assert(auth != null),
+        super(key: key);
 
-  Future<String> _typeCheck(String id) async {
-    HttpLink link = HttpLink(uri: "https://quela-api.herokuapp.com/");
-    GraphQLClient client = GraphQLClient(
-      link: link,
-      cache: InMemoryCache(),
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  LoginBloc _loginBloc;
+  AuthBloc _authBloc;
+
+  Auth get _auth => widget.auth;
+
+  @override
+  void initState() {
+    _authBloc = BlocProvider.of<AuthBloc>(context);
+    _loginBloc = LoginBloc(
+      auth: _auth,
+      authBloc: _authBloc,
     );
-    final QueryResult response = await client
-        .query(
-          QueryOptions(
-            document: check,
-            variables: <String, String>{"id": id},
-          ),
-        )
-        .timeout(const Duration(seconds: 10));
-
-    return response.data['checkType'];
+    super.initState();
   }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Login'),
+      ),
+      body: LoginForm(
+        authBloc: _authBloc,
+        loginBloc: _loginBloc,
+      ),
+    );
+  }
+
+  @override
+  void dispose() {
+    _loginBloc.dispose();
+    super.dispose();
+  }
+}
+
+/*class LoginPage extends StatefulWidget {
 
   Widget _handleAuth() {
     return StreamBuilder<FirebaseUser>(
@@ -53,4 +72,4 @@ class LoginPage extends StatelessWidget {
       body: _handleAuth(),
     );
   }
-}
+}*/
