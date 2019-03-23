@@ -1,15 +1,17 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_graphql/flutter_graphql.dart';
+import 'package:quela/pages/login/mock_main.dart';
+import 'package:quela/pages/patient/patient_page.dart';
 
-import 'package:quela/pages/login/login_form.dart';
-import 'package:quela/pages/login/login_router.dart';
 import 'package:quela/utils/auth.dart';
 
-class LoginPage extends StatelessWidget {
-  final auth = new Auth();
+class LoginRouter extends StatelessWidget {
+  final String uuid;
+  final Auth auth;
+
+  LoginRouter({Key key, this.uuid, this.auth}) : super(key: key);
 
   final String check = """
   query check(\$id: String!) {
@@ -36,22 +38,25 @@ class LoginPage extends StatelessWidget {
     return response.data['checkType'];
   }
 
-  Widget _handleAuth() {
-    return StreamBuilder<FirebaseUser>(
-      stream: FirebaseAuth.instance.onAuthStateChanged,
-      builder: (BuildContext context, snapshot) {
-        if (snapshot.hasData) {
-          return LoginRouter(uuid: snapshot.data.uid, auth: auth);
+  Widget _handleRoute() {
+    return FutureBuilder(
+      future: _typeCheck("H6v2616cL8QUvP3mKNW1"),
+      //initialData: "Loading text..",
+      builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+        print(snapshot.data);
+        if (snapshot.data == "patient") {
+          return PatientPage(uuid: uuid, auth: auth);
+        } else {
+          return MockMain(uuid: uuid, auth: auth);
         }
-        return LoginForm(auth: auth);
       },
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: _handleAuth(),
+    return Container(
+      child: _handleRoute(),
     );
   }
 }
