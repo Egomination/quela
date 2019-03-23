@@ -9,7 +9,7 @@ class PatientInfoBar extends StatelessWidget {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     //double height = MediaQuery.of(context).size.height;
-    DashboardBloc _bloc = BlocProvider.of(context);
+    PatientBloc _bloc = BlocProvider.of(context);
 
     return StreamBuilder<Object>(
 	    stream: _bloc.patient,

@@ -8,7 +8,7 @@ import 'package:quela/utils/hex_code.dart';
 class ScreenBuilder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    DashboardBloc _bloc = BlocProvider.of(context);
+	  PatientBloc _bloc = BlocProvider.of(context);
     return StreamBuilder<Patient>(
       stream: _bloc.patient,
       builder: (context, snapshot) {
