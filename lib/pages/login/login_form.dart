@@ -49,10 +49,6 @@ class _LoginFormState extends State<LoginForm> {
       try {
         userId = await widget.auth.signIn(_email, _password);
         print('Signed in: $userId');
-
-        setState(() {
-          _isLoading = false;
-        });
       } catch (err) {
         print('Error: $err');
         setState(() {
