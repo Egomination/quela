@@ -139,7 +139,6 @@ class _LoginFormState extends State<LoginForm> {
                 _logo(),
                 _emailInput(),
                 _passwordInput(),
-                //_errorMessageField(),
                 _loginButton(),
                 _circularProgress()
               ],
@@ -149,32 +148,4 @@ class _LoginFormState extends State<LoginForm> {
       },
     );
   }
-  /*
-
-  // Auth from Firebase
-  void _submit() async {
-    String userId = "";
-
-    setState(() {
-      _isLoading = true;
-      _errorMessage = "";
-    });
-
-    if (_validateForm()) {
-      try {
-        userId = await widget.auth.signIn(_email, _password);
-        print('Signed in: $userId');
-      } catch (err) {
-        print('Error: $err');
-        setState(() {
-          _isLoading = false;
-          _errorMessage = err.message;
-        });
-      }
-    } else {
-      setState(() {
-        _isLoading = false;
-      });
-    }
-  }*/
 }

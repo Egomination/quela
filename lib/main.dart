@@ -8,7 +8,6 @@ import 'package:quela/bloc/auth/event.dart';
 import 'package:quela/bloc/auth/state.dart';
 import 'package:quela/pages/login/login_page.dart';
 import 'package:quela/pages/login/mock_main.dart';
-import 'package:quela/pages/login/mock_splash.dart';
 
 class SimpleBlocDelegate extends BlocDelegate {
   @override
@@ -78,20 +77,3 @@ class _MyAppState extends State<MyApp> {
     );
   }
 }
-
-/*void main() => runApp(MyApp());
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Quela',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      routes: {
-        "/": (BuildContext context) => LoginPage(),
-      },
-    );
-  }
-}*/

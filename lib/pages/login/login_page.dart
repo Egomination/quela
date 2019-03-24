@@ -52,25 +52,3 @@ class _LoginPageState extends State<LoginPage> {
     super.dispose();
   }
 }
-
-/*class LoginPage extends StatefulWidget {
-
-  Widget _handleAuth() {
-    return StreamBuilder<FirebaseUser>(
-      stream: FirebaseAuth.instance.onAuthStateChanged,
-      builder: (BuildContext context, snapshot) {
-        if (snapshot.hasData) {
-          return null;
-        }
-        return LoginForm(auth: auth);
-      },
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: _handleAuth(),
-    );
-  }
-}*/
