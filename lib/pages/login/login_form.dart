@@ -1,76 +1,42 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:quela/utils/auth.dart';
+import 'package:quela/bloc/auth/auth_block.dart';
+import 'package:quela/bloc/login/event.dart';
+import 'package:quela/bloc/login/login_block.dart';
+import 'package:quela/bloc/login/state.dart';
 
 class LoginForm extends StatefulWidget {
-  LoginForm({Key key, this.auth}) : super(key: key);
+  final LoginBloc loginBloc;
+  final AuthBloc authBloc;
 
-  final Auth auth;
+  LoginForm({
+    Key key,
+    @required this.loginBloc,
+    @required this.authBloc,
+  }) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => _LoginFormState();
+  State<LoginForm> createState() => _LoginFormState();
 }
 
 class _LoginFormState extends State<LoginForm> {
-  final _formKey = GlobalKey<FormState>();
-  bool _isLoading;
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
 
-  String _email;
-  String _password;
-  String _errorMessage;
+  LoginBloc get _loginBloc => widget.loginBloc;
 
-  @override
-  void initState() {
-    super.initState();
-    _isLoading = false;
-    _errorMessage = "";
+  void _submit() {
+    _loginBloc.dispatch(ButtonPressed(
+      email: _emailController.text,
+      password: _passwordController.text,
+    ));
   }
 
-  // Form validation before sumbit
-  bool _validateForm() {
-    final form = _formKey.currentState;
-    if (form.validate()) {
-      form.save();
-      return true;
-    }
-    return false;
-  }
-
-  // Auth from Firebase
-  void _submit() async {
-    String userId = "";
-
-    setState(() {
-      _isLoading = true;
-      _errorMessage = "";
+  void _onWidgetDidBuild(Function callback) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      callback();
     });
-
-    if (_validateForm()) {
-      try {
-        userId = await widget.auth.signIn(_email, _password);
-        print('Signed in: $userId');
-      } catch (err) {
-        print('Error: $err');
-        setState(() {
-          _isLoading = false;
-          _errorMessage = err.message;
-        });
-      }
-    } else {
-      setState(() {
-        _isLoading = false;
-      });
-    }
-  }
-
-  Widget _circularProgress() {
-    if (_isLoading) {
-      return Center(child: CircularProgressIndicator());
-    }
-    return Container(
-      height: 0.0,
-      width: 0.0,
-    );
   }
 
   Widget _logo() {
@@ -98,9 +64,7 @@ class _LoginFormState extends State<LoginForm> {
             color: Colors.grey,
           ),
         ),
-        validator: (value) =>
-            value.isEmpty ? 'Email field can\'t be empty' : null,
-        onSaved: (value) => _email = value,
+        controller: _emailController,
       ),
     );
   }
@@ -119,80 +83,98 @@ class _LoginFormState extends State<LoginForm> {
             color: Colors.grey,
           ),
         ),
-        validator: (value) =>
-            value.isEmpty ? 'Password field can\'t be empty' : null,
-        onSaved: (value) => _password = value,
-      ),
-    );
-  }
-
-  // For Firebase errors
-  Widget _errorMessageField() {
-    if (_errorMessage.length > 0 && _errorMessage != null) {
-      return Padding(
-        padding: EdgeInsets.fromLTRB(45.0, 35.0, 45.0, 0.0),
-        child: Text(
-          _errorMessage,
-          style: TextStyle(
-              fontSize: 18.0,
-              color: Colors.red,
-              height: 1.0,
-              fontWeight: FontWeight.w300),
-        ),
-      );
-    } else {
-      return Container(
-        height: 0.0,
-      );
-    }
-  }
-
-  Widget _loginButton() {
-    return Padding(
-      padding: EdgeInsets.fromLTRB(70.0, 35.0, 70.0, 0.0),
-      child: OutlineButton(
-        borderSide: BorderSide(
-          color: Colors.blue,
-        ),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(30.0),
-        ),
-        child: Text(
-          'Login',
-          style: TextStyle(fontSize: 18.0, color: Colors.blue),
-        ),
-        onPressed: _submit,
-      ),
-    );
-  }
-
-  Widget _form() {
-    return Container(
-      padding: EdgeInsets.all(16.0),
-      child: Form(
-        key: _formKey,
-        child: ListView(
-          shrinkWrap: true,
-          children: <Widget>[
-            _logo(),
-            _emailInput(),
-            _passwordInput(),
-            _errorMessageField(),
-            _loginButton(),
-          ],
-        ),
+        controller: _passwordController,
       ),
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: <Widget>[
-        // Show CP if loading
-        _circularProgress(),
-        _form(),
-      ],
+    return BlocBuilder<LoginEvents, LoginStates>(
+      bloc: _loginBloc,
+      builder: (BuildContext context, LoginStates state) {
+        if (state is Failure) {
+          _onWidgetDidBuild(() {
+            Scaffold.of(context).showSnackBar(
+              SnackBar(
+                content: Text('${state.error}'),
+                backgroundColor: Colors.red,
+              ),
+            );
+          });
+        }
+
+        Widget _loginButton() {
+          return Padding(
+            padding: EdgeInsets.fromLTRB(70.0, 35.0, 70.0, 0.0),
+            child: OutlineButton(
+              borderSide: BorderSide(
+                color: Colors.blue,
+              ),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(30.0),
+              ),
+              child: Text(
+                'Login',
+                style: TextStyle(fontSize: 18.0, color: Colors.blue),
+              ),
+              onPressed: state is Loading ? null : _submit,
+            ),
+          );
+        }
+
+        Widget _circularProgress() {
+          if (state is Loading) {
+            return Center(child: CircularProgressIndicator());
+          }
+          return null;
+        }
+
+        return Container(
+          padding: EdgeInsets.all(16.0),
+          child: Form(
+            child: ListView(
+              shrinkWrap: true,
+              children: <Widget>[
+                _logo(),
+                _emailInput(),
+                _passwordInput(),
+                //_errorMessageField(),
+                _loginButton(),
+                _circularProgress()
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
+  /*
+
+  // Auth from Firebase
+  void _submit() async {
+    String userId = "";
+
+    setState(() {
+      _isLoading = true;
+      _errorMessage = "";
+    });
+
+    if (_validateForm()) {
+      try {
+        userId = await widget.auth.signIn(_email, _password);
+        print('Signed in: $userId');
+      } catch (err) {
+        print('Error: $err');
+        setState(() {
+          _isLoading = false;
+          _errorMessage = err.message;
+        });
+      }
+    } else {
+      setState(() {
+        _isLoading = false;
+      });
+    }
+  }*/
 }
