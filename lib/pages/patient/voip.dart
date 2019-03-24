@@ -37,6 +37,7 @@ class _VoipConnectionState extends State<VoipConnection> {
     super.initState();
     initRenderers();
     _connect();
+    _selfId = "pV6PGqbsE2asoGqu7k8c"; // todo: use shared_pref to get this id
   }
 
   initRenderers() async {
@@ -82,8 +83,9 @@ class _VoipConnectionState extends State<VoipConnection> {
       };
 
       _signaling.onPeersUpdate = ((event) {
+        print(event['peers']);
         this.setState(() {
-          _selfId = event['self'];
+          //_selfId = event['self'];
           _peers = event['peers'];
         });
       });
@@ -145,6 +147,7 @@ class _VoipConnectionState extends State<VoipConnection> {
               width: 16,
             ),
             Column(
+              mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
                 Container(
                   width: 8.0,
@@ -163,7 +166,7 @@ class _VoipConnectionState extends State<VoipConnection> {
                 Container(
                   height: 16.0,
                 ),
-                //Text(peer['user_agent']),
+                Text(doctor.proficiency),
               ],
             ),
           ],
@@ -258,12 +261,16 @@ class _VoipConnectionState extends State<VoipConnection> {
           })
               : // this is the part i will fix first. => The way it listed
           ListView.builder(
-              shrinkWrap: true,
-              padding: const EdgeInsets.all(0.0),
-              itemCount: (_peers != null ? _peers.length : 0),
-              itemBuilder: (context, i) {
-                return _buildRow(context, snapshot.data.doctorId[i]);
-              }),
+            shrinkWrap: true,
+            padding: const EdgeInsets.all(0.0),
+            itemCount: (_peers != null ? _peers.length : 0),
+            itemBuilder: (context, i) {
+              return _peers[i]['id'] != _selfId &&
+                  _peers[i] == snapshot.data.doctorId[i].id
+                  ? _buildRow(context, snapshot.data.doctorId[i])
+                  : null;
+            },
+          ),
         )
             : CircularProgressIndicator();
       },
