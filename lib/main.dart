@@ -69,6 +69,7 @@ class _MyAppState extends State<MyApp> {
               return LoginPage(auth: auth);
             }
             if (state is Loading) {
+              // NOTE: We could use a better loading design here
               return CircularProgressIndicator();
             }
           },
