@@ -12,7 +12,7 @@ class AuthBloc extends Bloc<AuthEvents, AuthStates> {
   AuthBloc({@required this.auth}) : assert(auth != null);
 
   @override
-  AuthStates get initialState => BeforeAuth();
+  AuthStates get initialState => Unauthenticated();
 
   @override
   Stream<AuthStates> mapEventToState(
