@@ -127,7 +127,7 @@ class _LoginFormState extends State<LoginForm> {
           if (state is Loading) {
             return Center(child: CircularProgressIndicator());
           }
-          return null;
+          return Container(width: 0.0, height: 0.0);
         }
 
         return Container(

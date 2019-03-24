@@ -10,7 +10,7 @@ dependencies:
   flutter:
     sdk: flutter
   flip_card: ^0.2.1
-  rxdart: ^0.21.0
+  rxdart: ^0.20.0
   flutter_graphql: ^1.0.0-rc.3
   firebase_auth: ^0.7.0
   flutter_webrtc: ^0.1.0

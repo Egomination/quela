@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quela/bloc/auth/auth.dart';
 import 'package:quela/bloc/auth/auth_block.dart';
 import 'package:quela/bloc/login/login_block.dart';
+import 'package:quela/pages/login/login_form.dart';
 
 class LoginPage extends StatefulWidget {
   final Auth auth;
