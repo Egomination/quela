@@ -53,19 +53,31 @@ class Patient {
 }
 
 class DoctorId {
+  String id;
   String name;
+  String surname;
+  String proficiency;
 
   DoctorId({
+    this.id,
     this.name,
+    this.surname,
+    this.proficiency,
   });
 
   factory DoctorId.fromJson(Map<String, dynamic> json) => new DoctorId(
-        name: json["name"],
-      );
+    id: json["id"],
+    name: json["name"],
+    surname: json["surname"],
+    proficiency: json["proficiency"],
+  );
 
   Map<String, dynamic> toJson() => {
-        "name": name,
-      };
+    "id": id,
+    "name": name,
+    "surname": surname,
+    "proficiency": proficiency,
+  };
 }
 
 class Value {

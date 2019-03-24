@@ -61,7 +61,10 @@ query search(\$id: String!) {
     email
     profile_pic
     doctorID{
+      id
       name
+      surname
+      proficiency
     }
     values {
       name 

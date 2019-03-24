@@ -3,13 +3,15 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_webrtc/webrtc.dart';
+import 'package:quela/bloc/bloc.dart';
+import 'package:quela/bloc/patient_dashboard_bloc.dart';
 import 'package:quela/widgets/voip_signaling.dart';
 
 class VoipConnection extends StatefulWidget {
   static String tag = 'call';
 
   // Needs to be set in here.
-  final String ip = '192.168.160.73';
+  final String ip = '192.168.1.108';
 
   VoipConnection({Key key}) : super(key: key);
 
@@ -118,52 +120,80 @@ class _VoipConnectionState extends State<VoipConnection> {
 
   _muteMic() {}
 
-  _buildRow(context, peer) {
-    var self = (peer['id'] == _selfId);
-    return ListBody(children: <Widget>[
-      ListTile(
-        title: Text(self
-            ? peer['name'] + '[Your self]'
-            : peer['name'] + '[' + peer['user_agent'] + ']'),
-        onTap: null,
-        trailing: SizedBox(
-            width: 100.0,
-            child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  IconButton(
-                    icon: const Icon(Icons.videocam),
-                    onPressed: () => _invitePeer(context, peer['id'], false),
-                    tooltip: 'Video calling',
+  _buildRow(context, doctor) {
+    return InkWell(
+      onTap: () => _invitePeer(context, doctor.id, false),
+      child: Container(
+        margin: const EdgeInsets.symmetric(
+          horizontal: 16.0,
+          vertical: 10.0,
+        ),
+        width: MediaQuery
+            .of(context)
+            .size
+            .width,
+        height: 120,
+        decoration: BoxDecoration(
+          color: Colors.grey,
+        ),
+        child: Row(
+          children: <Widget>[
+            Image.network(
+              "https://image.freepik.com/free-photo/doctor-smiling-with-stethoscope_1154-36.jpg",
+            ),
+            Container(
+              width: 16,
+            ),
+            Column(
+              children: <Widget>[
+                Container(
+                  width: 8.0,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 8.0),
+                  child: Text(
+                    doctor.name + ' ' + doctor.surname,
+                    style: TextStyle(
+                      fontSize: 24.0,
+                      color: Colors.black,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
-                  IconButton(
-                    icon: const Icon(Icons.screen_share),
-                    onPressed: () => _invitePeer(context, peer['id'], true),
-                    tooltip: 'Screen sharing',
-                  )
-                ])),
-        subtitle: Text('id: ' + peer['id']),
+                ),
+                Container(
+                  height: 16.0,
+                ),
+                //Text(peer['user_agent']),
+              ],
+            ),
+          ],
+        ),
       ),
-      Divider()
-    ]);
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Users on VOIP Server'),
-        actions: <Widget>[
-          IconButton(
-            icon: const Icon(Icons.settings),
-            onPressed: null,
-            tooltip: 'setup',
+    PatientBloc _bloc = BlocProvider.of(context);
+    return StreamBuilder(
+      stream: _bloc.patient,
+      builder: (context, AsyncSnapshot snapshot) {
+        return snapshot.hasData
+            ? Scaffold(
+          appBar: AppBar(
+            title: Text('Users on VOIP Server'),
+            actions: <Widget>[
+              IconButton(
+                icon: const Icon(Icons.settings),
+                onPressed: null,
+                tooltip: 'setup',
+              ),
+            ],
           ),
-        ],
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: _inCalling
-          ? SizedBox(
+          floatingActionButtonLocation:
+          FloatingActionButtonLocation.centerFloat,
+          floatingActionButton: _inCalling
+              ? SizedBox(
               width: 200.0,
               child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -183,44 +213,60 @@ class _VoipConnectionState extends State<VoipConnection> {
                       onPressed: _muteMic,
                     )
                   ]))
-          : null,
-      body: _inCalling
-          ? OrientationBuilder(builder: (context, orientation) {
-              return Container(
-                child: Stack(children: <Widget>[
-                  Positioned(
-                      left: 0.0,
-                      right: 0.0,
-                      top: 0.0,
-                      bottom: 0.0,
-                      child: Container(
-                        margin: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
-                        width: MediaQuery.of(context).size.width,
-                        height: MediaQuery.of(context).size.height,
-                        child: RTCVideoView(_remoteRenderer),
-                        decoration: BoxDecoration(color: Colors.black54),
-                      )),
-                  Positioned(
-                    left: 20.0,
-                    top: 20.0,
+              : null,
+          body: _inCalling
+              ? OrientationBuilder(builder: (context, orientation) {
+            return Container(
+              child: Stack(children: <Widget>[
+                Positioned(
+                    left: 0.0,
+                    right: 0.0,
+                    top: 0.0,
+                    bottom: 0.0,
                     child: Container(
-                      width: orientation == Orientation.portrait ? 90.0 : 120.0,
-                      height:
-                          orientation == Orientation.portrait ? 120.0 : 90.0,
-                      child: RTCVideoView(_localRenderer),
-                      decoration: BoxDecoration(color: Colors.black54),
-                    ),
+                      margin:
+                      EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
+                      width: MediaQuery
+                          .of(context)
+                          .size
+                          .width,
+                      height: MediaQuery
+                          .of(context)
+                          .size
+                          .height,
+                      child: RTCVideoView(_remoteRenderer),
+                      decoration:
+                      BoxDecoration(color: Colors.black54),
+                    )),
+                Positioned(
+                  left: 20.0,
+                  top: 20.0,
+                  child: Container(
+                    width: orientation == Orientation.portrait
+                        ? 90.0
+                        : 120.0,
+                    height: orientation == Orientation.portrait
+                        ? 120.0
+                        : 90.0,
+                    child: RTCVideoView(_localRenderer),
+                    decoration:
+                    BoxDecoration(color: Colors.black54),
                   ),
-                ]),
-              );
-            })
-          : ListView.builder(
+                ),
+              ]),
+            );
+          })
+              : // this is the part i will fix first. => The way it listed
+          ListView.builder(
               shrinkWrap: true,
               padding: const EdgeInsets.all(0.0),
               itemCount: (_peers != null ? _peers.length : 0),
               itemBuilder: (context, i) {
-                return _buildRow(context, _peers[i]);
+                return _buildRow(context, snapshot.data.doctorId[i]);
               }),
+        )
+            : CircularProgressIndicator();
+      },
     );
   }
 }
