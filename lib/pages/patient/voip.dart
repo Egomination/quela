@@ -147,13 +147,18 @@ class _VoipConnectionState extends State<VoipConnection> {
               width: 16,
             ),
             Column(
-              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Container(
                   width: 8.0,
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(top: 8.0),
+                  padding: EdgeInsets.only(
+                      left: (MediaQuery
+                          .of(context)
+                          .size
+                          .width / 100) * 12,
+                      top: 8.0),
                   child: Text(
                     doctor.name + ' ' + doctor.surname,
                     style: TextStyle(
@@ -272,7 +277,12 @@ class _VoipConnectionState extends State<VoipConnection> {
             },
           ),
         )
-            : CircularProgressIndicator();
+        // Snapshot has no data
+            : Scaffold(
+          body: Center(
+            child: CircularProgressIndicator(),
+          ),
+        );
       },
     );
   }
