@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-
-import 'package:quela/pages/patient/patient_page.dart';
 import 'package:quela/pages/login/login_page.dart';
 
 void main() => runApp(MyApp());

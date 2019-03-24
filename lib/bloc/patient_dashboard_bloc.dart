@@ -1,11 +1,12 @@
 import 'dart:async';
+
 import 'package:flutter_graphql/flutter_graphql.dart';
-import 'package:rxdart/rxdart.dart';
 import 'package:quela/bloc/bloc.dart';
 import 'package:quela/models/patient.dart';
+import 'package:rxdart/rxdart.dart';
 
-class DashboardBloc implements BlocBase {
-  DashboardBloc({this.uuid}) {
+class PatientBloc implements BlocBase {
+  PatientBloc({this.uuid}) {
     _handleApiCall();
   }
 
@@ -28,7 +29,9 @@ class DashboardBloc implements BlocBase {
           .query(
         QueryOptions(
           document: search,
-          variables: <String, dynamic>{'id': 'pV6PGqbsE2asoGqu7k8c'},
+          variables: <String, dynamic>{
+            'id': /*this.uuid*/ 'pV6PGqbsE2asoGqu7k8c'
+          },
         ),
       )
           .timeout(const Duration(seconds: 10));
@@ -58,7 +61,10 @@ query search(\$id: String!) {
     email
     profile_pic
     doctorID{
+      id
       name
+      surname
+      proficiency
     }
     values {
       name 

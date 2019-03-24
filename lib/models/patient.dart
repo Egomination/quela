@@ -1,7 +1,3 @@
-// To parse this JSON data, do
-//
-//     final patient = patientFromJson(jsonString);
-
 import 'dart:convert';
 
 Patient patientFromJson(String str) {
@@ -20,7 +16,7 @@ class Patient {
   String surname;
   String email;
   String profilePic;
-  DoctorId doctorId;
+  List<DoctorId> doctorId;
   List<Value> values;
 
   Patient({
@@ -39,9 +35,10 @@ class Patient {
         surname: json["surname"],
         email: json["email"],
         profilePic: json["profile_pic"],
-        doctorId: DoctorId.fromJson(json["doctorID"]),
-    values:
-    new List<Value>.from(json["values"].map((x) => Value.fromJson(x))),
+        doctorId: new List<DoctorId>.from(
+            json["doctorID"].map((x) => DoctorId.fromJson(x))),
+        values:
+            new List<Value>.from(json["values"].map((x) => Value.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -50,25 +47,37 @@ class Patient {
         "surname": surname,
         "email": email,
         "profile_pic": profilePic,
-        "doctorID": doctorId.toJson(),
-    "values": new List<dynamic>.from(values.map((x) => x.toJson())),
+        "doctorID": new List<dynamic>.from(doctorId.map((x) => x.toJson())),
+        "values": new List<dynamic>.from(values.map((x) => x.toJson())),
       };
 }
 
 class DoctorId {
+  String id;
   String name;
+  String surname;
+  String proficiency;
 
   DoctorId({
+    this.id,
     this.name,
+    this.surname,
+    this.proficiency,
   });
 
   factory DoctorId.fromJson(Map<String, dynamic> json) => new DoctorId(
-        name: json["name"],
-      );
+    id: json["id"],
+    name: json["name"],
+    surname: json["surname"],
+    proficiency: json["proficiency"],
+  );
 
   Map<String, dynamic> toJson() => {
-        "name": name,
-      };
+    "id": id,
+    "name": name,
+    "surname": surname,
+    "proficiency": proficiency,
+  };
 }
 
 class Value {
@@ -84,16 +93,14 @@ class Value {
     this.valMax,
   });
 
-  factory Value.fromJson(Map<String, dynamic> json) =>
-      new Value(
+  factory Value.fromJson(Map<String, dynamic> json) => new Value(
         name: json["name"],
         valCurr: json["val_curr"],
         valMin: json["val_min"],
         valMax: json["val_max"],
       );
 
-  Map<String, dynamic> toJson() =>
-      {
+  Map<String, dynamic> toJson() => {
         "name": name,
         "val_curr": valCurr,
         "val_min": valMin,

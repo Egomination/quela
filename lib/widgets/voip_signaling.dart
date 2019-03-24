@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter_webrtc/webrtc.dart';
-import 'package:quela/utils/random_string.dart';
 
 enum SignalingState {
   CallStateNew,
@@ -26,7 +25,7 @@ typedef void DataChannelMessageCallback(RTCDataChannel dc, data);
 typedef void DataChannelCallback(RTCDataChannel dc);
 
 class Signaling {
-  String _selfId = randomNumeric(6);
+  String _selfId = "pV6PGqbsE2asoGqu7k8c";
   var _socket;
   var _sessionId;
   var _url;
@@ -270,8 +269,7 @@ class Signaling {
       _send('new', {
         'name': _name,
         'id': _selfId,
-        'user_agent':
-            'VoIP/' + Platform.operatingSystem + '-plugin'
+        'user_agent': 'VoIP/' + Platform.operatingSystem + '-plugin'
       });
     } catch (e) {
       if (this.onStateChange != null) {
