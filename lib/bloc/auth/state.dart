@@ -9,10 +9,22 @@ abstract class AuthStates extends Equatable {}
   String toString() => 'BeforeAuth';
 }*/
 
-class Authenticated extends AuthStates {
-  // State where user is authenticated
+class PatientAuthenticated extends AuthStates {
+  // State where user is authenticated as patient
   @override
-  String toString() => 'Authenticated';
+  String toString() => 'PatientAuthenticated';
+}
+
+class StaffAuthenticated extends AuthStates {
+  // State where user is authenticated as staff
+  @override
+  String toString() => 'StaffAuthenticated';
+}
+
+class DoctorAuthenticated extends AuthStates {
+  // State where user is authenticated as doctor
+  @override
+  String toString() => 'DoctorAuthenticated';
 }
 
 class Unauthenticated extends AuthStates {

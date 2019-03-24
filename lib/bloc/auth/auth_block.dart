@@ -23,7 +23,14 @@ class AuthBloc extends Bloc<AuthEvents, AuthStates> {
       final bool hasToken = await auth.hasToken();
 
       if (hasToken) {
-        yield Authenticated();
+        final String type = await auth.getType();
+        if (type == "patient") {
+          yield PatientAuthenticated();
+        } else if (type == "staff") {
+          yield StaffAuthenticated();
+        } else if (type == "doctor") {
+          yield DoctorAuthenticated();
+        }
       } else {
         yield Unauthenticated();
       }
@@ -32,7 +39,14 @@ class AuthBloc extends Bloc<AuthEvents, AuthStates> {
     if (event is LoggedIn) {
       yield Loading();
       await auth.persistToken(event.token);
-      yield Authenticated();
+      final String type = await auth.getType();
+      if (type == "patient") {
+        yield PatientAuthenticated();
+      } else if (type == "staff") {
+        yield StaffAuthenticated();
+      } else if (type == "doctor") {
+        yield DoctorAuthenticated();
+      }
     }
 
     if (event is LoggedOut) {

@@ -62,7 +62,13 @@ class _MyAppState extends State<MyApp> {
             /*if (state is BeforeAuth) {
               return SplashPage();
             }*/
-            if (state is Authenticated) {
+            if (state is PatientAuthenticated) {
+              return MockMain();
+            }
+            if (state is StaffAuthenticated) {
+              return MockMain();
+            }
+            if (state is DoctorAuthenticated) {
               return MockMain();
             }
             if (state is Unauthenticated) {

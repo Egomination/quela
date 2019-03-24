@@ -63,4 +63,9 @@ class Auth {
     bool state = value.isEmpty;
     return state;
   }
+
+  Future<String> getType() async {
+    String type = await storage.read(key: "type");
+    return type;
+  }
 }
