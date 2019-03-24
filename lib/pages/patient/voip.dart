@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_webrtc/webrtc.dart';
 import 'package:quela/bloc/bloc.dart';
 import 'package:quela/bloc/patient_dashboard_bloc.dart';
+import 'package:quela/utils/hex_code.dart';
 import 'package:quela/widgets/voip_signaling.dart';
 
 class VoipConnection extends StatefulWidget {
@@ -147,13 +148,18 @@ class _VoipConnectionState extends State<VoipConnection> {
               width: 16,
             ),
             Column(
-              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Container(
                   width: 8.0,
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(top: 8.0),
+                  padding: EdgeInsets.only(
+                      left: (MediaQuery
+                          .of(context)
+                          .size
+                          .width / 100) * 12,
+                      top: 8.0),
                   child: Text(
                     doctor.name + ' ' + doctor.surname,
                     style: TextStyle(
@@ -185,6 +191,7 @@ class _VoipConnectionState extends State<VoipConnection> {
             ? Scaffold(
           appBar: AppBar(
             title: Text('Users on VOIP Server'),
+            backgroundColor: HexColor("#0f1923"),
             actions: <Widget>[
               IconButton(
                 icon: const Icon(Icons.settings),
@@ -272,7 +279,13 @@ class _VoipConnectionState extends State<VoipConnection> {
             },
           ),
         )
-            : CircularProgressIndicator();
+        // Snapshot has no data
+            : Scaffold(
+          backgroundColor: HexColor("#0f1923"),
+          body: Center(
+            child: CircularProgressIndicator(),
+          ),
+        );
       },
     );
   }
