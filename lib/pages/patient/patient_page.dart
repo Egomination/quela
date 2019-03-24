@@ -3,26 +3,20 @@ import 'package:quela/bloc/bloc.dart';
 import 'package:quela/bloc/patient_dashboard_bloc.dart';
 import 'package:quela/pages/patient/dashboard_builder.dart';
 import 'package:quela/pages/patient/voip.dart';
-import 'package:quela/utils/auth.dart';
 import 'package:quela/utils/hex_code.dart';
 
 class PatientPage extends StatelessWidget {
-  PatientPage({Key key, this.auth, this.uuid}) : super(key: key);
-
-  final Auth auth;
-  final String uuid;
-
   @override
   Widget build(BuildContext context) {
     return BlocProvider<PatientBloc>(
-      bloc: PatientBloc(uuid: uuid),
+      bloc: PatientBloc(),
       child: DefaultTabController(
         length: 2,
         child: Scaffold(
           //backgroundColor: Colors.black,
           body: TabBarView(
             children: <Widget>[
-              PatientDashboardBuilder(auth: auth),
+              PatientDashboardBuilder(),
               VoipConnection(),
             ],
           ),
