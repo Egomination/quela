@@ -1,22 +1,26 @@
 import 'dart:async';
 
 import 'package:flutter_graphql/flutter_graphql.dart';
+import 'package:quela/bloc/auth/auth.dart';
 import 'package:quela/bloc/bloc.dart';
 import 'package:quela/models/patient.dart';
 import 'package:rxdart/rxdart.dart';
 
 class PatientBloc implements BlocBase {
-  PatientBloc({this.uuid}) {
+  PatientBloc() {
     _handleApiCall();
   }
 
-  final String uuid;
+  // This is needed for every type of User
+  // Don't forget to add this to other types
+  final Future<String> userid = new Auth().getUser();
 
   BehaviorSubject<Patient> _controller = BehaviorSubject<Patient>();
 
   Stream<Patient> get patient => _controller;
 
   void _handleApiCall() async {
+    final String uid = await userid;
     // Linking api url
     HttpLink link = HttpLink(uri: "https://quela-api.herokuapp.com/");
     // Gql client
@@ -27,13 +31,11 @@ class PatientBloc implements BlocBase {
     try {
       final QueryResult response = await client
           .query(
-        QueryOptions(
-          document: search,
-          variables: <String, dynamic>{
-            'id': /*this.uuid*/ 'pV6PGqbsE2asoGqu7k8c'
-          },
-        ),
-      )
+            QueryOptions(
+              document: search,
+              variables: <String, dynamic>{'id': uid},
+            ),
+          )
           .timeout(const Duration(seconds: 10));
 
       if (response.errors != null) {

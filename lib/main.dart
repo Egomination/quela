@@ -8,6 +8,7 @@ import 'package:quela/bloc/auth/event.dart';
 import 'package:quela/bloc/auth/state.dart';
 import 'package:quela/pages/login/login_page.dart';
 import 'package:quela/pages/login/mock_main.dart';
+import 'package:quela/pages/patient/patient_page.dart';
 
 class SimpleBlocDelegate extends BlocDelegate {
   @override
@@ -63,7 +64,7 @@ class _MyAppState extends State<MyApp> {
               return SplashPage();
             }*/
             if (state is PatientAuthenticated) {
-              return MockMain();
+              return PatientPage();
             }
             if (state is StaffAuthenticated) {
               return MockMain();

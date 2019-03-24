@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:quela/bloc/auth/auth_block.dart';
+import 'package:quela/bloc/auth/event.dart';
 import 'package:quela/pages/patient/dashboard_body.dart';
 import 'package:quela/pages/patient/patient_info_bar.dart';
-import 'package:quela/utils/auth.dart';
 import 'package:quela/utils/hex_code.dart';
 
 class PatientDashboardBuilder extends StatelessWidget {
-  PatientDashboardBuilder({Key key, this.auth}) : super(key: key);
-
-  final Auth auth;
-
   @override
   Widget build(BuildContext context) {
+    final AuthBloc authBloc = BlocProvider.of<AuthBloc>(context);
     return Scaffold(
       //backgroundColor: Colors.white,
       appBar: AppBar(
@@ -27,7 +26,9 @@ class PatientDashboardBuilder extends StatelessWidget {
               ),
             ),
             InkWell(
-              onTap: auth.signOut,
+              onTap: () {
+                authBloc.dispatch(LoggedOut());
+              },
               child: Icon(Icons.power_settings_new),
             ),
           ],

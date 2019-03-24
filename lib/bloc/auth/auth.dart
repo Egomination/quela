@@ -53,7 +53,7 @@ class Auth {
   }
 
   Future<void> persistToken(String token) async {
-    String type = await typeCheck("H6v2616cL8QUvP3mKNW1");
+    String type = await typeCheck(token);
     await storage.write(key: "type", value: type);
     await storage.write(key: "token", value: token);
   }
@@ -67,5 +67,10 @@ class Auth {
   Future<String> getType() async {
     String type = await storage.read(key: "type");
     return type;
+  }
+
+  Future<String> getUser() async {
+    String user = await storage.read(key: "token");
+    return user;
   }
 }
