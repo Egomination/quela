@@ -128,16 +128,17 @@ class _VoipConnectionState extends State<VoipConnection> {
       onTap: () => _invitePeer(context, doctor.id, false),
       child: Container(
         margin: const EdgeInsets.symmetric(
-          horizontal: 16.0,
+          horizontal: 24.0,
           vertical: 10.0,
         ),
         width: MediaQuery
             .of(context)
             .size
             .width,
-        height: 120,
+        height: 90,
         decoration: BoxDecoration(
-          color: Colors.grey,
+          color: HexColor("#15202b"),
+          borderRadius: BorderRadius.all(Radius.circular(10.0)),
         ),
         child: Row(
           children: <Widget>[
@@ -145,34 +146,43 @@ class _VoipConnectionState extends State<VoipConnection> {
               "https://image.freepik.com/free-photo/doctor-smiling-with-stethoscope_1154-36.jpg",
             ),
             Container(
-              width: 16,
+              width: 16.0,
             ),
             Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
-                Container(
-                  width: 8.0,
-                ),
                 Padding(
-                  padding: EdgeInsets.only(
-                      left: (MediaQuery
-                          .of(context)
-                          .size
-                          .width / 100) * 12,
-                      top: 8.0),
+                  padding: EdgeInsets.only(top: 8.0),
                   child: Text(
                     doctor.name + ' ' + doctor.surname,
                     style: TextStyle(
                       fontSize: 24.0,
-                      color: Colors.black,
+                      color: Colors.white,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
                 ),
                 Container(
-                  height: 16.0,
+                  height: 8.0,
                 ),
-                Text(doctor.proficiency),
+                Text(
+                  doctor.proficiency,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w300,
+                    fontSize: 14.0,
+                    fontStyle: FontStyle.italic,
+                  ),
+                ),
+                Container(height: 10.0),
+                Container(
+                    width: 70.0,
+                    decoration: BoxDecoration(
+                      color: Colors.green,
+                      borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                    ),
+                    child: Center(child: Text("Available!"))),
               ],
             ),
           ],
