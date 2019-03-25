@@ -1,25 +1,32 @@
 import 'dart:async';
 
+import 'package:bloc/bloc.dart';
 import 'package:flutter_graphql/flutter_graphql.dart';
 import 'package:quela/bloc/auth/auth.dart';
-import 'package:quela/bloc/bloc.dart';
+import 'package:quela/bloc/patient/event.dart';
+import 'package:quela/bloc/patient/state.dart';
 import 'package:quela/models/patient.dart';
-import 'package:rxdart/rxdart.dart';
 
-class PatientBloc implements BlocBase {
-  PatientBloc() {
-    _handleApiCall();
-  }
-
-  // This is needed for every type of User
-  // Don't forget to add this to other types
+class PatientsBloc extends Bloc<PatientEvents, PatientState> {
   final Future<String> userid = new Auth().getUser();
 
-  BehaviorSubject<Patient> _controller = BehaviorSubject<Patient>();
+  @override
+  PatientState get initialState => PatientUninitialized();
 
-  Stream<Patient> get patient => _controller;
+  @override
+  Stream<PatientState> mapEventToState(PatientState currentState,
+      event) async* {
+    if (event is Fetch) {
+      try {
+        final patient = await _handleApiCall();
+        yield PatientLoaded(patient: patient);
+      } catch (e) {
+        yield PatientError(error: e);
+      }
+    }
+  }
 
-  void _handleApiCall() async {
+  Future<Patient> _handleApiCall() async {
     final String uid = await userid;
     // Linking api url
     HttpLink link = HttpLink(uri: "https://quela-api.herokuapp.com/");
@@ -42,15 +49,11 @@ class PatientBloc implements BlocBase {
         print(response.errors.toString());
       }
 
-      _controller.sink.add(Patient.fromJson(response.data['getPatient']));
+      return Patient.fromJson(response.data['getPatient']);
     } catch (e) {
       print(e.toString());
+      return null;
     }
-  }
-
-  @override
-  void dispose() {
-    _controller?.close();
   }
 }
 

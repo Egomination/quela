@@ -1,45 +1,36 @@
 import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
-import 'package:quela/bloc/bloc.dart';
-import 'package:quela/bloc/patient_dashboard_bloc.dart';
 import 'package:quela/models/patient.dart';
 import 'package:quela/utils/hex_code.dart';
 
 class ScreenBuilder extends StatelessWidget {
+  final Patient patient;
+
+  ScreenBuilder({this.patient});
+
   @override
   Widget build(BuildContext context) {
-	  PatientBloc _bloc = BlocProvider.of(context);
-    return StreamBuilder<Patient>(
-      stream: _bloc.patient,
-      builder: (context, snapshot) {
-        if (!snapshot.hasData) {
-          return Center(child: CircularProgressIndicator());
-        }
-        // Those variables are for providing the 'dynamic' feels of the UI
-        final Patient data = snapshot.data;
-        final List<IconData> icons = [
-          Icons.wifi_tethering,
-          Icons.ac_unit,
-          Icons.airline_seat_flat,
-          Icons.blur_on,
-        ];
-        return LayoutBuilder(
-          builder: (context, constraint) {
-            return GridView.builder(
-              itemCount: 4,
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                childAspectRatio: constraint.maxWidth / constraint.maxHeight,
-              ),
-              itemBuilder: (context, index) {
-                return CardBuilder(
-                  icon: icons[index],
-                  frontText: data.values[index].name,
-                  backHeader: data.values[index].valCurr,
-                  thresholdMin: data.values[index].valMin,
-                  thresholdMax: data.values[index].valMax,
-                );
-              },
+    final List<IconData> icons = [
+      Icons.wifi_tethering,
+      Icons.ac_unit,
+      Icons.airline_seat_flat,
+      Icons.blur_on,
+    ];
+    return LayoutBuilder(
+      builder: (context, constraint) {
+        return GridView.builder(
+          itemCount: 4,
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            childAspectRatio: constraint.maxWidth / constraint.maxHeight,
+          ),
+          itemBuilder: (context, index) {
+            return CardBuilder(
+              icon: icons[index],
+              frontText: patient.values[index].name,
+              backHeader: patient.values[index].valCurr,
+              thresholdMin: patient.values[index].valMin,
+              thresholdMax: patient.values[index].valMax,
             );
           },
         );

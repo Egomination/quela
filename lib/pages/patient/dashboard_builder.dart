@@ -2,11 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quela/bloc/auth/auth_block.dart';
 import 'package:quela/bloc/auth/event.dart';
+import 'package:quela/models/patient.dart';
 import 'package:quela/pages/patient/dashboard_body.dart';
 import 'package:quela/pages/patient/patient_info_bar.dart';
 import 'package:quela/utils/hex_code.dart';
 
 class PatientDashboardBuilder extends StatelessWidget {
+  final Patient patient;
+
+  PatientDashboardBuilder({this.patient});
+
   @override
   Widget build(BuildContext context) {
     final AuthBloc authBloc = BlocProvider.of<AuthBloc>(context);
@@ -36,12 +41,12 @@ class PatientDashboardBuilder extends StatelessWidget {
       ),
       body: Stack(
         children: <Widget>[
-          PatientInfoBar(),
+          PatientInfoBar(patient: patient),
           Container(
             margin: EdgeInsets.only(
               top: 140.0,
             ),
-            child: ScreenBuilder(),
+            child: ScreenBuilder(patient: patient),
           ),
         ],
       ),
