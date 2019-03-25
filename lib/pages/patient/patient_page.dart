@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quela/bloc/patient/patient_bloc.dart';
 import 'package:quela/pages/patient/dashboard_builder.dart';
-import 'package:quela/pages/patient/voip.dart';
 import 'package:quela/utils/hex_code.dart';
+import 'package:quela/widgets/voip.dart';
 
 class PatientPage extends StatefulWidget {
   @override
@@ -54,7 +54,7 @@ class _PatientPageState extends State<PatientPage> {
                 body: TabBarView(
                   children: <Widget>[
                     PatientDashboardBuilder(),
-                    VoipConnection(patient: state.patient),
+                    VoipConnection(entity: state.patient, isDoctor: false),
                   ],
                 ),
                 bottomNavigationBar: TabBar(
