@@ -278,14 +278,27 @@ class _VoipConnectionState extends State<VoipConnection> {
       ListView.builder(
         shrinkWrap: true,
         padding: const EdgeInsets.all(0.0),
-        itemCount: (_peers != null ? widget.patient.doctorId.length : 0),
+        itemCount: (_peers != null
+            ? _buildPatientPeerMergedList(_peers, widget.patient.doctorId)
+            .length
+            : 0),
         itemBuilder: (context, i) {
-          return _peers[i]['id'] != _selfId &&
-              _peers[i]['id'] == widget.patient.doctorId[i].id
-              ? _buildRow(context, widget.patient.doctorId[i])
-              : Container();
+          return _buildRow(
+              context,
+              _buildPatientPeerMergedList(
+                  _peers, widget.patient.doctorId)[i]);
         },
       ),
     );
+  }
+
+  _buildPatientPeerMergedList(List peers, List entity) {
+    List _available = [];
+
+    for (int i = 0; i < entity.length; i++)
+      for (int j = 0; j < peers.length; j++)
+        if (peers[j]['id'] == entity[i].id) _available.insert(i, entity[i]);
+
+    return _available;
   }
 }
