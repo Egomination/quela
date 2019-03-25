@@ -2,7 +2,6 @@ import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 import 'package:quela/models/patient.dart';
 
-@immutable
 abstract class PatientState extends Equatable {
   PatientState([List props = const []]) : super(props);
 }
