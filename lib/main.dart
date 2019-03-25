@@ -1,7 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:bloc/bloc.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import 'package:quela/bloc/auth/auth.dart';
 import 'package:quela/bloc/auth/auth_block.dart';
 import 'package:quela/bloc/auth/event.dart';
@@ -33,6 +32,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   AuthBloc authBloc;
+
   Auth get auth => widget.auth;
 
   @override
@@ -77,7 +77,7 @@ class _MyAppState extends State<MyApp> {
             }
             if (state is Loading) {
               // NOTE: We could use a better loading design here
-              return CircularProgressIndicator();
+              return Scaffold(body: Center(child: CircularProgressIndicator()));
             }
           },
         ),

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import 'package:quela/bloc/auth/auth_block.dart';
 import 'package:quela/bloc/login/event.dart';
 import 'package:quela/bloc/login/login_block.dart';
