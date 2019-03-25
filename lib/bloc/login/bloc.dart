@@ -1,10 +1,9 @@
 import 'dart:async';
 
-import 'package:meta/meta.dart';
 import 'package:bloc/bloc.dart';
-
+import 'package:meta/meta.dart';
 import 'package:quela/bloc/auth/auth.dart';
-import 'package:quela/bloc/auth/auth_block.dart';
+import 'package:quela/bloc/auth/bloc.dart';
 import 'package:quela/bloc/auth/event.dart';
 import 'package:quela/bloc/login/event.dart';
 import 'package:quela/bloc/login/state.dart';
@@ -28,7 +27,7 @@ class LoginBloc extends Bloc<LoginEvents, LoginStates> {
     LoginEvents event,
   ) async* {
     if (event is ButtonPressed) {
-      yield Loading();
+	    yield LoginLoading();
       try {
         final token = await auth.signIn(
           email: event.email,

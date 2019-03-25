@@ -1,5 +1,5 @@
-import 'package:meta/meta.dart';
 import 'package:equatable/equatable.dart';
+import 'package:meta/meta.dart';
 
 abstract class LoginStates extends Equatable {
   LoginStates([List props = const []]) : super(props);
@@ -10,7 +10,7 @@ class BeforeLogin extends LoginStates {
   String toString() => 'BeforeLogin';
 }
 
-class Loading extends LoginStates {
+class LoginLoading extends LoginStates {
   @override
   String toString() => 'Loading';
 }

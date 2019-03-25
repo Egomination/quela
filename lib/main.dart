@@ -1,10 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:quela/bloc/auth/auth.dart';
-import 'package:quela/bloc/auth/auth_block.dart';
-import 'package:quela/bloc/auth/event.dart';
-import 'package:quela/bloc/auth/state.dart';
+import 'package:quela/bloc/blocs.dart';
 import 'package:quela/pages/login/login_page.dart';
 import 'package:quela/pages/login/mock_main.dart';
 import 'package:quela/pages/patient/patient_page.dart';

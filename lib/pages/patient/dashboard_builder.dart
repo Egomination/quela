@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:quela/bloc/auth/auth_block.dart';
+import 'package:quela/bloc/auth/bloc.dart';
 import 'package:quela/bloc/auth/event.dart';
 import 'package:quela/models/patient.dart';
 import 'package:quela/pages/patient/dashboard_body.dart';

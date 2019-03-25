@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:quela/bloc/patient/bloc.dart';
-import 'package:quela/bloc/patient/event.dart';
-import 'package:quela/bloc/patient/state.dart';
+import 'package:quela/bloc/patient/patient_bloc.dart';
 import 'package:quela/pages/patient/dashboard_builder.dart';
 import 'package:quela/pages/patient/voip.dart';
 import 'package:quela/utils/hex_code.dart';

@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:quela/bloc/auth/auth_block.dart';
-import 'package:quela/bloc/login/event.dart';
-import 'package:quela/bloc/login/login_block.dart';
-import 'package:quela/bloc/login/state.dart';
+import 'package:quela/bloc/blocs.dart';
 
 class LoginForm extends StatefulWidget {
   final LoginBloc loginBloc;
@@ -117,13 +114,13 @@ class _LoginFormState extends State<LoginForm> {
                 'Login',
                 style: TextStyle(fontSize: 18.0, color: Colors.blue),
               ),
-              onPressed: state is Loading ? null : _submit,
+              onPressed: state is LoginLoading ? null : _submit,
             ),
           );
         }
 
         Widget _circularProgress() {
-          if (state is Loading) {
+          if (state is LoginLoading) {
             return Center(child: CircularProgressIndicator());
           }
           return Container(width: 0.0, height: 0.0);

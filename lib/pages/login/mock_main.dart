@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:quela/bloc/auth/auth_block.dart';
-import 'package:quela/bloc/auth/event.dart';
+import 'package:quela/bloc/blocs.dart';
 
 class MockMain extends StatelessWidget {
   @override

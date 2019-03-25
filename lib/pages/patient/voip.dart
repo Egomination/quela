@@ -4,7 +4,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_webrtc/webrtc.dart';
-import 'package:quela/bloc/auth/auth.dart';
+import 'package:quela/bloc/blocs.dart';
 import 'package:quela/models/patient.dart';
 import 'package:quela/utils/hex_code.dart';
 import 'package:quela/widgets/voip_signaling.dart';

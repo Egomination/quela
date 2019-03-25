@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter_webrtc/webrtc.dart';
-import 'package:quela/bloc/auth/auth.dart';
+import 'package:quela/bloc/blocs.dart';
 
 enum SignalingState {
   CallStateNew,
