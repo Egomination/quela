@@ -1,8 +1,10 @@
+import 'dart:async';
 import 'dart:core';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_webrtc/webrtc.dart';
+import 'package:quela/bloc/auth/auth.dart';
 import 'package:quela/models/patient.dart';
 import 'package:quela/utils/hex_code.dart';
 import 'package:quela/widgets/voip_signaling.dart';
@@ -31,6 +33,7 @@ class _VoipConnectionState extends State<VoipConnection> {
   RTCVideoRenderer _remoteRenderer = RTCVideoRenderer();
   bool _inCalling = false;
   final String serverIP;
+  final Future<String> userId = new Auth().getUser();
 
   _VoipConnectionState({Key key, @required this.serverIP});
 
@@ -39,7 +42,13 @@ class _VoipConnectionState extends State<VoipConnection> {
     super.initState();
     initRenderers();
     _connect();
-    _selfId = "pV6PGqbsE2asoGqu7k8c"; // todo: use shared_pref to get this id
+    _selfId = _initUserName();
+  }
+
+  _initUserName() async {
+    String _id;
+    _id = await userId;
+    return _id;
   }
 
   initRenderers() async {
@@ -209,25 +218,25 @@ class _VoipConnectionState extends State<VoipConnection> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: _inCalling
           ? SizedBox(
-              width: 200.0,
-              child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    FloatingActionButton(
-                      child: const Icon(Icons.switch_camera),
-                      onPressed: _switchCamera,
-                    ),
-                    FloatingActionButton(
-                      onPressed: _hangUp,
-                      tooltip: 'Hangup',
-                      child: Icon(Icons.call_end),
-                      backgroundColor: Colors.pink,
-                    ),
-                    FloatingActionButton(
-                      child: const Icon(Icons.mic_off),
-                      onPressed: _muteMic,
-                    )
-                  ]))
+          width: 200.0,
+          child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                FloatingActionButton(
+                  child: const Icon(Icons.switch_camera),
+                  onPressed: _switchCamera,
+                ),
+                FloatingActionButton(
+                  onPressed: _hangUp,
+                  tooltip: 'Hangup',
+                  child: Icon(Icons.call_end),
+                  backgroundColor: Colors.pink,
+                ),
+                FloatingActionButton(
+                  child: const Icon(Icons.mic_off),
+                  onPressed: _muteMic,
+                )
+              ]))
           : null,
       body: _inCalling
           ? OrientationBuilder(builder: (context, orientation) {
@@ -266,17 +275,17 @@ class _VoipConnectionState extends State<VoipConnection> {
         );
       })
           : // this is the part i will fix first. => The way it listed
-          ListView.builder(
-            shrinkWrap: true,
-            padding: const EdgeInsets.all(0.0),
-            itemCount: (_peers != null ? _peers.length : 0),
-            itemBuilder: (context, i) {
-              return _peers[i]['id'] != _selfId &&
-                  _peers[i] == widget.patient.doctorId[i].id
-                  ? _buildRow(context, widget.patient.doctorId[i])
-                  : null;
-            },
-          ),
+      ListView.builder(
+        shrinkWrap: true,
+        padding: const EdgeInsets.all(0.0),
+        itemCount: (_peers != null ? widget.patient.doctorId.length : 0),
+        itemBuilder: (context, i) {
+          return _peers[i]['id'] != _selfId &&
+              _peers[i]['id'] == widget.patient.doctorId[i].id
+              ? _buildRow(context, widget.patient.doctorId[i])
+              : Container();
+        },
+      ),
     );
   }
 }

@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter_webrtc/webrtc.dart';
+import 'package:quela/bloc/auth/auth.dart';
 
 enum SignalingState {
   CallStateNew,
@@ -25,13 +26,14 @@ typedef void DataChannelMessageCallback(RTCDataChannel dc, data);
 typedef void DataChannelCallback(RTCDataChannel dc);
 
 class Signaling {
-  String _selfId = "pV6PGqbsE2asoGqu7k8c";
+  String _selfId;
   var _socket;
   var _sessionId;
   var _url;
   var _name;
   var _peerConnections = Map<String, RTCPeerConnection>();
   var _dataChannels = Map<String, RTCDataChannel>();
+  final Future<String> userId = new Auth().getUser();
   MediaStream _localStream;
   List<MediaStream> _remoteStreams;
   SignalingStateCallback onStateChange;
@@ -79,7 +81,15 @@ class Signaling {
     'optional': [],
   };
 
-  Signaling(this._url, this._name);
+  void _initUserId() async {
+    String _id;
+    _id = await userId;
+    this._selfId = _id;
+  }
+
+  Signaling(this._url, this._name) {
+    _initUserId();
+  }
 
   close() {
     if (_localStream != null) {
