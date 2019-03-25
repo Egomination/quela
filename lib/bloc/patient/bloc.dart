@@ -8,14 +8,14 @@ import 'package:quela/bloc/patient/state.dart';
 import 'package:quela/models/patient.dart';
 
 class PatientsBloc extends Bloc<PatientEvents, PatientState> {
-  final Future<String> userid = new Auth().getUser();
+  final Future<String> userId = new Auth().getUser();
 
   @override
   PatientState get initialState => PatientUninitialized();
 
   @override
   Stream<PatientState> mapEventToState(PatientState currentState,
-      event) async* {
+      event,) async* {
     if (event is Fetch) {
       try {
         final patient = await _handleApiCall();
@@ -27,7 +27,7 @@ class PatientsBloc extends Bloc<PatientEvents, PatientState> {
   }
 
   Future<Patient> _handleApiCall() async {
-    final String uid = await userid;
+    final String uid = await userId;
     // Linking api url
     HttpLink link = HttpLink(uri: "https://quela-api.herokuapp.com/");
     // Gql client
@@ -49,6 +49,7 @@ class PatientsBloc extends Bloc<PatientEvents, PatientState> {
         print(response.errors.toString());
       }
 
+      print("Patient Info: =>:  ${response.data['getPatient']}");
       return Patient.fromJson(response.data['getPatient']);
     } catch (e) {
       print(e.toString());
