@@ -5,61 +5,78 @@ import 'package:quela/pages/patient/dashboard_builder.dart';
 import 'package:quela/pages/patient/voip.dart';
 import 'package:quela/utils/hex_code.dart';
 
-class PatientPage extends StatelessWidget {
-  final PatientsBloc _bloc = PatientsBloc();
+class PatientPage extends StatefulWidget {
+  @override
+  _PatientPageState createState() => _PatientPageState();
+}
 
-  PatientPage() {
-    _bloc.dispatch(Fetch());
+class _PatientPageState extends State<PatientPage> {
+  PatientsBloc _bloc;
+
+  @override
+  void initState() {
+    super.initState();
+    _bloc = PatientsBloc()
+      ..dispatch(Fetch());
+  }
+
+  @override
+  void dispose() {
+    _bloc.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder(
+    return BlocProvider(
       bloc: _bloc,
-      builder: (BuildContext context, PatientState state) {
-        if (state is PatientUninitialized || state is PatientLoading) {
-          return Scaffold(
-            body: Center(
-              child: CircularProgressIndicator(),
-            ),
-          );
-        }
-        if (state is PatientError) {
-          return Center(
-            child: Text(state.toString()),
-          );
-        }
-        if (state is PatientLoaded) {
-          print(state.patient);
-          return DefaultTabController(
-            length: 2,
-            child: Scaffold(
-              //backgroundColor: Colors.black,
-              body: TabBarView(
-                children: <Widget>[
-                  PatientDashboardBuilder(patient: state.patient),
-                  VoipConnection(patient: state.patient),
-                ],
+      child: BlocBuilder(
+        bloc: _bloc,
+        builder: (BuildContext context, PatientState state) {
+          if (state is PatientUninitialized || state is PatientLoading) {
+            return Scaffold(
+              body: Center(
+                child: CircularProgressIndicator(),
               ),
-              bottomNavigationBar: TabBar(
-                //isScrollable: true,
-                labelColor: Colors.white,
-                tabs: [
-                  Tab(
-                    icon: Icon(Icons.home),
-                    text: "Dashboard",
-                  ),
-                  Tab(
-                    icon: Icon(Icons.video_call),
-                    text: "Call",
-                  ),
-                ],
+            );
+          }
+          if (state is PatientError) {
+            return Center(
+              child: Text(state.toString()),
+            );
+          }
+          if (state is PatientLoaded) {
+            print(state.patient);
+            return DefaultTabController(
+              length: 2,
+              child: Scaffold(
+                //backgroundColor: Colors.black,
+                body: TabBarView(
+                  children: <Widget>[
+                    PatientDashboardBuilder(),
+                    VoipConnection(patient: state.patient),
+                  ],
+                ),
+                bottomNavigationBar: TabBar(
+                  //isScrollable: true,
+                  labelColor: Colors.white,
+                  tabs: [
+                    Tab(
+                      icon: Icon(Icons.home),
+                      text: "Dashboard",
+                    ),
+                    Tab(
+                      icon: Icon(Icons.video_call),
+                      text: "Call",
+                    ),
+                  ],
+                ),
+                backgroundColor: HexColor("#0f1923"),
               ),
-              backgroundColor: HexColor("#0f1923"),
-            ),
-          );
-        }
-      },
+            );
+          }
+        },
+      ),
     );
   }
 }
