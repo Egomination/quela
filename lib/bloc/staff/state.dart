@@ -10,14 +10,14 @@ class StaffUninitialized extends StaffStates {
   String toString() => 'StaffUninitialized';
 }
 
-class StaffLoading extends StaffStates {
+class StaffFetching extends StaffStates {
   @override
-  String toString() => 'StaffLoading';
+  String toString() => 'StaffFetching';
 }
 
-class StaffLoaded extends StaffStates {
+class StaffFetched extends StaffStates {
   @override
-  String toString() => 'StaffLoaded';
+  String toString() => 'StaffFetched';
 }
 
 class StaffError extends StaffStates {
