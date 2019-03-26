@@ -5,7 +5,7 @@ abstract class StaffEvents extends Equatable {
   StaffEvents([List props = const []]) : super(props);
 }
 
-class CreatePatient extends StaffEvents {
+class CreatePatientEvent extends StaffEvents {
   final String email;
   final String password;
   final String name;
@@ -13,7 +13,7 @@ class CreatePatient extends StaffEvents {
   final String tc;
   final String profilePic;
 
-  CreatePatient({
+  CreatePatientEvent({
     @required this.email,
     @required this.password,
     @required this.name,
@@ -23,6 +23,5 @@ class CreatePatient extends StaffEvents {
   }) : super([email, password, name, surname, tc, profilePic]);
 
   @override
-  String toString() =>
-      'Account Created: { email: $email, password: $password }';
+  String toString() => 'Account Creation';
 }
