@@ -44,9 +44,7 @@ class _CreatePatientState extends State<CreatePatient> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Center(
-          child: Text('Patient Creator'),
-        ),
+        title: Text('Patient Creator'),
       ),
       body: ListView(
         padding: EdgeInsets.all(10.0),

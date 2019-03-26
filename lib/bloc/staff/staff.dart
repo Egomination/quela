@@ -8,17 +8,23 @@ class Staff {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
   final String createPatientQuery = """
-  query createPatientQuery(\$id: String!, \$name: String!, 
-  \$surname: String!, \$tc: String!, \$email: String!, \$profilePic: String!) {
-    createPatient(
-      id: \$id, 
-      name: \$name, 
-      surname: \$surname, 
-      TC: \$tc, 
-      email: \$email,
-      profile_pic: \$profilePic
-    )
-  }
+    mutation addPatient(
+      \$id: String!
+      \$name: String!
+      \$surname: String!
+      \$email: String!
+      \$profile_pic: String!
+      \$tc: String!
+    ) {
+      createPatient(
+        id: \$id
+        name: \$name
+        surname: \$surname
+        TC: \$tc
+        email: \$email
+        profile_pic: \$profile_pic
+      )
+    }
   """
       .replaceAll('\n', ' ');
 
@@ -30,14 +36,14 @@ class Staff {
       cache: InMemoryCache(),
     );
     final QueryResult response = await client
-        .query(
-          QueryOptions(
+        .mutate(
+          MutationOptions(
             document: createPatientQuery,
-            variables: <String, String>{
+            variables: <String, dynamic>{
               "id": id,
               "name": name,
               "surname": surname,
-              "TC": tc,
+              "tc": tc,
               "email": email,
               "profile_pic": profilePic
             },
