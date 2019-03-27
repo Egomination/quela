@@ -15,7 +15,7 @@ class PatientsBloc extends Bloc<PatientEvents, PatientState> {
 
   @override
   Stream<PatientState> mapEventToState(PatientState currentState,
-      event,) async* {
+		  event,) async* {
     if (event is Fetch) {
       try {
         final patient = await _handleApiCall();
