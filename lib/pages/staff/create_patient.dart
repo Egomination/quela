@@ -15,6 +15,12 @@ class _CreatePatientState extends State<CreatePatient> {
 
   final _staffBloc = new StaffBloc();
 
+  @override
+  void dispose() {
+    _staffBloc.dispose();
+    super.dispose();
+  }
+
   Widget inputField(
       String name, TextInputType type, TextEditingController controller) {
     return Padding(
