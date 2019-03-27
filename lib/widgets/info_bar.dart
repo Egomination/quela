@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quela/models/doctor.dart';
 import 'package:quela/utils/hex_code.dart';
 
 class InfoBar extends StatelessWidget {
@@ -41,11 +42,13 @@ class InfoBar extends StatelessWidget {
               top: 50.0,
             ),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Text(
                   "Profile",
                   style: TextStyle(
                     color: Colors.white,
+                    fontWeight: FontWeight.w800,
                   ),
                 ),
                 Text(
@@ -54,6 +57,14 @@ class InfoBar extends StatelessWidget {
                     color: Colors.white,
                   ),
                 ),
+                (person is Doctor)
+                    ? Text(
+                  person.proficiency,
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
+                )
+                    : Container(),
               ],
             ),
           ),
