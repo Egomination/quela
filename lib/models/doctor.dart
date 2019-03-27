@@ -15,6 +15,7 @@ class Doctor {
   String surname;
   String email;
   String proficiency;
+  String profilePic;
   List<PatientId> patientId;
 
   Doctor({
@@ -22,6 +23,7 @@ class Doctor {
     this.surname,
     this.email,
     this.proficiency,
+    this.profilePic,
     this.patientId,
   });
 
@@ -30,6 +32,7 @@ class Doctor {
         surname: json["surname"],
         email: json["email"],
         proficiency: json["proficiency"],
+    profilePic: json["profile_pic"],
         patientId: new List<PatientId>.from(
             json["patientID"].map((x) => PatientId.fromJson(x))),
       );
@@ -39,6 +42,7 @@ class Doctor {
         "surname": surname,
         "email": email,
         "proficiency": proficiency,
+    "profile_pic": profilePic,
         "patientID": new List<dynamic>.from(patientId.map((x) => x.toJson())),
       };
 }
