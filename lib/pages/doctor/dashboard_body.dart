@@ -14,7 +14,7 @@ class DashboardBody extends StatelessWidget {
           "$fieldName:",
           style: TextStyle(
             color: Colors.white,
-            fontWeight: FontWeight.w700,
+            fontWeight: FontWeight.w400,
             fontSize: 24.0,
           ),
         ),
@@ -55,6 +55,7 @@ class DashboardBody extends StatelessWidget {
   }
 
   Widget _cardBuilder(BuildContext context, PatientId patient) {
+    List<Value> values = patient.values;
     return InkWell(
       onTap: () => null,
       child: Container(
@@ -76,11 +77,30 @@ class DashboardBody extends StatelessWidget {
             Container(width: 24.0),
             Expanded(
               child: _cardContent(patient),
+            ),
+            Container(
+              height: MediaQuery
+                  .of(context)
+                  .size
+                  .height,
+              width: 10.0,
+              decoration: BoxDecoration(
+                color: _logicForColoring(values) ? Colors.red : Colors.green,
+              ),
             )
           ],
         ),
       ),
     );
+  }
+
+  _logicForColoring(List<Value> values) {
+    bool flag = false;
+    values.forEach((val) {
+      if (int.parse(val.valCurr) <= int.parse(val.valMin) ||
+          int.parse(val.valCurr) >= int.parse(val.valMax)) flag = true;
+    });
+    return flag;
   }
 
   @override
