@@ -19,7 +19,7 @@ class VoipConnection extends StatefulWidget {
   final bool isDoctor;
 
   VoipConnection({Key key, this.entity, @required this.isDoctor})
-		  : super(key: key);
+      : super(key: key);
 
   @override
   _VoipConnectionState createState() => _VoipConnectionState(serverIP: ip);
@@ -137,16 +137,13 @@ class _VoipConnectionState extends State<VoipConnection> {
 
   _buildRow(context, entity) {
     return InkWell(
-	    onTap: () => _invitePeer(context, entity.id, false),
+      onTap: () => _invitePeer(context, entity.id, false),
       child: Container(
         margin: const EdgeInsets.symmetric(
           horizontal: 24.0,
           vertical: 10.0,
         ),
-	      width: MediaQuery
-			      .of(context)
-			      .size
-			      .width,
+        width: MediaQuery.of(context).size.width,
         height: 90,
         decoration: BoxDecoration(
           color: HexColor("#15202b"),
@@ -167,7 +164,7 @@ class _VoipConnectionState extends State<VoipConnection> {
                 Padding(
                   padding: EdgeInsets.only(top: 8.0),
                   child: Text(
-	                  entity.name + ' ' + entity.surname,
+                    entity.name + ' ' + entity.surname,
                     style: TextStyle(
                       fontSize: 24.0,
                       color: Colors.white,
@@ -179,7 +176,7 @@ class _VoipConnectionState extends State<VoipConnection> {
                   height: 8.0,
                 ),
                 Text(
-	                entity.proficiency,
+                  entity.proficiency,
                   style: TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.w300,
@@ -220,84 +217,77 @@ class _VoipConnectionState extends State<VoipConnection> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: _inCalling
           ? SizedBox(
-		      width: 200.0,
-		      child: Row(
-				      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-				      children: <Widget>[
-					      FloatingActionButton(
-						      child: const Icon(Icons.switch_camera),
-						      onPressed: _switchCamera,
-					      ),
-					      FloatingActionButton(
-						      onPressed: _hangUp,
-						      tooltip: 'Hangup',
-						      child: Icon(Icons.call_end),
-						      backgroundColor: Colors.pink,
-					      ),
-					      FloatingActionButton(
-						      child: const Icon(Icons.mic_off),
-						      onPressed: _muteMic,
-					      )
-				      ]))
+              width: 200.0,
+              child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    FloatingActionButton(
+                      child: const Icon(Icons.switch_camera),
+                      onPressed: _switchCamera,
+                    ),
+                    FloatingActionButton(
+                      onPressed: _hangUp,
+                      tooltip: 'Hangup',
+                      child: Icon(Icons.call_end),
+                      backgroundColor: Colors.pink,
+                    ),
+                    FloatingActionButton(
+                      child: const Icon(Icons.mic_off),
+                      onPressed: _muteMic,
+                    )
+                  ]))
           : null,
       body: _inCalling
           ? OrientationBuilder(builder: (context, orientation) {
-	      return Container(
-		      child: Stack(children: <Widget>[
-			      Positioned(
-					      left: 0.0,
-					      right: 0.0,
-					      top: 0.0,
-					      bottom: 0.0,
-					      child: Container(
-						      margin: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
-						      width: MediaQuery
-								      .of(context)
-								      .size
-								      .width,
-						      height: MediaQuery
-								      .of(context)
-								      .size
-								      .height,
-						      child: RTCVideoView(_remoteRenderer),
-						      decoration: BoxDecoration(color: Colors.black54),
-					      )),
-			      Positioned(
-				      left: 20.0,
-				      top: 20.0,
-				      child: Container(
-					      width: orientation == Orientation.portrait ? 90.0 : 120.0,
-					      height:
-					      orientation == Orientation.portrait ? 120.0 : 90.0,
-					      child: RTCVideoView(_localRenderer),
-					      decoration: BoxDecoration(color: Colors.black54),
-				      ),
-			      ),
-		      ]),
-	      );
-      })
+              return Container(
+                child: Stack(children: <Widget>[
+                  Positioned(
+                      left: 0.0,
+                      right: 0.0,
+                      top: 0.0,
+                      bottom: 0.0,
+                      child: Container(
+                        margin: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
+                        width: MediaQuery.of(context).size.width,
+                        height: MediaQuery.of(context).size.height,
+                        child: RTCVideoView(_remoteRenderer),
+                        decoration: BoxDecoration(color: Colors.black54),
+                      )),
+                  Positioned(
+                    left: 20.0,
+                    top: 20.0,
+                    child: Container(
+                      width: orientation == Orientation.portrait ? 90.0 : 120.0,
+                      height:
+                          orientation == Orientation.portrait ? 120.0 : 90.0,
+                      child: RTCVideoView(_localRenderer),
+                      decoration: BoxDecoration(color: Colors.black54),
+                    ),
+                  ),
+                ]),
+              );
+            })
           : // this is the part i will fix first. => The way it listed
-      ListView.builder(
-	      shrinkWrap: true,
-	      padding: const EdgeInsets.all(0.0),
-	      itemCount: (_peers != null
-			      ? _buildPatientPeerMergedList(
-			      _peers,
-			      widget.isDoctor
-					      ? widget.entity
-					      : widget.entity.doctorId)
-			      .length
-			      : 0),
-	      itemBuilder: (context, i) {
-		      return _buildRow(
-				      context,
-				      _buildPatientPeerMergedList(
-						      _peers,
-						      widget.isDoctor
-								      ? widget.entity
-								      : widget.entity.doctorId)[i]);
-	      },
-      ),
+          ListView.builder(
+              shrinkWrap: true,
+              itemCount: (_peers != null
+                  ? _buildPatientPeerMergedList(
+                          _peers,
+                          widget.isDoctor
+                              ? widget.entity
+                              : widget.entity.doctorId)
+                      .length
+                  : 0),
+              itemBuilder: (context, i) {
+                return _buildRow(
+                    context,
+                    _buildPatientPeerMergedList(
+                        _peers,
+                        widget.isDoctor
+                            ? widget.entity
+                            : widget.entity.doctorId)[i]);
+              },
+            ),
     );
   }
 
