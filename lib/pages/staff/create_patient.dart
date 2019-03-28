@@ -53,7 +53,7 @@ class _CreatePatientState extends State<CreatePatient> {
         title: Text('Patient Creator'),
       ),
       body: ListView(
-        padding: EdgeInsets.all(10.0),
+        padding: EdgeInsets.all(30.0),
         children: <Widget>[
           inputField("Email", TextInputType.emailAddress, _emailController),
           inputField("Password", TextInputType.text, _passwordController),
@@ -62,9 +62,15 @@ class _CreatePatientState extends State<CreatePatient> {
           inputField("TC", TextInputType.number, _tcController),
           inputField(
               "Profile Picture", TextInputType.url, _profilePicController),
-          RaisedButton(
-            child: Text('Create'),
-            onPressed: _submit,
+          Padding(
+            padding: const EdgeInsets.only(top: 15.0),
+            child: RaisedButton(
+              child: Text('Create'),
+              onPressed: () {
+                _submit();
+                Navigator.pop(context);
+              },
+            ),
           ),
         ],
       ),
