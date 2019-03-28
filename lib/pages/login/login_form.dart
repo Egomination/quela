@@ -20,13 +20,17 @@ class _LoginFormState extends State<LoginForm> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
+  final _formKey = GlobalKey<FormState>();
+
   LoginBloc get _loginBloc => widget.loginBloc;
 
   void _submit() {
-    _loginBloc.dispatch(ButtonPressed(
-      email: _emailController.text,
-      password: _passwordController.text,
-    ));
+    if (_formKey.currentState.validate()) {
+      _loginBloc.dispatch(ButtonPressed(
+        email: _emailController.text,
+        password: _passwordController.text,
+      ));
+    }
   }
 
   void _onWidgetDidBuild(Function callback) {
@@ -61,8 +65,19 @@ class _LoginFormState extends State<LoginForm> {
           ),
         ),
         controller: _emailController,
+        validator: validateEmail,
       ),
     );
+  }
+
+  String validateEmail(String value) {
+    Pattern pattern =
+        r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+    RegExp regex = new RegExp(pattern);
+    if (!regex.hasMatch(value))
+      return "Please enter a valid email";
+    else
+      return null;
   }
 
   Widget _passwordInput() {
@@ -80,8 +95,16 @@ class _LoginFormState extends State<LoginForm> {
           ),
         ),
         controller: _passwordController,
+        validator: validatePassword,
       ),
     );
+  }
+
+  String validatePassword(String value) {
+    if (value.length < 6)
+      return "Password must contain atleast 6 characters";
+    else
+      return null;
   }
 
   @override
@@ -129,6 +152,7 @@ class _LoginFormState extends State<LoginForm> {
         return Container(
           padding: EdgeInsets.all(16.0),
           child: Form(
+            key: _formKey,
             child: ListView(
               shrinkWrap: true,
               children: <Widget>[
