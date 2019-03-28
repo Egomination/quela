@@ -27,7 +27,7 @@ class LoginBloc extends Bloc<LoginEvents, LoginStates> {
     LoginEvents event,
   ) async* {
     if (event is ButtonPressed) {
-	    yield LoginLoading();
+      yield LoginLoading();
       try {
         final token = await auth.signIn(
           email: event.email,
@@ -37,7 +37,7 @@ class LoginBloc extends Bloc<LoginEvents, LoginStates> {
         authBloc.dispatch(LoggedIn(token: token));
         yield BeforeLogin();
       } catch (error) {
-        yield Failure(error: error.toString());
+        yield Failure(error: error.message.toString());
       }
     }
   }
