@@ -4,6 +4,8 @@ import 'package:quela/bloc/blocs.dart';
 import 'package:quela/pages/doctor/doctor_dashboard.dart';
 import 'package:quela/utils/hex_code.dart';
 
+/// Class that responsible from passing the corresponding bloc instances to its
+/// children. Also it reacts to current state of the [DoctorsBloc] instance.
 class DoctorPage extends StatefulWidget {
   @override
   _DoctorPageState createState() => _DoctorPageState();

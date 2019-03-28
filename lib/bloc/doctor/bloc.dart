@@ -7,12 +7,15 @@ import 'package:quela/bloc/doctor/event.dart';
 import 'package:quela/bloc/doctor/state.dart';
 import 'package:quela/models/doctor.dart';
 
+/// The bloc class that handles GraphQL requests for the doctors.
 class DoctorsBloc extends Bloc<DoctorEvents, DoctorState> {
   final Future<String> userId = new Auth().getUser();
 
   @override
   DoctorState get initialState => DoctorUninitialized();
 
+  /// The main dispatcher for the states.
+  /// It yields to the corresponding state depending on the event and its result
   @override
   Stream<DoctorState> mapEventToState(
     DoctorState currentState,
@@ -28,6 +31,12 @@ class DoctorsBloc extends Bloc<DoctorEvents, DoctorState> {
     }
   }
 
+  /// The function that responsible from actual network traffic.
+  /// It uses [userId] to fetch current user id from secure storage.
+  ///
+  /// It has its own GraphQL client inside because we didn't want to deal with
+  /// widgets since we're using actual dart code rather than flutter's building
+  /// blocks.
   Future<Doctor> _handleApiCall() async {
     final String uid = await userId;
     // Linking api url

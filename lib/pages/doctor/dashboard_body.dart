@@ -2,11 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:quela/models/doctor.dart';
 import 'package:quela/utils/hex_code.dart';
 
+/// As the name indicates, it builds the whole body of the dashboard.
 class DashboardBody extends StatelessWidget {
   final Doctor doctor;
 
   DashboardBody({Key key, this.doctor});
 
+  /// Building card content's texts
+  ///
+  /// =====================
+  /// |        This: part  |
+  /// |        This: part  |
+  /// =====================
+  ///
+  /// [fieldName] corresponds to the left side of the card which was depicted by
+  /// This: in the art above. [fieldValue] is the latter part.
   Row _cardContentRowBuilder({String fieldName, String fieldValue}) {
     return Row(
       children: <Widget>[
@@ -30,6 +40,7 @@ class DashboardBody extends StatelessWidget {
     );
   }
 
+  /// It's the card content's text part.
   Column _cardContent(PatientId patient) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -54,6 +65,19 @@ class DashboardBody extends StatelessWidget {
     );
   }
 
+  /// Actual builder function.
+  /// It uses [context] to determine [width] of the card.
+  /// [PatientId] stands for the patient's information polled via doctor query
+  /// and [values] is the array that contains only the patient's sensor values.
+  /// The reason of the separation is there's a emergency indicator in this class
+  /// and need to find if any of those values are resides between max and min values.
+  ///
+  /// Also img part of the card is build here.
+  ///
+  /// ==================================
+  /// |   img   |   Text       | indc   |
+  /// |   img   |   Text       | indc   |
+  /// ==================================
   Widget _cardBuilder(BuildContext context, PatientId patient) {
     List<Value> values = patient.values;
     return InkWell(
@@ -94,6 +118,9 @@ class DashboardBody extends StatelessWidget {
     );
   }
 
+  /// Logic of the emergency indicator.
+  /// It checks each and every [sensor] value whether they're inside of the
+  /// boundaries or not
   _logicForColoring(List<Value> values) {
     bool flag = false;
     values.forEach((val) {
