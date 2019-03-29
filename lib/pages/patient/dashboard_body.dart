@@ -1,3 +1,5 @@
+import 'dart:convert' show utf8;
+
 import 'package:flutter/material.dart';
 import 'package:flip_card/flip_card.dart';
 import 'package:intl/intl.dart';
@@ -12,10 +14,16 @@ class ScreenBuilder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final List<IconData> icons = [
-      Icons.wifi_tethering,
-      Icons.ac_unit,
-      Icons.airline_seat_flat,
-      Icons.blur_on,
+      Icons.blur_on, // Air Prs
+      Icons.airline_seat_flat, // Blood Prs
+      Icons.wifi_tethering, // Pulse
+      Icons.ac_unit, // Temp
+    ];
+    final List<String> units = [
+      utf8.decode([0xE3, 0x8B, 0x8C]),
+      utf8.decode([0xE3, 0x8E, 0x9C]) + utf8.decode([0xE3, 0x8B, 0x8C]),
+      "b/pm",
+      utf8.decode([0xE2, 0x84, 0x83]),
     ];
     return LayoutBuilder(
       builder: (context, constraint) {
@@ -28,6 +36,7 @@ class ScreenBuilder extends StatelessWidget {
           itemBuilder: (context, index) {
             return CardBuilder(
               icon: icons[index],
+              unit: units[index],
               frontText: patient.values[index].name,
               backHeader: patient.values[index].valCurr,
               thresholdMin: patient.values[index].valMin,
@@ -44,6 +53,7 @@ class ScreenBuilder extends StatelessWidget {
 class CardBuilder extends StatelessWidget {
   CardBuilder({
     @required this.icon,
+    @required this.unit,
     @required this.frontText,
     @required this.backHeader,
     @required this.thresholdMin,
@@ -52,6 +62,7 @@ class CardBuilder extends StatelessWidget {
   });
 
   final IconData icon;
+  final String unit;
   final String frontText;
   final String backHeader;
   final String thresholdMin;
@@ -108,7 +119,7 @@ class CardBuilder extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Text(
-                backHeader,
+                backHeader + " " + unit,
                 style: int.parse(backHeader) > int.parse(thresholdMax) ||
                         int.parse(backHeader) < int.parse(thresholdMin)
                     ? TextStyle(
