@@ -277,8 +277,128 @@ class DetailsPage extends StatelessWidget {
       body: Column(
         children: <Widget>[
           _infoCard(context, patient),
+          Container(height: 24.0),
+          Expanded(
+            child: ListViewOfTheValues(
+              patient: patient,
+            ),
+          ),
         ],
       ),
+    );
+  }
+}
+
+class ListViewOfTheValues extends StatelessWidget {
+  final PatientId patient;
+
+  ListViewOfTheValues({Key key, this.patient}) : assert(patient != null);
+
+  Widget _card(BuildContext context, {
+    PatientId patient,
+    int index,
+  }) {
+    return Container(
+      margin: const EdgeInsets.symmetric(
+        horizontal: 24.0,
+        vertical: 16.0,
+      ),
+      width: MediaQuery
+          .of(context)
+          .size
+          .width,
+      height: 120.0,
+      decoration: BoxDecoration(
+        color: Colors.blue,
+        borderRadius: BorderRadius.all(Radius.circular(20.0)),
+      ),
+      child: Column(
+        children: <Widget>[
+          _buildTopRow(patient.values[index]),
+          Container(height: 20.0),
+          Row(
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.only(left: 16.0),
+                child: _valueCreator("Min", patient.values[index].valMin),
+              ),
+              Expanded(
+                child: _valueCreator("Current", patient.values[index].valCurr),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(right: 16.0),
+                child: _valueCreator("Max", patient.values[index].valMax),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildTopRow(Value value) {
+    return Row(
+      children: <Widget>[
+        Expanded(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 16.0,
+              vertical: 8.0,
+            ),
+            child: Text(
+              value.name,
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 18.0,
+              ),
+            ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(right: 16.0),
+          child: Text(
+            "2 hrs ago",
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: 18.0,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _valueCreator(String fieldName, String value) {
+    return Column(
+      children: <Widget>[
+        Text(
+          fieldName,
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 18.0,
+          ),
+        ),
+        Text(value,
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: 18.0,
+            )),
+      ],
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      shrinkWrap: true,
+      itemCount: patient.values.length,
+      itemBuilder: (context, index) {
+        return _card(
+          context,
+          patient: patient,
+          index: index,
+        );
+      },
     );
   }
 }
