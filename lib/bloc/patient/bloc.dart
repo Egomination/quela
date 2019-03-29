@@ -76,6 +76,7 @@ query search(\$id: String!) {
       val_curr
       val_min 
       val_max
+      last_upd
     }
   }
 }

@@ -66,18 +66,18 @@ class DoctorId {
   });
 
   factory DoctorId.fromJson(Map<String, dynamic> json) => new DoctorId(
-    id: json["id"],
-    name: json["name"],
-    surname: json["surname"],
-    proficiency: json["proficiency"],
-  );
+        id: json["id"],
+        name: json["name"],
+        surname: json["surname"],
+        proficiency: json["proficiency"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "name": name,
-    "surname": surname,
-    "proficiency": proficiency,
-  };
+        "id": id,
+        "name": name,
+        "surname": surname,
+        "proficiency": proficiency,
+      };
 }
 
 class Value {
@@ -85,12 +85,14 @@ class Value {
   String valCurr;
   String valMin;
   String valMax;
+  String lastUpd;
 
   Value({
     this.name,
     this.valCurr,
     this.valMin,
     this.valMax,
+    this.lastUpd,
   });
 
   factory Value.fromJson(Map<String, dynamic> json) => new Value(
@@ -98,6 +100,7 @@ class Value {
         valCurr: json["val_curr"],
         valMin: json["val_min"],
         valMax: json["val_max"],
+        lastUpd: json["last_upd"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -105,5 +108,6 @@ class Value {
         "val_curr": valCurr,
         "val_min": valMin,
         "val_max": valMax,
+        "last_upd": lastUpd,
       };
 }
