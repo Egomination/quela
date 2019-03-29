@@ -81,7 +81,15 @@ class DashboardBody extends StatelessWidget {
   Widget _cardBuilder(BuildContext context, PatientId patient) {
     List<Value> values = patient.values;
     return InkWell(
-      onTap: () => null,
+      onTap: () =>
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) =>
+                    DetailsPage(
+                      patient: patient,
+                    )),
+          ),
       child: Container(
         margin: const EdgeInsets.symmetric(
           vertical: 8.0,
@@ -137,6 +145,140 @@ class DashboardBody extends StatelessWidget {
       itemBuilder: (context, index) {
         return _cardBuilder(context, doctor.patientId[index]);
       },
+    );
+  }
+}
+
+class DetailsPage extends StatelessWidget {
+  final PatientId patient;
+
+  DetailsPage({Key key, @required this.patient}) : assert(patient != null);
+
+  Widget _buildTopRows() {
+    return Row(
+      children: <Widget>[
+        Expanded(
+          child: Padding(
+            padding: const EdgeInsets.only(
+              top: 12.0,
+              left: 12.0,
+            ),
+            child: Text(
+              "Age: 34",
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 19.0,
+              ),
+            ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(
+            top: 12.0,
+            right: 12.0,
+          ),
+          child: Text(
+            "Male",
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 19.0,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildUnderneathOfTheImage(PatientId patient) {
+    return Column(
+      children: <Widget>[
+        _buildTopRows(),
+        Padding(
+          padding: const EdgeInsets.only(top: 16.0, bottom: 8.0),
+          child: Text(
+            "${patient.name} ${patient.surname}",
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 19.0,
+            ),
+          ),
+        ),
+        Text(
+          "TC: ${patient.tc}",
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 19.0,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildImage(BuildContext context, PatientId patient) {
+    return Container(
+      margin: EdgeInsets.only(
+        left: (MediaQuery
+            .of(context)
+            .size
+            .width / 100) * 37,
+        top: 24.0,
+      ),
+      child: Image.network(
+        patient.profilePic,
+        scale: 3 / 24,
+        width: 90.0,
+        height: 120.0,
+        fit: BoxFit.fill,
+      ),
+    );
+  }
+
+  Widget _infoCard(BuildContext context, PatientId patient) {
+    return Stack(
+      children: <Widget>[
+        Container(
+          margin: const EdgeInsets.only(
+            top: 96.0,
+            left: 24.0,
+            right: 24.0,
+          ),
+          width: MediaQuery
+              .of(context)
+              .size
+              .width,
+          height: 120.0,
+          decoration: BoxDecoration(
+            color: Colors.red,
+            borderRadius: BorderRadius.all(Radius.circular(20.0)),
+          ),
+          child: _buildUnderneathOfTheImage(patient),
+        ),
+        _buildImage(context, patient),
+      ],
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          "${patient.name} ${patient.surname}",
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.w700,
+            fontSize: 17.0,
+          ),
+        ),
+        backgroundColor: HexColor("#0f1923"),
+      ),
+      body: Column(
+        children: <Widget>[
+          _infoCard(context, patient),
+        ],
+      ),
     );
   }
 }
