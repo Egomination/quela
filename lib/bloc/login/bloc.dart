@@ -22,12 +22,9 @@ class LoginBloc extends Bloc<LoginEvents, LoginStates> {
   LoginStates get initialState => BeforeLogin();
 
   @override
-  Stream<LoginStates> mapEventToState(
-    LoginStates currentState,
-    LoginEvents event,
-  ) async* {
+  Stream<LoginStates> mapEventToState(LoginEvents event) async* {
     if (event is ButtonPressed) {
-	    yield LoginLoading();
+      yield LoginLoading();
       try {
         final token = await auth.signIn(
           email: event.email,

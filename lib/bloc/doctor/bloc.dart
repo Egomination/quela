@@ -17,10 +17,7 @@ class DoctorsBloc extends Bloc<DoctorEvents, DoctorState> {
   /// The main dispatcher for the states.
   /// It yields to the corresponding state depending on the event and its result
   @override
-  Stream<DoctorState> mapEventToState(
-    DoctorState currentState,
-    event,
-  ) async* {
+  Stream<DoctorState> mapEventToState(event) async* {
     if (event is DoctorFetch) {
       try {
         final _doctor = await _handleApiCall();
