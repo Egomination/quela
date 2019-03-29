@@ -16,7 +16,6 @@ class AuthBloc extends Bloc<AuthEvents, AuthStates> {
 
   @override
   Stream<AuthStates> mapEventToState(
-    AuthStates currentState,
     AuthEvents event,
   ) async* {
     if (event is AppStarted) {

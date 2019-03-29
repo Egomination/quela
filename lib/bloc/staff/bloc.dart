@@ -13,7 +13,6 @@ class StaffBloc extends Bloc<StaffEvents, StaffStates> {
 
   @override
   Stream<StaffStates> mapEventToState(
-    StaffStates currentState,
     StaffEvents event,
   ) async* {
     if (event is CreatePatientEvent) {

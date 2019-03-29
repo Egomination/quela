@@ -23,7 +23,6 @@ class LoginBloc extends Bloc<LoginEvents, LoginStates> {
 
   @override
   Stream<LoginStates> mapEventToState(
-    LoginStates currentState,
     LoginEvents event,
   ) async* {
     if (event is ButtonPressed) {
