@@ -1,28 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:quela/bloc/patient/patient_bloc.dart';
-import 'package:quela/pages/patient/dashboard_builder.dart';
+import 'package:quela/bloc/blocs.dart';
+import 'package:quela/pages/doctor/doctor_dashboard.dart';
 import 'package:quela/utils/hex_code.dart';
-import 'package:quela/widgets/voip.dart';
 
-class PatientPage extends StatefulWidget {
+/// Class that responsible from passing the corresponding bloc instances to its
+/// children. Also it reacts to current state of the [DoctorsBloc] instance.
+class DoctorPage extends StatefulWidget {
   @override
-  _PatientPageState createState() => _PatientPageState();
+  _DoctorPageState createState() => _DoctorPageState();
 }
 
-class _PatientPageState extends State<PatientPage> {
-  PatientsBloc _bloc;
+class _DoctorPageState extends State<DoctorPage> {
+  DoctorsBloc _bloc;
 
   @override
   void initState() {
     super.initState();
-    _bloc = PatientsBloc()
-      ..dispatch(Fetch());
+    _bloc = DoctorsBloc()
+      ..dispatch(DoctorFetch());
   }
 
   @override
   void dispose() {
-    _bloc.dispose();
+    _bloc?.dispose();
     super.dispose();
   }
 
@@ -32,29 +33,30 @@ class _PatientPageState extends State<PatientPage> {
       bloc: _bloc,
       child: BlocBuilder(
         bloc: _bloc,
-        builder: (BuildContext context, PatientState state) {
-          if (state is PatientUninitialized || state is PatientLoading) {
+        builder: (BuildContext context, DoctorState state) {
+          if (state is DoctorUninitialized || state is DoctorLoading) {
             return Scaffold(
               body: Center(
                 child: CircularProgressIndicator(),
               ),
             );
           }
-          if (state is PatientError) {
+          if (state is DoctorError) {
             return Center(
               child: Text(state.toString()),
             );
           }
-          if (state is PatientLoaded) {
-            print(state.patient);
+          if (state is DoctorLoaded) {
+            print(state.doctor);
             return DefaultTabController(
               length: 2,
               child: Scaffold(
                 //backgroundColor: Colors.black,
                 body: TabBarView(
                   children: <Widget>[
-                    PatientDashboardBuilder(),
-                    VoipConnection(entity: state.patient, isDoctor: false),
+                    DoctorDashboard(),
+                    Container(),
+                    //VoipConnection(entity: state.patient, isDoctor: false),
                   ],
                 ),
                 bottomNavigationBar: TabBar(
