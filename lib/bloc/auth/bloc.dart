@@ -15,13 +15,9 @@ class AuthBloc extends Bloc<AuthEvents, AuthStates> {
   AuthStates get initialState => Unauthenticated();
 
   @override
-<<<<<<< HEAD
   Stream<AuthStates> mapEventToState(
     AuthEvents event,
   ) async* {
-=======
-  Stream<AuthStates> mapEventToState(AuthEvents event) async* {
->>>>>>> 2adeffbd898bf991d66d1963acdc0e899f00e167
     if (event is AppStarted) {
       final bool hasToken = await auth.hasToken();
 
