@@ -1,26 +1,32 @@
 import 'dart:async';
 
+import 'package:bloc/bloc.dart';
 import 'package:flutter_graphql/flutter_graphql.dart';
 import 'package:quela/bloc/auth/auth.dart';
-import 'package:quela/bloc/bloc.dart';
+import 'package:quela/bloc/patient/event.dart';
+import 'package:quela/bloc/patient/state.dart';
 import 'package:quela/models/patient.dart';
-import 'package:rxdart/rxdart.dart';
 
-class PatientBloc implements BlocBase {
-  PatientBloc() {
-    _handleApiCall();
+class PatientsBloc extends Bloc<PatientEvents, PatientState> {
+  final Future<String> userId = new Auth().getUser();
+
+  @override
+  PatientState get initialState => PatientUninitialized();
+
+  @override
+  Stream<PatientState> mapEventToState(event) async* {
+    if (event is Fetch) {
+      try {
+        final patient = await _handleApiCall();
+        yield PatientLoaded(patient: patient);
+      } catch (e) {
+        yield PatientError(error: e);
+      }
+    }
   }
 
-  // This is needed for every type of User
-  // Don't forget to add this to other types
-  final Future<String> userid = new Auth().getUser();
-
-  BehaviorSubject<Patient> _controller = BehaviorSubject<Patient>();
-
-  Stream<Patient> get patient => _controller;
-
-  void _handleApiCall() async {
-    final String uid = await userid;
+  Future<Patient> _handleApiCall() async {
+    final String uid = await userId;
     // Linking api url
     HttpLink link = HttpLink(uri: "https://quela-api.herokuapp.com/");
     // Gql client
@@ -42,15 +48,12 @@ class PatientBloc implements BlocBase {
         print(response.errors.toString());
       }
 
-      _controller.sink.add(Patient.fromJson(response.data['getPatient']));
+      print("Patient Info: =>:  ${response.data['getPatient']}");
+      return Patient.fromJson(response.data['getPatient']);
     } catch (e) {
       print(e.toString());
+      return null;
     }
-  }
-
-  @override
-  void dispose() {
-    _controller?.close();
   }
 }
 
@@ -64,6 +67,7 @@ query search(\$id: String!) {
     profile_pic
     doctorID{
       id
+      profile_pic
       name
       surname
       proficiency
@@ -73,6 +77,7 @@ query search(\$id: String!) {
       val_curr
       val_min 
       val_max
+      last_upd
     }
   }
 }

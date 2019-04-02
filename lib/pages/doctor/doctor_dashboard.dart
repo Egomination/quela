@@ -1,28 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quela/bloc/blocs.dart';
-import 'package:quela/pages/patient/dashboard_body.dart';
+import 'package:quela/models/doctor.dart';
+import 'package:quela/pages/doctor/dashboard_body.dart';
 import 'package:quela/utils/hex_code.dart';
 import 'package:quela/widgets/info_bar.dart';
 
-class PatientDashboardBuilder extends StatelessWidget {
+class DoctorDashboard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final AuthBloc authBloc = BlocProvider.of<AuthBloc>(context);
-    final PatientsBloc _patientBlock = BlocProvider.of<PatientsBloc>(context);
+    final DoctorsBloc _bloc = BlocProvider.of<DoctorsBloc>(context);
     return BlocBuilder(
-      bloc: _patientBlock,
-      builder: (BuildContext context, PatientState state) {
-        final patient = (state as PatientLoaded).patient;
+      bloc: _bloc,
+      builder: (BuildContext context, DoctorState state) {
+        final Doctor doctor = (state as DoctorLoaded).doctor;
         return Scaffold(
-          //backgroundColor: Colors.white,
           appBar: AppBar(
-            backgroundColor: HexColor("#0f1923"),
             title: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 Text(
-                  "Patient Dashboard",
+                  "Doctor Dashboard",
                   style: TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.w700,
@@ -37,15 +36,14 @@ class PatientDashboardBuilder extends StatelessWidget {
                 ),
               ],
             ),
+            backgroundColor: HexColor("#0f1923"),
           ),
           body: Stack(
             children: <Widget>[
-              InfoBar(person: patient),
+              InfoBar(person: doctor),
               Container(
-                margin: EdgeInsets.only(
-                  top: 140.0,
-                ),
-                child: ScreenBuilder(patient: patient),
+                margin: EdgeInsets.only(top: 140.0),
+                child: DashboardBody(doctor: doctor),
               ),
             ],
           ),
