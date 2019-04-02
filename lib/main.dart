@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quela/bloc/blocs.dart';
 import 'package:quela/pages/doctor/doctor_page.dart';
 import 'package:quela/pages/login/login_page.dart';
-import 'package:quela/pages/login/mock_main.dart';
 import 'package:quela/pages/patient/patient_page.dart';
 import 'package:quela/pages/staff/staff_page.dart';
 
@@ -69,7 +68,7 @@ class _MyAppState extends State<MyApp> {
               return StaffPage();
             }
             if (state is DoctorAuthenticated) {
-	            return DoctorPage();
+              return DoctorPage();
             }
             if (state is Unauthenticated) {
               return LoginPage(auth: auth);

@@ -75,6 +75,7 @@ query search(\$id: String!){
     proficiency
     profile_pic
     patientID{
+      id
       name
       surname
       TC

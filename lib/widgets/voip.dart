@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_webrtc/webrtc.dart';
 import 'package:quela/bloc/blocs.dart';
+import 'package:quela/models/doctor.dart';
 import 'package:quela/models/patient.dart';
 import 'package:quela/utils/hex_code.dart';
 import 'package:quela/widgets/voip_signaling.dart';
@@ -15,10 +16,11 @@ class VoipConnection extends StatefulWidget {
   // Needs to be set in here.
   final String ip = '192.168.1.108';
 
-  final Patient entity;
+  final Patient patient;
+  final Doctor doctor;
   final bool isDoctor;
 
-  VoipConnection({Key key, this.entity, @required this.isDoctor})
+  VoipConnection({Key key, this.patient, this.doctor, @required this.isDoctor})
       : super(key: key);
 
   @override
@@ -152,7 +154,7 @@ class _VoipConnectionState extends State<VoipConnection> {
         child: Row(
           children: <Widget>[
             Image.network(
-              "https://image.freepik.com/free-photo/doctor-smiling-with-stethoscope_1154-36.jpg",
+              entity.profilePic,
             ),
             Container(
               width: 16.0,
@@ -175,7 +177,9 @@ class _VoipConnectionState extends State<VoipConnection> {
                 Container(
                   height: 8.0,
                 ),
-                Text(
+                (entity is PatientId)
+                    ? Container()
+                    : Text(
                   entity.proficiency,
                   style: TextStyle(
                     color: Colors.white,
@@ -274,8 +278,8 @@ class _VoipConnectionState extends State<VoipConnection> {
                   ? _buildPatientPeerMergedList(
                           _peers,
                           widget.isDoctor
-                              ? widget.entity
-                              : widget.entity.doctorId)
+                              ? widget.doctor.patientId
+                              : widget.patient.doctorId)
                       .length
                   : 0),
               itemBuilder: (context, i) {
@@ -284,8 +288,8 @@ class _VoipConnectionState extends State<VoipConnection> {
                     _buildPatientPeerMergedList(
                         _peers,
                         widget.isDoctor
-                            ? widget.entity
-                            : widget.entity.doctorId)[i]);
+                            ? widget.doctor.patientId
+                            : widget.patient.doctorId)[i]);
               },
             ),
     );

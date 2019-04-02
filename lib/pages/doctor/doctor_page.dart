@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quela/bloc/blocs.dart';
 import 'package:quela/pages/doctor/doctor_dashboard.dart';
 import 'package:quela/utils/hex_code.dart';
+import 'package:quela/widgets/voip.dart';
 
 /// Class that responsible from passing the corresponding bloc instances to its
 /// children. Also it reacts to current state of the [DoctorsBloc] instance.
@@ -55,7 +56,10 @@ class _DoctorPageState extends State<DoctorPage> {
                 body: TabBarView(
                   children: <Widget>[
                     DoctorDashboard(),
-                    Container(),
+                    VoipConnection(
+                      doctor: state.doctor,
+                      isDoctor: true,
+                    ),
                     //VoipConnection(entity: state.patient, isDoctor: false),
                   ],
                 ),

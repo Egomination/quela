@@ -54,7 +54,7 @@ class _PatientPageState extends State<PatientPage> {
                 body: TabBarView(
                   children: <Widget>[
                     PatientDashboardBuilder(),
-                    VoipConnection(entity: state.patient, isDoctor: false),
+                    VoipConnection(patient: state.patient, isDoctor: false),
                   ],
                 ),
                 bottomNavigationBar: TabBar(

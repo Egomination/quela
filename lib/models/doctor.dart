@@ -48,6 +48,7 @@ class Doctor {
 }
 
 class PatientId {
+  String id;
   String name;
   String surname;
   String tc;
@@ -55,6 +56,7 @@ class PatientId {
   List<Value> values;
 
   PatientId({
+    this.id,
     this.name,
     this.surname,
     this.tc,
@@ -63,21 +65,23 @@ class PatientId {
   });
 
   factory PatientId.fromJson(Map<String, dynamic> json) => new PatientId(
-        name: json["name"],
-        surname: json["surname"],
-        tc: json["TC"],
-        profilePic: json["profile_pic"],
-        values:
-            new List<Value>.from(json["values"].map((x) => Value.fromJson(x))),
-      );
+    id: json['id'],
+    name: json["name"],
+    surname: json["surname"],
+    tc: json["TC"],
+    profilePic: json["profile_pic"],
+    values:
+    new List<Value>.from(json["values"].map((x) => Value.fromJson(x))),
+  );
 
   Map<String, dynamic> toJson() => {
-        "name": name,
-        "surname": surname,
-        "TC": tc,
-        "profile_pic": profilePic,
-        "values": new List<dynamic>.from(values.map((x) => x.toJson())),
-      };
+    "id": id,
+    "name": name,
+    "surname": surname,
+    "TC": tc,
+    "profile_pic": profilePic,
+    "values": new List<dynamic>.from(values.map((x) => x.toJson())),
+  };
 }
 
 class Value {
