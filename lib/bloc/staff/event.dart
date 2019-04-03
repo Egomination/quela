@@ -25,3 +25,18 @@ class CreatePatientEvent extends StaffEvents {
   @override
   String toString() => 'Account Creation';
 }
+
+class UpdatePatientDataEvent extends StaffEvents {
+  final String id;
+  final String value;
+  final String field;
+
+  UpdatePatientDataEvent({
+    @required this.id,
+    @required this.value,
+    @required this.field,
+  }) : super([id, value, field]);
+
+  @override
+  String toString() => 'Field Updated';
+}

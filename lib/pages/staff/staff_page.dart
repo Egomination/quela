@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:quela/pages/staff/create_patient.dart';
+import 'package:quela/pages/staff/update_patient_data.dart';
 
 class StaffPage extends StatelessWidget {
   @override
@@ -19,6 +20,15 @@ class StaffPage extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => CreatePatient()),
+              );
+            },
+          ),
+          RaisedButton(
+            child: Text('Update Patient Data'),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => UpdatePatientData()),
               );
             },
           ),
