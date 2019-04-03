@@ -16,8 +16,7 @@ class _PatientPageState extends State<PatientPage> {
   @override
   void initState() {
     super.initState();
-    _bloc = PatientsBloc()
-      ..dispatch(Fetch());
+    _bloc = PatientsBloc()..dispatch(Fetch());
   }
 
   @override
