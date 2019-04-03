@@ -68,7 +68,7 @@ class _DoctorPageState extends State<DoctorPage> {
                   labelColor: Colors.white,
                   tabs: [
                     Tab(
-                      icon: Icon(Icons.home),
+                      icon: Icon(Icons.dashboard),
                       text: "Dashboard",
                     ),
                     Tab(
