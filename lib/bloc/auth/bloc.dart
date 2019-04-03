@@ -50,7 +50,7 @@ class AuthBloc extends Bloc<AuthEvents, AuthStates> {
 
     if (event is LoggedOut) {
       yield Loading();
-      //await auth.deleteToken();
+      await auth.deleteToken();
       yield Unauthenticated();
     }
   }
