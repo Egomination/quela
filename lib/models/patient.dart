@@ -16,6 +16,12 @@ class Patient {
   String surname;
   String email;
   String profilePic;
+  String roomNo;
+  String illness;
+  String gender;
+  int age;
+  String weight;
+  String height;
   List<DoctorId> doctorId;
   List<Value> values;
 
@@ -25,6 +31,12 @@ class Patient {
     this.surname,
     this.email,
     this.profilePic,
+    this.roomNo,
+    this.illness,
+    this.gender,
+    this.age,
+    this.weight,
+    this.height,
     this.doctorId,
     this.values,
   });
@@ -35,6 +47,12 @@ class Patient {
         surname: json["surname"],
         email: json["email"],
         profilePic: json["profile_pic"],
+        roomNo: json["room_no"],
+        illness: json["illness"],
+        gender: json["gender"],
+        age: json["age"],
+        weight: json["weight"],
+        height: json["height"],
         doctorId: new List<DoctorId>.from(
             json["doctorID"].map((x) => DoctorId.fromJson(x))),
         values:
@@ -47,6 +65,12 @@ class Patient {
         "surname": surname,
         "email": email,
         "profile_pic": profilePic,
+        "room_no": roomNo,
+        "illness": illness,
+        "gender": gender,
+        "age": age,
+        "weight": weight,
+        "height": height,
         "doctorID": new List<dynamic>.from(doctorId.map((x) => x.toJson())),
         "values": new List<dynamic>.from(values.map((x) => x.toJson())),
       };
@@ -79,7 +103,7 @@ class DoctorId {
         "name": name,
         "surname": surname,
         "proficiency": proficiency,
-    "profile_pic": profilePic,
+        "profile_pic": profilePic,
       };
 }
 
@@ -88,7 +112,7 @@ class Value {
   String valCurr;
   String valMin;
   String valMax;
-  String lastUpd;
+  int lastUpd;
 
   Value({
     this.name,

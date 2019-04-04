@@ -67,7 +67,7 @@ class CardBuilder extends StatelessWidget {
   final String backHeader;
   final String thresholdMin;
   final String thresholdMax;
-  final String lastUpdated;
+  final int lastUpdated;
 
   // NOTE FOR DEVELOPERS: If you want to remove padding between cards, change
   // this return to Container and comment out elevation. Color is little bit tricky,
@@ -75,8 +75,7 @@ class CardBuilder extends StatelessWidget {
   // However, after those changes made they'll do the trick.
   @override
   Widget build(BuildContext context) {
-    DateTime time =
-        DateTime.fromMillisecondsSinceEpoch(int.parse(lastUpdated) * 1000);
+    DateTime time = DateTime.fromMillisecondsSinceEpoch(lastUpdated * 1000);
     String date = DateFormat.yMMMd().add_Hm().format(time);
     return Card(
       elevation: 0.0,
