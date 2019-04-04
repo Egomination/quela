@@ -12,6 +12,13 @@ class _CreatePatientState extends State<CreatePatient> {
   final _surnameController = TextEditingController();
   final _tcController = TextEditingController();
   final _profilePicController = TextEditingController();
+  final _roomNoController = TextEditingController();
+  final _illnessController = TextEditingController();
+  final _genderController = TextEditingController();
+  final _ageController = TextEditingController();
+  final _weightController = TextEditingController();
+  final _heightController = TextEditingController();
+  final _telephoneController = TextEditingController();
 
   final _staffBloc = new StaffBloc();
 
@@ -43,6 +50,13 @@ class _CreatePatientState extends State<CreatePatient> {
       surname: _surnameController.text,
       tc: _tcController.text,
       profilePic: _profilePicController.text,
+      roomNo: _roomNoController.text,
+      illness: _illnessController.text,
+      gender: _genderController.text,
+      age: _ageController.text,
+      weight: _weightController.text,
+      height: _heightController.text,
+      telephone: _telephoneController.text,
     ));
   }
 
@@ -62,6 +76,14 @@ class _CreatePatientState extends State<CreatePatient> {
           inputField("TC", TextInputType.number, _tcController),
           inputField(
               "Profile Picture", TextInputType.url, _profilePicController),
+          inputField("Room No", TextInputType.text, _roomNoController),
+          inputField("Illness", TextInputType.text, _illnessController),
+          inputField("Gender", TextInputType.text, _genderController),
+          inputField("Age", TextInputType.number, _ageController),
+          inputField("Weight", TextInputType.text, _weightController),
+          inputField("Height", TextInputType.text, _heightController),
+          inputField(
+              "Telephone Number", TextInputType.number, _telephoneController),
           Padding(
             padding: const EdgeInsets.only(top: 15.0),
             child: RaisedButton(
