@@ -22,6 +22,7 @@ class Patient {
   int age;
   String weight;
   String height;
+  String telephone;
   List<DoctorId> doctorId;
   List<Value> values;
 
@@ -37,6 +38,7 @@ class Patient {
     this.age,
     this.weight,
     this.height,
+    this.telephone,
     this.doctorId,
     this.values,
   });
@@ -53,6 +55,7 @@ class Patient {
         age: json["age"],
         weight: json["weight"],
         height: json["height"],
+        telephone: json["telephone"],
         doctorId: new List<DoctorId>.from(
             json["doctorID"].map((x) => DoctorId.fromJson(x))),
         values:
@@ -71,6 +74,7 @@ class Patient {
         "age": age,
         "weight": weight,
         "height": height,
+        "telephone": telephone,
         "doctorID": new List<dynamic>.from(doctorId.map((x) => x.toJson())),
         "values": new List<dynamic>.from(values.map((x) => x.toJson())),
       };
@@ -82,6 +86,8 @@ class DoctorId {
   String surname;
   String proficiency;
   String profilePic;
+  String gender;
+  String telephone;
 
   DoctorId({
     this.id,
@@ -89,14 +95,19 @@ class DoctorId {
     this.surname,
     this.proficiency,
     this.profilePic,
+    this.gender,
+    this.telephone,
   });
 
   factory DoctorId.fromJson(Map<String, dynamic> json) => new DoctorId(
-      id: json["id"],
-      name: json["name"],
-      surname: json["surname"],
-      proficiency: json["proficiency"],
-      profilePic: json["profile_pic"]);
+        id: json["id"],
+        name: json["name"],
+        surname: json["surname"],
+        proficiency: json["proficiency"],
+        profilePic: json["profile_pic"],
+        gender: json["gender"],
+        telephone: json["telephone"],
+      );
 
   Map<String, dynamic> toJson() => {
         "id": id,
@@ -104,6 +115,8 @@ class DoctorId {
         "surname": surname,
         "proficiency": proficiency,
         "profile_pic": profilePic,
+        "gender": gender,
+        "telephone": telephone,
       };
 }
 
