@@ -228,7 +228,7 @@ class _VoipConnectionState extends State<VoipConnection> {
                   ],
                 )
               : Padding(
-                  padding: const EdgeInsets.only(top: 25.0),
+                  padding: const EdgeInsets.only(top: 5.0),
                   child: RaisedButton(
                     onPressed: isOnline
                         ? () => _invitePeer(context, entity.id, false)
