@@ -68,4 +68,43 @@ class Staff {
         email: email, password: password);
     await patientCreator(user.uid, name, surname, tc, email, profilePic);
   }
+
+  final String updatePatientDataQuery = """
+    mutation updatePatientData(
+      \$id: String!
+      \$value: String!
+      \$field: String!
+    ) {
+      updatePatientData(
+        patientID: \$id
+        new_value: \$value
+        field_name: \$field
+      )
+    }
+  """
+      .replaceAll('\n', ' ');
+
+  Future<void> patientDataUpdater(String id, String value, String field) async {
+    HttpLink link = HttpLink(uri: "https://quela-api.herokuapp.com/");
+    GraphQLClient client = GraphQLClient(
+      link: link,
+      cache: InMemoryCache(),
+    );
+    final QueryResult response = await client
+        .mutate(
+          MutationOptions(
+            document: updatePatientDataQuery,
+            variables: <String, dynamic>{
+              "id": id,
+              "value": value,
+              "field": field,
+            },
+          ),
+        )
+        .timeout(const Duration(seconds: 10));
+
+    if (response.errors != null) {
+      print(response.errors.toString());
+    }
+  }
 }
