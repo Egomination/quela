@@ -2,13 +2,6 @@ import 'package:equatable/equatable.dart';
 
 abstract class AuthStates extends Equatable {}
 
-/*class BeforeAuth extends AuthStates {
-  // State where user is yet to see anything
-  // NOTE: A splash screen would be ideal
-  @override
-  String toString() => 'BeforeAuth';
-}*/
-
 class PatientAuthenticated extends AuthStates {
   // State where user is authenticated as patient
   @override
