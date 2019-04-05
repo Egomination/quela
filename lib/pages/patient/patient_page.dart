@@ -16,8 +16,7 @@ class _PatientPageState extends State<PatientPage> {
   @override
   void initState() {
     super.initState();
-    _bloc = PatientsBloc()
-      ..dispatch(Fetch());
+    _bloc = PatientsBloc()..dispatch(Fetch());
   }
 
   @override
@@ -62,12 +61,12 @@ class _PatientPageState extends State<PatientPage> {
                   labelColor: Colors.white,
                   tabs: [
                     Tab(
-                      icon: Icon(Icons.home),
+                      icon: Icon(Icons.dashboard),
                       text: "Dashboard",
                     ),
                     Tab(
                       icon: Icon(Icons.video_call),
-                      text: "Call",
+                      text: "Video Call",
                     ),
                   ],
                 ),

@@ -31,5 +31,15 @@ class StaffBloc extends Bloc<StaffEvents, StaffStates> {
         yield StaffError(error: err.toString());
       }
     }
+
+    if (event is UpdatePatientDataEvent) {
+      yield StaffFetching();
+      try {
+        await staff.patientDataUpdater(event.id, event.value, event.field);
+        yield StaffFetched();
+      } catch (err) {
+        yield StaffError(error: err.toString());
+      }
+    }
   }
 }

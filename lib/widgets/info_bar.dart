@@ -59,11 +59,11 @@ class InfoBar extends StatelessWidget {
                 ),
                 (person is Doctor)
                     ? Text(
-                  person.proficiency,
-                  style: TextStyle(
-                    color: Colors.white,
-                  ),
-                )
+                        person.proficiency,
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                      )
                     : Container(),
               ],
             ),

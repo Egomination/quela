@@ -65,12 +65,21 @@ query search(\$id: String!) {
     surname
     email
     profile_pic
+    room_no
+    illness
+    gender
+    age
+    weight
+    height
+    telephone
     doctorID{
       id
       profile_pic
       name
       surname
       proficiency
+      gender
+      telephone
     }
     values {
       name 

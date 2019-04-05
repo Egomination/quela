@@ -58,9 +58,6 @@ class _MyAppState extends State<MyApp> {
         home: BlocBuilder<AuthEvents, AuthStates>(
           bloc: authBloc,
           builder: (BuildContext context, AuthStates state) {
-            /*if (state is BeforeAuth) {
-              return SplashPage();
-            }*/
             if (state is PatientAuthenticated) {
               return PatientPage();
             }

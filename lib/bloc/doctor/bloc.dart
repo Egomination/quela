@@ -74,17 +74,29 @@ query search(\$id: String!){
     email
     proficiency
     profile_pic
+    gender
+    age
+    hospital_name
+    telephone
     patientID{
       id
       name
       surname
       TC
       profile_pic
+      room_no
+      illness
+      gender
+      age
+      weight
+      height
+      telephone
       values{
         name
         val_min
         val_max
         val_curr
+        last_upd
       }
     }
   }

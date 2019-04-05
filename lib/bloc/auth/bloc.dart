@@ -21,7 +21,7 @@ class AuthBloc extends Bloc<AuthEvents, AuthStates> {
     if (event is AppStarted) {
       final bool hasToken = await auth.hasToken();
 
-      if (hasToken) {
+      if (!hasToken) {
         final String type = await auth.getType();
         if (type == "patient") {
           yield PatientAuthenticated();

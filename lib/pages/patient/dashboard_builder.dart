@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quela/bloc/blocs.dart';
 import 'package:quela/pages/patient/dashboard_body.dart';
+import 'package:quela/pages/patient/patient_info.dart';
 import 'package:quela/utils/hex_code.dart';
-import 'package:quela/widgets/info_bar.dart';
 
 class PatientDashboardBuilder extends StatelessWidget {
   @override
@@ -30,9 +30,7 @@ class PatientDashboardBuilder extends StatelessWidget {
                   ),
                 ),
                 InkWell(
-                  onTap: () {
-                    authBloc.dispatch(LoggedOut());
-                  },
+                  onTap: () => authBloc.dispatch(LoggedOut()),
                   child: Icon(Icons.power_settings_new),
                 ),
               ],
@@ -40,7 +38,7 @@ class PatientDashboardBuilder extends StatelessWidget {
           ),
           body: Stack(
             children: <Widget>[
-              InfoBar(person: patient),
+              PatientInfo(person: patient),
               Container(
                 margin: EdgeInsets.only(
                   top: 140.0,

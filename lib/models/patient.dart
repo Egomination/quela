@@ -16,6 +16,13 @@ class Patient {
   String surname;
   String email;
   String profilePic;
+  String roomNo;
+  String illness;
+  String gender;
+  int age;
+  String weight;
+  String height;
+  String telephone;
   List<DoctorId> doctorId;
   List<Value> values;
 
@@ -25,6 +32,13 @@ class Patient {
     this.surname,
     this.email,
     this.profilePic,
+    this.roomNo,
+    this.illness,
+    this.gender,
+    this.age,
+    this.weight,
+    this.height,
+    this.telephone,
     this.doctorId,
     this.values,
   });
@@ -35,6 +49,13 @@ class Patient {
         surname: json["surname"],
         email: json["email"],
         profilePic: json["profile_pic"],
+        roomNo: json["room_no"],
+        illness: json["illness"],
+        gender: json["gender"],
+        age: json["age"],
+        weight: json["weight"],
+        height: json["height"],
+        telephone: json["telephone"],
         doctorId: new List<DoctorId>.from(
             json["doctorID"].map((x) => DoctorId.fromJson(x))),
         values:
@@ -47,6 +68,13 @@ class Patient {
         "surname": surname,
         "email": email,
         "profile_pic": profilePic,
+        "room_no": roomNo,
+        "illness": illness,
+        "gender": gender,
+        "age": age,
+        "weight": weight,
+        "height": height,
+        "telephone": telephone,
         "doctorID": new List<dynamic>.from(doctorId.map((x) => x.toJson())),
         "values": new List<dynamic>.from(values.map((x) => x.toJson())),
       };
@@ -58,6 +86,8 @@ class DoctorId {
   String surname;
   String proficiency;
   String profilePic;
+  String gender;
+  String telephone;
 
   DoctorId({
     this.id,
@@ -65,21 +95,28 @@ class DoctorId {
     this.surname,
     this.proficiency,
     this.profilePic,
+    this.gender,
+    this.telephone,
   });
 
   factory DoctorId.fromJson(Map<String, dynamic> json) => new DoctorId(
-      id: json["id"],
-      name: json["name"],
-      surname: json["surname"],
-      proficiency: json["proficiency"],
-      profilePic: json["profile_pic"]);
+        id: json["id"],
+        name: json["name"],
+        surname: json["surname"],
+        proficiency: json["proficiency"],
+        profilePic: json["profile_pic"],
+        gender: json["gender"],
+        telephone: json["telephone"],
+      );
 
   Map<String, dynamic> toJson() => {
         "id": id,
         "name": name,
         "surname": surname,
         "proficiency": proficiency,
-    "profile_pic": profilePic,
+        "profile_pic": profilePic,
+        "gender": gender,
+        "telephone": telephone,
       };
 }
 
@@ -88,7 +125,7 @@ class Value {
   String valCurr;
   String valMin;
   String valMax;
-  String lastUpd;
+  int lastUpd;
 
   Value({
     this.name,
