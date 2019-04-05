@@ -180,12 +180,12 @@ class _VoipConnectionState extends State<VoipConnection> {
                 ),
               ),
         Padding(
-          padding: const EdgeInsets.only(top: 10.0),
+          padding: const EdgeInsets.only(top: 5.0),
           child: (entity is PatientId)
               ? Row(
                   children: <Widget>[
                     Padding(
-                      padding: const EdgeInsets.only(left: 15.0, top: 25.0),
+                      padding: const EdgeInsets.only(left: 15.0, top: 15.0),
                       child: RaisedButton(
                         onPressed: () => Navigator.push(
                               context,
@@ -208,7 +208,7 @@ class _VoipConnectionState extends State<VoipConnection> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 25.0),
+                      padding: const EdgeInsets.only(top: 15.0),
                       child: RaisedButton(
                         onPressed: isOnline
                             ? () => _invitePeer(context, entity.id, false)
