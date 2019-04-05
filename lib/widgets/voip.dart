@@ -7,6 +7,7 @@ import 'package:flutter_webrtc/webrtc.dart';
 import 'package:quela/bloc/blocs.dart';
 import 'package:quela/models/doctor.dart';
 import 'package:quela/models/patient.dart';
+import 'package:quela/pages/doctor/dashboard_body.dart';
 import 'package:quela/utils/hex_code.dart';
 import 'package:quela/widgets/voip_signaling.dart';
 
@@ -38,6 +39,7 @@ class _VoipConnectionState extends State<VoipConnection> {
   bool _inCalling = false;
   final String serverIP;
   final Future<String> userId = new Auth().getUser();
+  bool isOnline;
 
   _VoipConnectionState({Key key, @required this.serverIP});
 
@@ -47,6 +49,7 @@ class _VoipConnectionState extends State<VoipConnection> {
     initRenderers();
     _connect();
     _selfId = _initUserName();
+    isOnline = false;
   }
 
   _initUserName() async {
@@ -137,75 +140,120 @@ class _VoipConnectionState extends State<VoipConnection> {
 
   _muteMic() {}
 
-  _buildRow(context, entity) {
-    return InkWell(
-      onTap: () => _invitePeer(context, entity.id, false),
-      child: Container(
-        margin: const EdgeInsets.symmetric(
-          horizontal: 24.0,
-          vertical: 10.0,
-        ),
-        width: MediaQuery.of(context).size.width,
-        height: 90,
-        decoration: BoxDecoration(
-          color: HexColor("#15202b"),
-          borderRadius: BorderRadius.all(Radius.circular(10.0)),
-        ),
-        child: Row(
-          children: <Widget>[
-            Image.network(
+  Widget _testChildBuilder(entity) {
+    // _invitePeer(context, entity.id, false),
+    return Column(
+      children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.only(top: 45.0),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(50.0),
+            child: Image.network(
               entity.profilePic,
+              width: 150,
+              height: 150,
+              fit: BoxFit.fill,
             ),
-            Container(
-              width: 16.0,
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                Padding(
-                  padding: EdgeInsets.only(top: 8.0),
-                  child: Text(
-                    entity.name + ' ' + entity.surname,
-                    style: TextStyle(
-                      fontSize: 24.0,
-                      color: Colors.white,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ),
-                Container(
-                  height: 8.0,
-                ),
-                (entity is PatientId)
-                    ? Container()
-                    : Text(
-                  entity.proficiency,
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.w300,
-                    fontSize: 14.0,
-                    fontStyle: FontStyle.italic,
-                  ),
-                ),
-                Container(height: 10.0),
-                Container(
-                    width: 70.0,
-                    decoration: BoxDecoration(
-                      color: Colors.green,
-                      borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                    ),
-                    child: Center(child: Text("Available!"))),
-              ],
-            ),
-          ],
+          ),
         ),
-      ),
+        Padding(
+          padding: const EdgeInsets.only(top: 25.0),
+          child: Text(
+            "${entity.name} ${entity.surname}",
+            softWrap: true,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 24.0,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+        ),
+        (entity is PatientId)
+            ? Container()
+            : Text(
+                "Hearth and Brain Specialist",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontStyle: FontStyle.italic,
+                  fontWeight: FontWeight.w400,
+                  fontSize: 20.0,
+                ),
+              ),
+        Padding(
+          padding: const EdgeInsets.only(top: 5.0),
+          child: (entity is PatientId)
+              ? Row(
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.only(left: 15.0, top: 15.0),
+                      child: RaisedButton(
+                        onPressed: () => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => DetailsPage(
+                                      patient: entity,
+                                    ),
+                              ),
+                            ),
+                        child: Container(
+                          width: 70.0,
+                          height: 70.0,
+                          child: Icon(
+                            Icons.dehaze,
+                            color: Colors.white,
+                          ),
+                        ),
+                        shape: CircleBorder(),
+                        color: Colors.blue,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 15.0),
+                      child: RaisedButton(
+                        onPressed: isOnline
+                            ? () => _invitePeer(context, entity.id, false)
+                            : null,
+                        child: Container(
+                          width: 70.0,
+                          height: 70.0,
+                          child: Icon(
+                            Icons.call,
+                            color: Colors.white,
+                          ),
+                        ),
+                        shape: CircleBorder(),
+                        color: Colors.blue,
+                      ),
+                    ),
+                  ],
+                )
+              : Padding(
+                  padding: const EdgeInsets.only(top: 25.0),
+                  child: RaisedButton(
+                    onPressed: isOnline
+                        ? () => _invitePeer(context, entity.id, false)
+                        : null,
+                    child: Container(
+                      width: 70.0,
+                      height: 70.0,
+                      child: Icon(
+                        Icons.call,
+                        color: Colors.white,
+                      ),
+                    ),
+                    shape: CircleBorder(),
+                    color: Colors.blue,
+                  ),
+                ),
+        )
+      ],
     );
   }
 
   @override
   Widget build(BuildContext context) {
+    final List availableEntities = _buildPatientPeerMergedList(_peers,
+        widget.isDoctor ? widget.doctor.patientId : widget.patient.doctorId);
     return Scaffold(
       appBar: AppBar(
         title: Text('Users on VOIP Server'),
@@ -273,33 +321,72 @@ class _VoipConnectionState extends State<VoipConnection> {
             })
           : // this is the part i will fix first. => The way it listed
           ListView.builder(
+              padding: const EdgeInsets.symmetric(
+                vertical: 50.0,
+                horizontal: 15.0,
+              ),
               shrinkWrap: true,
-              itemCount: (_peers != null
-                  ? _buildPatientPeerMergedList(
-                          _peers,
-                          widget.isDoctor
-                              ? widget.doctor.patientId
-                              : widget.patient.doctorId)
-                      .length
-                  : 0),
+              itemCount: widget.isDoctor
+                  ? widget.doctor.patientId.length
+                  : widget.patient.doctorId.length,
+              physics: const BouncingScrollPhysics(),
+              scrollDirection: Axis.horizontal,
               itemBuilder: (context, i) {
-                return _buildRow(
-                    context,
-                    _buildPatientPeerMergedList(
-                        _peers,
-                        widget.isDoctor
-                            ? widget.doctor.patientId
-                            : widget.patient.doctorId)[i]);
+                return Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 10.0),
+                  width: 230.0,
+                  height: 200.0,
+                  decoration: BoxDecoration(
+                    color: _colorBuilder(availableEntities),
+                    borderRadius: BorderRadius.all(Radius.circular(120.0)),
+                  ),
+                  child: _testChildBuilder(widget.isDoctor
+                      ? widget.doctor.patientId[i]
+                      : widget.patient.doctorId[i]),
+                );
               },
             ),
     );
   }
 
+  Color _colorBuilder(List available) {
+    Color online = Colors.green;
+    Color offline = Colors.red;
+
+    print(available);
+
+    if (widget.isDoctor && available.isNotEmpty) {
+      for (int i = 0; i < available.length; i++)
+        for (int j = 0; j < widget.doctor.patientId.length; j++)
+          if (widget.doctor.patientId[j].id == available[i].id) {
+            isOnline = true;
+            return online;
+          }
+    } else if (!widget.isDoctor && available.isNotEmpty) {
+      for (int i = 0; i < available.length; i++)
+        for (int j = 0; j < widget.patient.doctorId.length; j++)
+          if (available[i].id == widget.patient.doctorId[j].id) {
+            isOnline = true;
+            return online;
+          }
+    }
+
+    isOnline = false;
+    return offline;
+  }
+
   _buildPatientPeerMergedList(List peers, List entity) {
     List _available = [];
+    int peerLen;
+
+    // This is required for null exception
+    if (peers == null)
+      peerLen = 0;
+    else
+      peerLen = peers.length;
 
     for (int i = 0; i < entity.length; i++)
-      for (int j = 0; j < peers.length; j++)
+      for (int j = 0; j < peerLen; j++)
         if (peers[j]['id'] == entity[i].id) _available.insert(i, entity[i]);
 
     return _available;

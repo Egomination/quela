@@ -1,9 +1,9 @@
 import 'dart:async';
 
-import 'package:meta/meta.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_graphql/flutter_graphql.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:meta/meta.dart';
 
 class Auth {
   final storage = new FlutterSecureStorage();

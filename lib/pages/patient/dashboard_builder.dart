@@ -30,9 +30,7 @@ class PatientDashboardBuilder extends StatelessWidget {
                   ),
                 ),
                 InkWell(
-                  onTap: () {
-                    authBloc.dispatch(LoggedOut());
-                  },
+                  onTap: () => authBloc.dispatch(LoggedOut()),
                   child: Icon(Icons.power_settings_new),
                 ),
               ],

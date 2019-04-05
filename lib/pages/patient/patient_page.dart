@@ -61,12 +61,12 @@ class _PatientPageState extends State<PatientPage> {
                   labelColor: Colors.white,
                   tabs: [
                     Tab(
-                      icon: Icon(Icons.home),
+                      icon: Icon(Icons.dashboard),
                       text: "Dashboard",
                     ),
                     Tab(
                       icon: Icon(Icons.video_call),
-                      text: "Call",
+                      text: "Video Call",
                     ),
                   ],
                 ),
