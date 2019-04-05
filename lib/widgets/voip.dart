@@ -7,6 +7,7 @@ import 'package:flutter_webrtc/webrtc.dart';
 import 'package:quela/bloc/blocs.dart';
 import 'package:quela/models/doctor.dart';
 import 'package:quela/models/patient.dart';
+import 'package:quela/pages/doctor/dashboard_body.dart';
 import 'package:quela/utils/hex_code.dart';
 import 'package:quela/widgets/voip_signaling.dart';
 
@@ -170,30 +171,80 @@ class _VoipConnectionState extends State<VoipConnection> {
         (entity is PatientId)
             ? Container()
             : Text(
-          "Hearth and Brain Specialist",
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            fontStyle: FontStyle.italic,
-            fontWeight: FontWeight.w400,
-            fontSize: 20.0,
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(top: 25.0),
-          child: RaisedButton(
-            onPressed:
-            isOnline ? () => _invitePeer(context, entity.id, false) : null,
-            child: Container(
-              width: 70.0,
-              height: 70.0,
-              child: Icon(
-                Icons.call,
-                color: Colors.white,
+                "Hearth and Brain Specialist",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontStyle: FontStyle.italic,
+                  fontWeight: FontWeight.w400,
+                  fontSize: 20.0,
+                ),
               ),
-            ),
-            shape: CircleBorder(),
-            color: Colors.blue,
-          ),
+        Padding(
+          padding: const EdgeInsets.only(top: 10.0),
+          child: (entity is PatientId)
+              ? Row(
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.only(left: 15.0, top: 25.0),
+                      child: RaisedButton(
+                        onPressed: () => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => DetailsPage(
+                                      patient: entity,
+                                    ),
+                              ),
+                            ),
+                        child: Container(
+                          width: 70.0,
+                          height: 70.0,
+                          child: Icon(
+                            Icons.dehaze,
+                            color: Colors.white,
+                          ),
+                        ),
+                        shape: CircleBorder(),
+                        color: Colors.blue,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 25.0),
+                      child: RaisedButton(
+                        onPressed: isOnline
+                            ? () => _invitePeer(context, entity.id, false)
+                            : null,
+                        child: Container(
+                          width: 70.0,
+                          height: 70.0,
+                          child: Icon(
+                            Icons.call,
+                            color: Colors.white,
+                          ),
+                        ),
+                        shape: CircleBorder(),
+                        color: Colors.blue,
+                      ),
+                    ),
+                  ],
+                )
+              : Padding(
+                  padding: const EdgeInsets.only(top: 25.0),
+                  child: RaisedButton(
+                    onPressed: isOnline
+                        ? () => _invitePeer(context, entity.id, false)
+                        : null,
+                    child: Container(
+                      width: 70.0,
+                      height: 70.0,
+                      child: Icon(
+                        Icons.call,
+                        color: Colors.white,
+                      ),
+                    ),
+                    shape: CircleBorder(),
+                    color: Colors.blue,
+                  ),
+                ),
         )
       ],
     );
@@ -218,83 +269,83 @@ class _VoipConnectionState extends State<VoipConnection> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: _inCalling
           ? SizedBox(
-          width: 200.0,
-          child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                FloatingActionButton(
-                  child: const Icon(Icons.switch_camera),
-                  onPressed: _switchCamera,
-                ),
-                FloatingActionButton(
-                  onPressed: _hangUp,
-                  tooltip: 'Hangup',
-                  child: Icon(Icons.call_end),
-                  backgroundColor: Colors.pink,
-                ),
-                FloatingActionButton(
-                  child: const Icon(Icons.mic_off),
-                  onPressed: _muteMic,
-                )
-              ]))
+              width: 200.0,
+              child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    FloatingActionButton(
+                      child: const Icon(Icons.switch_camera),
+                      onPressed: _switchCamera,
+                    ),
+                    FloatingActionButton(
+                      onPressed: _hangUp,
+                      tooltip: 'Hangup',
+                      child: Icon(Icons.call_end),
+                      backgroundColor: Colors.pink,
+                    ),
+                    FloatingActionButton(
+                      child: const Icon(Icons.mic_off),
+                      onPressed: _muteMic,
+                    )
+                  ]))
           : null,
       body: _inCalling
           ? OrientationBuilder(builder: (context, orientation) {
-        return Container(
-          child: Stack(children: <Widget>[
-            Positioned(
-                left: 0.0,
-                right: 0.0,
-                top: 0.0,
-                bottom: 0.0,
-                child: Container(
-                  margin: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height,
-                  child: RTCVideoView(_remoteRenderer),
-                  decoration: BoxDecoration(color: Colors.black54),
-                )),
-            Positioned(
-              left: 20.0,
-              top: 20.0,
-              child: Container(
-                width: orientation == Orientation.portrait ? 90.0 : 120.0,
-                height:
-                orientation == Orientation.portrait ? 120.0 : 90.0,
-                child: RTCVideoView(_localRenderer),
-                decoration: BoxDecoration(color: Colors.black54),
-              ),
-            ),
-          ]),
-        );
-      })
+              return Container(
+                child: Stack(children: <Widget>[
+                  Positioned(
+                      left: 0.0,
+                      right: 0.0,
+                      top: 0.0,
+                      bottom: 0.0,
+                      child: Container(
+                        margin: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
+                        width: MediaQuery.of(context).size.width,
+                        height: MediaQuery.of(context).size.height,
+                        child: RTCVideoView(_remoteRenderer),
+                        decoration: BoxDecoration(color: Colors.black54),
+                      )),
+                  Positioned(
+                    left: 20.0,
+                    top: 20.0,
+                    child: Container(
+                      width: orientation == Orientation.portrait ? 90.0 : 120.0,
+                      height:
+                          orientation == Orientation.portrait ? 120.0 : 90.0,
+                      child: RTCVideoView(_localRenderer),
+                      decoration: BoxDecoration(color: Colors.black54),
+                    ),
+                  ),
+                ]),
+              );
+            })
           : // this is the part i will fix first. => The way it listed
-      ListView.builder(
-        padding: const EdgeInsets.symmetric(
-          vertical: 50.0,
-          horizontal: 15.0,
-        ),
-        shrinkWrap: true,
-        itemCount: widget.isDoctor
-            ? widget.doctor.patientId.length
-            : widget.patient.doctorId.length,
-        physics: const BouncingScrollPhysics(),
-        scrollDirection: Axis.horizontal,
-        itemBuilder: (context, i) {
-          return Container(
-            margin: const EdgeInsets.symmetric(horizontal: 10.0),
-            width: 230.0,
-            height: 200.0,
-            decoration: BoxDecoration(
-              color: _colorBuilder(availableEntities),
-              borderRadius: BorderRadius.all(Radius.circular(120.0)),
+          ListView.builder(
+              padding: const EdgeInsets.symmetric(
+                vertical: 50.0,
+                horizontal: 15.0,
+              ),
+              shrinkWrap: true,
+              itemCount: widget.isDoctor
+                  ? widget.doctor.patientId.length
+                  : widget.patient.doctorId.length,
+              physics: const BouncingScrollPhysics(),
+              scrollDirection: Axis.horizontal,
+              itemBuilder: (context, i) {
+                return Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 10.0),
+                  width: 230.0,
+                  height: 200.0,
+                  decoration: BoxDecoration(
+                    color: _colorBuilder(availableEntities),
+                    borderRadius: BorderRadius.all(Radius.circular(120.0)),
+                  ),
+                  child: _testChildBuilder(widget.isDoctor
+                      ? widget.doctor.patientId[i]
+                      : widget.patient.doctorId[i]),
+                );
+              },
             ),
-            child: _testChildBuilder(widget.isDoctor
-                ? widget.doctor.patientId[i]
-                : widget.patient.doctorId[i]),
-          );
-        },
-      ),
     );
   }
 
