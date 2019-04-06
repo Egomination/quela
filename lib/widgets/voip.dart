@@ -143,108 +143,96 @@ class _VoipConnectionState extends State<VoipConnection> {
   Widget _testChildBuilder(entity) {
     // _invitePeer(context, entity.id, false),
     return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.only(top: 45.0),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(50.0),
-            child: Image.network(
-              entity.profilePic,
-              width: 150,
-              height: 150,
-              fit: BoxFit.fill,
-            ),
+        ClipRRect(
+          borderRadius: BorderRadius.circular(50.0),
+          child: Image.network(
+            entity.profilePic,
+            width: 150,
+            height: 150,
+            fit: BoxFit.fill,
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.only(top: 25.0),
-          child: Text(
-            "${entity.name} ${entity.surname}",
-            softWrap: true,
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: 24.0,
-              fontWeight: FontWeight.w700,
-            ),
+        Text(
+          "${entity.name} ${entity.surname}",
+          softWrap: true,
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            fontSize: 24.0,
+            fontWeight: FontWeight.w700,
           ),
         ),
         (entity is PatientId)
             ? Container()
             : Text(
-                "Hearth and Brain Specialist",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontStyle: FontStyle.italic,
-                  fontWeight: FontWeight.w400,
-                  fontSize: 20.0,
+          "Hearth and Brain Specialist",
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            fontStyle: FontStyle.italic,
+            fontWeight: FontWeight.w400,
+            fontSize: 20.0,
+          ),
+        ),
+        (entity is PatientId)
+            ? Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            RaisedButton(
+              onPressed: () =>
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          DetailsPage(
+                            patient: entity,
+                          ),
+                    ),
+                  ),
+              child: Container(
+                width: 70.0,
+                height: 70.0,
+                child: Icon(
+                  Icons.dehaze,
+                  color: Colors.white,
                 ),
               ),
-        Padding(
-          padding: const EdgeInsets.only(top: 5.0),
-          child: (entity is PatientId)
-              ? Row(
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.only(left: 15.0, top: 15.0),
-                      child: RaisedButton(
-                        onPressed: () => Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => DetailsPage(
-                                      patient: entity,
-                                    ),
-                              ),
-                            ),
-                        child: Container(
-                          width: 70.0,
-                          height: 70.0,
-                          child: Icon(
-                            Icons.dehaze,
-                            color: Colors.white,
-                          ),
-                        ),
-                        shape: CircleBorder(),
-                        color: Colors.blue,
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 15.0),
-                      child: RaisedButton(
-                        onPressed: isOnline
-                            ? () => _invitePeer(context, entity.id, false)
-                            : null,
-                        child: Container(
-                          width: 70.0,
-                          height: 70.0,
-                          child: Icon(
-                            Icons.call,
-                            color: Colors.white,
-                          ),
-                        ),
-                        shape: CircleBorder(),
-                        color: Colors.blue,
-                      ),
-                    ),
-                  ],
-                )
-              : Padding(
-                  padding: const EdgeInsets.only(top: 5.0),
-                  child: RaisedButton(
-                    onPressed: isOnline
-                        ? () => _invitePeer(context, entity.id, false)
-                        : null,
-                    child: Container(
-                      width: 70.0,
-                      height: 70.0,
-                      child: Icon(
-                        Icons.call,
-                        color: Colors.white,
-                      ),
-                    ),
-                    shape: CircleBorder(),
-                    color: Colors.blue,
-                  ),
+              shape: CircleBorder(),
+              color: Colors.blue,
+            ),
+            RaisedButton(
+              onPressed: isOnline
+                  ? () => _invitePeer(context, entity.id, false)
+                  : null,
+              child: Container(
+                width: 70.0,
+                height: 70.0,
+                child: Icon(
+                  Icons.call,
+                  color: Colors.white,
                 ),
+              ),
+              shape: CircleBorder(),
+              color: Colors.blue,
+            ),
+          ],
+        )
+            : RaisedButton(
+          onPressed: isOnline
+              ? () => _invitePeer(context, entity.id, false)
+              : null,
+          child: Container(
+            width: 70.0,
+            height: 70.0,
+            child: Icon(
+              Icons.call,
+              color: Colors.white,
+            ),
+          ),
+          shape: CircleBorder(),
+          color: Colors.blue,
         )
       ],
     );
