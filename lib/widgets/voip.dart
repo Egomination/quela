@@ -155,25 +155,30 @@ class _VoipConnectionState extends State<VoipConnection> {
             fit: BoxFit.fill,
           ),
         ),
-        Text(
-          "${entity.name} ${entity.surname}",
-          softWrap: true,
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            fontSize: 24.0,
-            fontWeight: FontWeight.w700,
-          ),
-        ),
-        (entity is PatientId)
-            ? Container()
-            : Text(
-          "Hearth and Brain Specialist",
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            fontStyle: FontStyle.italic,
-            fontWeight: FontWeight.w400,
-            fontSize: 20.0,
-          ),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            Text(
+              "${entity.name} ${entity.surname}",
+              softWrap: true,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 24.0,
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+            (entity is PatientId)
+                ? Container()
+                : Text(
+              "Hearth and Brain Specialist",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontStyle: FontStyle.italic,
+                fontWeight: FontWeight.w400,
+                fontSize: 20.0,
+              ),
+            ),
+          ],
         ),
         (entity is PatientId)
             ? Row(
