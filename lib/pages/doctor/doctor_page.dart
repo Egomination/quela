@@ -64,7 +64,7 @@ class _DoctorPageState extends State<DoctorPage> {
                   ],
                 ),
                 bottomNavigationBar: TabBar(
-                  //isScrollable: true,
+                  isScrollable: false,
                   labelColor: Colors.white,
                   tabs: [
                     Tab(
