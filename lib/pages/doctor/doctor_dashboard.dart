@@ -8,7 +8,6 @@ import 'package:quela/pages/doctor/dashboard_body.dart';
 class DoctorDashboard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    //final AuthBloc authBloc = BlocProvider.of<AuthBloc>(context);
     final DoctorsBloc _bloc = BlocProvider.of<DoctorsBloc>(context);
     return BlocBuilder(
       bloc: _bloc,
@@ -77,10 +76,24 @@ class DoctorInfoBuilder extends StatelessWidget {
   }
 
   Column _doctorInfoBuilder(BuildContext context) {
+    final AuthBloc authBloc = BlocProvider.of<AuthBloc>(context);
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.only(right: 34.0),
+          child: Align(
+            alignment: Alignment.centerRight,
+            child: InkWell(
+              child: Text(
+                "Logout",
+                style: TextStyle(color: Colors.red),
+              ),
+              onTap: () => authBloc.dispatch(LoggedOut()),
+            ),
+          ),
+        ),
         Padding(
           padding: EdgeInsets.only(
             left: (MediaQuery
