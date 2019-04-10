@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quela/bloc/blocs.dart';
 import 'package:quela/models/doctor.dart';
 import 'package:quela/pages/doctor/dashboard_body.dart';
+import 'package:quela/utils/hex_code.dart';
 
 class DoctorDashboard extends StatelessWidget {
   @override
@@ -28,12 +29,10 @@ class DoctorInfoBuilder extends StatelessWidget {
 
   Widget _imageNameBuilder(BuildContext context, {PatientId patient}) {
     return InkWell(
-      onTap: () =>
-          Navigator.push(
+      onTap: () => Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) =>
-                  DetailsPage(
+              builder: (context) => DetailsPage(
                     patient: patient,
                   ),
             ),
@@ -60,14 +59,11 @@ class DoctorInfoBuilder extends StatelessWidget {
   Widget _listViewBuilder(BuildContext context) {
     return ListView.builder(
         padding: EdgeInsets.only(
-          left: (MediaQuery
-              .of(context)
-              .size
-              .width / 100) * 10,
+          left: (MediaQuery.of(context).size.width / 100) * 10,
         ),
         physics: BouncingScrollPhysics(),
         itemCount:
-        doctor.patientId.length == null ? 0 : doctor.patientId.length,
+            doctor.patientId.length == null ? 0 : doctor.patientId.length,
         scrollDirection: Axis.horizontal,
         shrinkWrap: true,
         itemBuilder: (context, index) {
@@ -82,13 +78,13 @@ class DoctorInfoBuilder extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Padding(
-          padding: const EdgeInsets.only(right: 34.0),
+          padding: const EdgeInsets.only(right: 34.0), // FIXME:
           child: Align(
             alignment: Alignment.centerRight,
             child: InkWell(
               child: Text(
                 "Logout",
-                style: TextStyle(color: Colors.red),
+                style: TextStyle(color: Colors.black),
               ),
               onTap: () => authBloc.dispatch(LoggedOut()),
             ),
@@ -96,10 +92,7 @@ class DoctorInfoBuilder extends StatelessWidget {
         ),
         Padding(
           padding: EdgeInsets.only(
-            left: (MediaQuery
-                .of(context)
-                .size
-                .width / 100) * 10,
+            left: (MediaQuery.of(context).size.width / 100) * 10,
           ),
           child: Text(
             "Welcome",
@@ -112,15 +105,12 @@ class DoctorInfoBuilder extends StatelessWidget {
         Container(height: 15.0),
         Padding(
           padding: EdgeInsets.only(
-            left: (MediaQuery
-                .of(context)
-                .size
-                .width / 100) * 10,
+            left: (MediaQuery.of(context).size.width / 100) * 10,
           ),
           child: Text(
             "Dr. ${doctor.surname}",
             style: TextStyle(
-              color: Colors.black45,
+              color: HexColor("#214D70"),
               fontWeight: FontWeight.bold,
               fontSize: 32.0,
             ),
@@ -129,13 +119,10 @@ class DoctorInfoBuilder extends StatelessWidget {
         Container(height: 15.0),
         Padding(
           padding: EdgeInsets.only(
-            left: (MediaQuery
-                .of(context)
-                .size
-                .width / 100) * 10,
+            left: (MediaQuery.of(context).size.width / 100) * 10,
           ),
           child: Text(
-            "Recently viewed patients",
+            "Recently Viewed Patients",
             style: TextStyle(
               color: Colors.black,
               fontSize: 18.0,
@@ -144,10 +131,7 @@ class DoctorInfoBuilder extends StatelessWidget {
         ),
         Container(height: 15.0),
         Container(
-          height: (MediaQuery
-              .of(context)
-              .size
-              .height / 100) * 10,
+          height: (MediaQuery.of(context).size.height / 100) * 10,
           child: _listViewBuilder(context),
         ),
       ],
@@ -174,17 +158,11 @@ class DoctorInfoBuilder extends StatelessWidget {
         ),
         Container(
           margin: EdgeInsets.only(
-            top: (MediaQuery
-                .of(context)
-                .size
-                .height / 100) * 5.0,
+            top: (MediaQuery.of(context).size.height / 100) * 5.0,
             left: 35.0,
             right: 35.0,
           ),
-          width: MediaQuery
-              .of(context)
-              .size
-              .width,
+          width: MediaQuery.of(context).size.width,
           height: 120.0,
           decoration: BoxDecoration(
             color: Colors.white,
@@ -240,41 +218,26 @@ class DoctorInfoBuilder extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
         Padding(
-          padding: const EdgeInsets.only(left: 34.0),
+          padding: const EdgeInsets.only(left: 30.0),
           child: Container(
             padding: EdgeInsets.only(
-              top: (MediaQuery
-                  .of(context)
-                  .size
-                  .height / 100) * 10,
+              top: (MediaQuery.of(context).size.height / 100) * 6,
             ),
-            width: MediaQuery
-                .of(context)
-                .size
-                .width,
-            height: MediaQuery
-                .of(context)
-                .size
-                .height / 2.4,
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height / 2.28,
             decoration: BoxDecoration(
-              color: Colors.blueAccent,
+              color: HexColor("#FF9A91"),
             ),
             child: _doctorInfoBuilder(context),
           ),
         ),
         Padding(
-          padding: const EdgeInsets.only(left: 34.0),
+          padding: const EdgeInsets.only(left: 30.0),
           child: Container(
-            width: MediaQuery
-                .of(context)
-                .size
-                .width,
-            height: MediaQuery
-                .of(context)
-                .size
-                .height / 2.4,
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height / 2.37,
             decoration: BoxDecoration(
-              color: Colors.amber,
+              color: HexColor("#FFE0B9"),
             ),
             child: _doctorNotes(context),
           ),
