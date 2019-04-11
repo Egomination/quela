@@ -3,7 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quela/bloc/blocs.dart';
 import 'package:quela/models/doctor.dart';
-import 'package:quela/pages/doctor/dashboard_body.dart';
+import 'package:quela/pages/doctor/doctor_patient.dart';
 import 'package:quela/utils/hex_code.dart';
 
 class DoctorDashboard extends StatelessWidget {
