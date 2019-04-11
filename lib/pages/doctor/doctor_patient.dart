@@ -12,7 +12,18 @@ class DetailsPage extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Container(height: (MediaQuery.of(context).size.height / 15)),
+        Padding(
+          padding:
+              EdgeInsets.only(left: (MediaQuery.of(context).size.width / 10)),
+          child: InkWell(
+            child: Icon(
+              Icons.arrow_back,
+              color: Colors.white,
+            ),
+            onTap: () => Navigator.pop(context),
+          ),
+        ),
+        Container(height: (MediaQuery.of(context).size.height / 50)),
         Row(
           children: <Widget>[
             Column(
