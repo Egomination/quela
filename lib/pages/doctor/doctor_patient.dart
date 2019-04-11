@@ -189,6 +189,119 @@ class DetailsPage extends StatelessWidget {
     );
   }
 
+  Widget _patientData(BuildContext context, PatientId patient) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Container(height: (MediaQuery.of(context).size.height / 20)),
+        Padding(
+          padding: EdgeInsets.only(
+              left: (MediaQuery.of(context).size.width / 100) * 10),
+          child: Text(
+            "Vital Data",
+            style: TextStyle(
+              color: HexColor("#FFE0B9"),
+              fontSize: 20.0,
+              fontWeight: FontWeight.w300,
+            ),
+          ),
+        ),
+        Container(height: (MediaQuery.of(context).size.height / 20)),
+        Expanded(
+          child: Padding(
+            padding: EdgeInsets.only(
+                left: (MediaQuery.of(context).size.width / 100) * 20),
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: 2,
+              itemBuilder: (context, index) {
+                return Center(
+                  child: Column(
+                    children: <Widget>[
+                      Padding(
+                        padding: EdgeInsets.only(
+                            right:
+                                (MediaQuery.of(context).size.width / 100) * 10),
+                        child: Text(
+                          patient.values[index].valCurr,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 25.0,
+                          ),
+                        ),
+                      ),
+                      Container(
+                          height: (MediaQuery.of(context).size.height / 80)),
+                      Padding(
+                        padding: EdgeInsets.only(
+                            right:
+                                (MediaQuery.of(context).size.width / 100) * 10),
+                        child: Text(
+                          patient.values[index].name,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 15.0,
+                            fontWeight: FontWeight.w300,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              },
+            ),
+          ),
+        ),
+        Expanded(
+          child: Padding(
+            padding: EdgeInsets.only(
+                left: (MediaQuery.of(context).size.width / 100) * 25),
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: 2,
+              itemBuilder: (context, index) {
+                return Center(
+                  child: Column(
+                    children: <Widget>[
+                      Padding(
+                        padding: EdgeInsets.only(
+                            right:
+                                (MediaQuery.of(context).size.width / 100) * 17),
+                        child: Text(
+                          patient.values[index + 2].valCurr,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 25.0,
+                          ),
+                        ),
+                      ),
+                      Container(
+                          height: (MediaQuery.of(context).size.height / 80)),
+                      Padding(
+                        padding: EdgeInsets.only(
+                            right:
+                                (MediaQuery.of(context).size.width / 100) * 17),
+                        child: Text(
+                          patient.values[index + 2].name,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 15.0,
+                            fontWeight: FontWeight.w300,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              },
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -204,6 +317,17 @@ class DetailsPage extends StatelessWidget {
                 color: HexColor("#214D70"),
               ),
               child: _patientInfo(context, patient),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 40.0),
+            child: Container(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height / 2.2,
+              decoration: BoxDecoration(
+                color: HexColor("#679287"),
+              ),
+              child: _patientData(context, patient),
             ),
           ),
         ],
