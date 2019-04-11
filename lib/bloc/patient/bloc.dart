@@ -15,7 +15,7 @@ class PatientsBloc extends Bloc<PatientEvents, PatientState> {
 
   @override
   Stream<PatientState> mapEventToState(event) async* {
-    if (event is Fetch) {
+    if (event is Fetch || event is Update) {
       try {
         final patient = await _handleApiCall();
         yield PatientLoaded(patient: patient);
@@ -28,21 +28,21 @@ class PatientsBloc extends Bloc<PatientEvents, PatientState> {
   Future<Patient> _handleApiCall() async {
     final String uid = await userId;
     // Linking api url
-    HttpLink link = HttpLink(uri: "https://quela-api.herokuapp.com/");
+    //HttpLink link = HttpLink(uri: "https://quela-api.herokuapp.com/");
+    HttpLink link = HttpLink(uri: "http://192.168.1.108:4000/graphql");
     // Gql client
-    GraphQLClient client = GraphQLClient(
-      link: link,
-      cache: InMemoryCache(),
-    );
+    GraphQLClient client = GraphQLClient(link: link, cache: InMemoryCache());
     try {
       final QueryResult response = await client
           .query(
             QueryOptions(
               document: search,
               variables: <String, dynamic>{'id': uid},
+              //pollInterval: 1,
             ),
           )
           .timeout(const Duration(seconds: 10));
+      client.cache.reset();
 
       if (response.errors != null) {
         print(response.errors.toString());

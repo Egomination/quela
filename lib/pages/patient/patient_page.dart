@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quela/bloc/patient/patient_bloc.dart';
@@ -45,7 +47,9 @@ class _PatientPageState extends State<PatientPage> {
             );
           }
           if (state is PatientLoaded) {
-            print(state.patient);
+            Future.delayed(const Duration(seconds: 10), () {
+              _bloc.dispatch(Update());
+            });
             return DefaultTabController(
               length: 2,
               child: Scaffold(
