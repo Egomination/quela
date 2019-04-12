@@ -42,6 +42,7 @@ class PatientsBloc extends Bloc<PatientEvents, PatientState> {
             ),
           )
           .timeout(const Duration(seconds: 10));
+      client.cache.reset();
 
       if (response.errors != null) {
         print(response.errors.toString());
