@@ -97,6 +97,7 @@ query search(\$id: String!){
         val_max
         val_curr
         last_upd
+        graph_data
       }
     }
   }

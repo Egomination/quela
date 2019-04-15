@@ -126,6 +126,7 @@ class Value {
   String valMin;
   String valMax;
   int lastUpd;
+  List<dynamic> graphData;
 
   Value({
     this.name,
@@ -133,6 +134,7 @@ class Value {
     this.valMin,
     this.valMax,
     this.lastUpd,
+    this.graphData,
   });
 
   factory Value.fromJson(Map<String, dynamic> json) => new Value(
@@ -141,6 +143,7 @@ class Value {
         valMin: json["val_min"],
         valMax: json["val_max"],
         lastUpd: json["last_upd"],
+        graphData: json["graph_data"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -149,5 +152,6 @@ class Value {
         "val_min": valMin,
         "val_max": valMax,
         "last_upd": lastUpd,
+        "graph_data": graphData,
       };
 }
