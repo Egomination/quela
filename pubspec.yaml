@@ -14,6 +14,7 @@ dependencies:
   flutter_webrtc: ^0.1.6
   flutter_bloc: ^0.9.0
   flutter_secure_storage: ^3.2.1
+  charts_flutter: ^0.6.0
   flip_card: ^0.2.1
   meta: ^1.1.6
   equatable: ^0.2.3
