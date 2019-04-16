@@ -82,11 +82,12 @@ query search(\$id: String!) {
     }
     values {
       name 
-      val_curr
       val_min 
       val_max
-      last_upd
-      graph_data
+      graph_data {
+        data
+        time
+      }
     }
   }
 }

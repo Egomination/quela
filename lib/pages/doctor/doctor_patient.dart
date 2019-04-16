@@ -238,7 +238,11 @@ class DetailsPage extends StatelessWidget {
                             right:
                                 (MediaQuery.of(context).size.width / 100) * 10),
                         child: Text(
-                          patient.values[index].valCurr,
+                          patient
+                              .values[index]
+                              .graphData[
+                                  patient.values[index].graphData.length - 1]
+                              .data,
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 25.0,
@@ -283,7 +287,12 @@ class DetailsPage extends StatelessWidget {
                             right:
                                 (MediaQuery.of(context).size.width / 100) * 17),
                         child: Text(
-                          patient.values[index + 2].valCurr,
+                          patient
+                              .values[index + 2]
+                              .graphData[
+                                  patient.values[index + 2].graphData.length -
+                                      1]
+                              .data,
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 25.0,

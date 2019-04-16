@@ -38,10 +38,12 @@ class ScreenBuilder extends StatelessWidget {
               icon: icons[index],
               unit: units[index],
               frontText: patient.values[index].name,
-              backHeader: patient.values[index].valCurr,
+              backHeader: patient.values[index]
+                  .graphData[patient.values[index].graphData.length - 1].data,
               thresholdMin: patient.values[index].valMin,
               thresholdMax: patient.values[index].valMax,
-              lastUpdated: patient.values[index].lastUpd,
+              lastUpdated: patient.values[index]
+                  .graphData[patient.values[index].graphData.length - 1].time,
             );
           },
         );
