@@ -39,7 +39,8 @@ class ScreenBuilder extends StatelessWidget {
               unit: units[index],
               frontText: patient.values[index].name,
               backHeader: patient.values[index]
-                  .graphData[patient.values[index].graphData.length - 1].data,
+                  .graphData[patient.values[index].graphData.length - 1].data
+                  .toString(),
               thresholdMin: patient.values[index].valMin,
               thresholdMax: patient.values[index].valMax,
               lastUpdated: patient.values[index]

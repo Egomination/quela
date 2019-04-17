@@ -241,7 +241,8 @@ class DetailsPage extends StatelessWidget {
                               .values[index]
                               .graphData[
                                   patient.values[index].graphData.length - 1]
-                              .data,
+                              .data
+                              .toString(),
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 25.0,
@@ -291,7 +292,8 @@ class DetailsPage extends StatelessWidget {
                               .graphData[
                                   patient.values[index + 2].graphData.length -
                                       1]
-                              .data,
+                              .data
+                              .toString(),
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 25.0,
@@ -341,13 +343,19 @@ class DetailsPage extends StatelessWidget {
               child: _patientInfo(context, patient),
             ),
           ),
-          Container(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height / 2.2,
-            decoration: BoxDecoration(
-                //color: HexColor("#679287"),
-                ),
-            child: SimpleLineChart(),
+          Padding(
+            padding: const EdgeInsets.only(left: 40.0),
+            child: Container(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height / 2.2,
+              decoration: BoxDecoration(
+                color: HexColor("#679287"),
+              ),
+              child: SimpleLineChart(
+                patient: patient,
+                type: 2,
+              ),
+            ),
           ),
         ],
       ),

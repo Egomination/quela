@@ -158,7 +158,7 @@ class Value {
 }
 
 class GraphData {
-  String data;
+  int data;
   int time;
 
   GraphData({
