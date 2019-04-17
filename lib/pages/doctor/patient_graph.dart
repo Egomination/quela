@@ -13,7 +13,8 @@ class SimpleLineChart extends StatelessWidget {
 
   String dateFormatter(data) {
     DateTime time = DateTime.fromMillisecondsSinceEpoch(data * 1000);
-    String date = DateFormat.MMMd().add_Hm().format(time);
+    //String date = DateFormat.MMMd().add_Hm().format(time);
+    String date = DateFormat.Hm().format(time);
     return date;
   }
 
@@ -61,18 +62,20 @@ class SimpleLineChart extends StatelessWidget {
       ],
     ];
 
-    return new LineChart(
+    return LineChart(
       lines: [
-        new Line<List, String, int>(
+        Line<List, String, int>(
           data: myData,
           xFn: (datum) => dateFormatter(datum[0]),
           yFn: (datum) => datum[1],
-          yAxis: new ChartAxis(span: IntSpan(minMax[0] - 2, minMax[1] + 2)
-              //tickGenerator: IntervalTickGenerator.byN(1),
-              ),
+          xAxis: ChartAxis(),
+          yAxis: ChartAxis(
+            span: IntSpan(minMax[0] - 2, minMax[1] + 2),
+            //tickGenerator: IntervalTickGenerator.byN(1),
+          ),
         ),
       ],
-      chartPadding: new EdgeInsets.fromLTRB(30.0, 10.0, 10.0, 30.0),
+      chartPadding: EdgeInsets.fromLTRB(30.0, 10.0, 10.0, 30.0),
     );
   }
 }
