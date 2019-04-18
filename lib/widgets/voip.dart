@@ -15,7 +15,7 @@ class VoipConnection extends StatefulWidget {
   static String tag = 'call';
 
   // Needs to be set in here.
-  final String ip = '192.168.1.108';
+  final String ip = 'https://rtcsw.herokuapp.com';
 
   final Patient patient;
   final Doctor doctor;

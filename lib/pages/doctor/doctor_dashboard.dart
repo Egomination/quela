@@ -49,7 +49,7 @@ class DoctorInfoBuilder extends StatelessWidget {
               height: 45.0,
             ),
           ),
-          Container(height: 5.0),
+          Container(height: 2.0),
           Text(patient.name),
         ],
       ),
@@ -102,7 +102,7 @@ class DoctorInfoBuilder extends StatelessWidget {
             ),
           ),
         ),
-        Container(height: 15.0),
+        Container(height: 12.0),
         Padding(
           padding: EdgeInsets.only(
             left: (MediaQuery.of(context).size.width / 100) * 10,
@@ -116,7 +116,7 @@ class DoctorInfoBuilder extends StatelessWidget {
             ),
           ),
         ),
-        Container(height: 15.0),
+        Container(height: 5.0),
         Padding(
           padding: EdgeInsets.only(
             left: (MediaQuery.of(context).size.width / 100) * 10,

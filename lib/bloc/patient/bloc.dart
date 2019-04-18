@@ -28,8 +28,8 @@ class PatientsBloc extends Bloc<PatientEvents, PatientState> {
   Future<Patient> _handleApiCall() async {
     final String uid = await userId;
     // Linking api url
-    //HttpLink link = HttpLink(uri: "https://quela-api.herokuapp.com/");
-    HttpLink link = HttpLink(uri: "http://192.168.1.108:4000/graphql");
+    HttpLink link = HttpLink(uri: "https://quela-api.herokuapp.com/");
+    //HttpLink link = HttpLink(uri: "http://192.168.1.108:4000/graphql");
     // Gql client
     GraphQLClient client = GraphQLClient(link: link, cache: InMemoryCache());
     try {
