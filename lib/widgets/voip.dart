@@ -15,7 +15,7 @@ class VoipConnection extends StatefulWidget {
   static String tag = 'call';
 
   // Needs to be set in here.
-  final String ip = 'https://rtcsw.herokuapp.com';
+  final String ip = 'rtcsw.herokuapp.com';
 
   final Patient patient;
   final Doctor doctor;
@@ -73,7 +73,7 @@ class _VoipConnectionState extends State<VoipConnection> {
 
   void _connect() async {
     if (_signaling == null) {
-      _signaling = Signaling('ws://' + serverIP + ':4442', _displayName)
+      _signaling = Signaling('ws://' + serverIP, _displayName)
         ..connect();
 
       _signaling.onStateChange = (SignalingState state) {
