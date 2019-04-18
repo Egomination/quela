@@ -23,21 +23,20 @@ class DetailsPage extends StatelessWidget {
             child: SimpleLineChart(
               patient: patient,
               type: index,
+              bloc: this.bloc,
             ),
           );
         });
   }
 
   Widget _patientInfo(BuildContext context, PatientId patient) {
-    var test = patient.values[0];
-    print(test.graphData[test.graphData.length - 1].data);
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Padding(
           padding:
-          EdgeInsets.only(left: (MediaQuery.of(context).size.width / 10)),
+              EdgeInsets.only(left: (MediaQuery.of(context).size.width / 10)),
           child: InkWell(
             child: Icon(
               Icons.arrow_back,
@@ -404,9 +403,9 @@ class DetailsPage extends StatelessWidget {
         final List<PatientId> patientId =
             (state as DoctorLoaded).doctor.patientId;
 
-        var dummyVar = this.patient;
+        var ppatient = this.patient;
         patientId.forEach((patient) =>
-        patient.name == this.patient.name ? dummyVar = patient : patient);
+            patient.name == this.patient.name ? ppatient = patient : patient);
 
         return Scaffold(
           body: Column(
@@ -415,35 +414,23 @@ class DetailsPage extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(left: 40.0),
                 child: Container(
-                  width: MediaQuery
-                      .of(context)
-                      .size
-                      .width,
-                  height: MediaQuery
-                      .of(context)
-                      .size
-                      .height / 2,
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.height / 2,
                   decoration: BoxDecoration(
                     color: HexColor("#214D70"),
                   ),
-                  child: _patientInfo(context, dummyVar),
+                  child: _patientInfo(context, ppatient),
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 40.0),
                 child: Container(
-                  width: MediaQuery
-                      .of(context)
-                      .size
-                      .width,
-                  height: MediaQuery
-                      .of(context)
-                      .size
-                      .height / 2.2,
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.height / 2.2,
                   decoration: BoxDecoration(
                     color: HexColor("#679287"),
                   ),
-                  child: _patientData(context, dummyVar),
+                  child: _patientData(context, ppatient),
                 ),
               ),
             ],

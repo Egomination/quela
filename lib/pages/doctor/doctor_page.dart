@@ -20,8 +20,7 @@ class _DoctorPageState extends State<DoctorPage> {
   @override
   void initState() {
     super.initState();
-    _bloc = DoctorsBloc()
-      ..dispatch(DoctorFetch());
+    _bloc = DoctorsBloc()..dispatch(DoctorFetch());
   }
 
   @override
@@ -50,7 +49,7 @@ class _DoctorPageState extends State<DoctorPage> {
             );
           }
           if (state is DoctorLoaded) {
-            Future.delayed(const Duration(seconds: 5), () {
+            Future.delayed(const Duration(seconds: 15), () {
               _bloc.dispatch(DoctorUpdate());
             });
             return DefaultTabController(

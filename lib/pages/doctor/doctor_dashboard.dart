@@ -33,10 +33,8 @@ class DoctorInfoBuilder extends StatelessWidget {
       onTap: () => Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => DetailsPage(
-                    patient: patient,
-                  bloc: this.bloc
-                  ),
+              builder: (context) =>
+                  DetailsPage(patient: patient, bloc: this.bloc),
             ),
           ),
       child: Column(
