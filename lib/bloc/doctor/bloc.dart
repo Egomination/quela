@@ -95,8 +95,10 @@ query search(\$id: String!){
         name
         val_min
         val_max
-        val_curr
-        last_upd
+        graph_data {
+          data
+          time
+        }
       }
     }
   }

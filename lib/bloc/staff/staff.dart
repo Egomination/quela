@@ -72,7 +72,7 @@ class Staff {
   final String updatePatientDataQuery = """
     mutation updatePatientData(
       \$id: String!
-      \$value: String!
+      \$value: Int!
       \$field: String!
     ) {
       updatePatientData(
@@ -96,7 +96,7 @@ class Staff {
             document: updatePatientDataQuery,
             variables: <String, dynamic>{
               "id": id,
-              "value": value,
+              "value": int.parse(value),
               "field": field,
             },
           ),

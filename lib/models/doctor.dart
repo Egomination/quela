@@ -132,30 +132,47 @@ class Value {
   String name;
   String valMin;
   String valMax;
-  String valCurr;
-  int lastUpd;
+  List<GraphData> graphData;
 
   Value({
     this.name,
     this.valMin,
     this.valMax,
-    this.valCurr,
-    this.lastUpd,
+    this.graphData,
   });
 
   factory Value.fromJson(Map<String, dynamic> json) => new Value(
         name: json["name"],
         valMin: json["val_min"],
         valMax: json["val_max"],
-        valCurr: json["val_curr"],
-        lastUpd: json["last_upd"],
+        graphData: new List<GraphData>.from(
+            json["graph_data"].map((x) => GraphData.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
         "name": name,
         "val_min": valMin,
         "val_max": valMax,
-        "val_curr": valCurr,
-        "last_upd": lastUpd,
+        "graph_data": new List<dynamic>.from(graphData.map((x) => x.toJson())),
+      };
+}
+
+class GraphData {
+  int data;
+  int time;
+
+  GraphData({
+    this.data,
+    this.time,
+  });
+
+  factory GraphData.fromJson(Map<String, dynamic> json) => new GraphData(
+        data: json["data"],
+        time: json["time"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "data": data,
+        "time": time,
       };
 }

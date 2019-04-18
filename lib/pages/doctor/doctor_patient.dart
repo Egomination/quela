@@ -1,11 +1,30 @@
+import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
+
 import 'package:quela/models/doctor.dart';
+import 'package:quela/pages/doctor/patient_graph.dart';
 import 'package:quela/utils/hex_code.dart';
 
 class DetailsPage extends StatelessWidget {
   final PatientId patient;
 
   DetailsPage({Key key, @required this.patient}) : assert(patient != null);
+
+  void _showPatientGraph(context, index) {
+    showModalBottomSheet(
+        context: context,
+        builder: (BuildContext context) {
+          return Container(
+            decoration: BoxDecoration(
+              color: HexColor("#679287"),
+            ),
+            child: SimpleLineChart(
+              patient: patient,
+              type: index,
+            ),
+          );
+        });
+  }
 
   Widget _patientInfo(BuildContext context, PatientId patient) {
     return Column(
@@ -205,7 +224,6 @@ class DetailsPage extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Container(height: (MediaQuery.of(context).size.height / 20)),
         Padding(
           padding: EdgeInsets.only(
               left: (MediaQuery.of(context).size.width / 100) * 10),
@@ -218,97 +236,158 @@ class DetailsPage extends StatelessWidget {
             ),
           ),
         ),
-        Container(height: (MediaQuery.of(context).size.height / 20)),
-        Expanded(
-          child: Padding(
-            padding: EdgeInsets.only(
-                left: (MediaQuery.of(context).size.width / 100) * 20),
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              itemCount: 2,
-              itemBuilder: (context, index) {
-                return Center(
-                  child: Column(
-                    children: <Widget>[
-                      Padding(
-                        padding: EdgeInsets.only(
-                            right:
-                                (MediaQuery.of(context).size.width / 100) * 10),
-                        child: Text(
-                          patient.values[index].valCurr,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 25.0,
+        Container(height: (MediaQuery.of(context).size.height / 17)),
+        Padding(
+          padding: EdgeInsets.only(
+              left: (MediaQuery.of(context).size.width / 100) * 20),
+          child: Column(
+            children: <Widget>[
+              Row(
+                children: <Widget>[
+                  GestureDetector(
+                    onTap: () {
+                      _showPatientGraph(context, 0);
+                    },
+                    child: Container(
+                      child: Column(
+                        children: <Widget>[
+                          Text(
+                            patient
+                                .values[0]
+                                .graphData[
+                                    patient.values[0].graphData.length - 1]
+                                .data
+                                .toString(),
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 25.0,
+                            ),
                           ),
-                        ),
-                      ),
-                      Container(
-                          height: (MediaQuery.of(context).size.height / 80)),
-                      Padding(
-                        padding: EdgeInsets.only(
-                            right:
-                                (MediaQuery.of(context).size.width / 100) * 10),
-                        child: Text(
-                          patient.values[index].name,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 15.0,
-                            fontWeight: FontWeight.w300,
+                          Text(
+                            patient.values[0].name,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 15.0,
+                              fontWeight: FontWeight.w300,
+                            ),
                           ),
-                        ),
+                        ],
                       ),
-                    ],
+                    ),
                   ),
-                );
-              },
-            ),
-          ),
-        ),
-        Expanded(
-          child: Padding(
-            padding: EdgeInsets.only(
-                left: (MediaQuery.of(context).size.width / 100) * 25),
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              itemCount: 2,
-              itemBuilder: (context, index) {
-                return Center(
-                  child: Column(
-                    children: <Widget>[
-                      Padding(
-                        padding: EdgeInsets.only(
-                            right:
-                                (MediaQuery.of(context).size.width / 100) * 17),
-                        child: Text(
-                          patient.values[index + 2].valCurr,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 25.0,
+                  Container(width: (MediaQuery.of(context).size.width / 10)),
+                  GestureDetector(
+                    onTap: () {
+                      _showPatientGraph(context, 1);
+                    },
+                    child: Container(
+                      child: Column(
+                        children: <Widget>[
+                          Text(
+                            patient
+                                .values[1]
+                                .graphData[
+                                    patient.values[1].graphData.length - 1]
+                                .data
+                                .toString(),
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 25.0,
+                            ),
                           ),
-                        ),
-                      ),
-                      Container(
-                          height: (MediaQuery.of(context).size.height / 80)),
-                      Padding(
-                        padding: EdgeInsets.only(
-                            right:
-                                (MediaQuery.of(context).size.width / 100) * 17),
-                        child: Text(
-                          patient.values[index + 2].name,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 15.0,
-                            fontWeight: FontWeight.w300,
+                          Text(
+                            patient.values[1].name,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 15.0,
+                              fontWeight: FontWeight.w300,
+                            ),
                           ),
-                        ),
+                        ],
                       ),
-                    ],
+                    ),
                   ),
-                );
-              },
-            ),
+                ],
+              ),
+              Container(height: (MediaQuery.of(context).size.height / 20)),
+              Row(
+                children: <Widget>[
+                  Padding(
+                    padding: EdgeInsets.only(
+                        left: (MediaQuery.of(context).size.width / 100) * 6),
+                    child: GestureDetector(
+                      onTap: () {
+                        _showPatientGraph(context, 2);
+                      },
+                      child: Container(
+                        child: Column(
+                          children: <Widget>[
+                            Text(
+                              patient
+                                  .values[2]
+                                  .graphData[
+                                      patient.values[2].graphData.length - 1]
+                                  .data
+                                  .toString(),
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 25.0,
+                              ),
+                            ),
+                            Text(
+                              patient.values[2].name,
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 15.0,
+                                fontWeight: FontWeight.w300,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  Container(width: (MediaQuery.of(context).size.width / 10)),
+                  Padding(
+                    padding: EdgeInsets.only(
+                        left: (MediaQuery.of(context).size.width / 100) * 6),
+                    child: GestureDetector(
+                      onTap: () {
+                        _showPatientGraph(context, 3);
+                      },
+                      child: Container(
+                        child: Column(
+                          children: <Widget>[
+                            Text(
+                              patient
+                                  .values[3]
+                                  .graphData[
+                                      patient.values[3].graphData.length - 1]
+                                  .data
+                                  .toString(),
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 25.0,
+                              ),
+                            ),
+                            Text(
+                              patient.values[3].name,
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 15.0,
+                                fontWeight: FontWeight.w300,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
           ),
-        ),
+        )
       ],
     );
   }

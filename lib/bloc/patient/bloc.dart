@@ -29,7 +29,6 @@ class PatientsBloc extends Bloc<PatientEvents, PatientState> {
     final String uid = await userId;
     // Linking api url
     HttpLink link = HttpLink(uri: "https://quela-api.herokuapp.com/");
-    //HttpLink link = HttpLink(uri: "http://192.168.1.108:4000/graphql");
     // Gql client
     GraphQLClient client = GraphQLClient(link: link, cache: InMemoryCache());
     try {
@@ -82,11 +81,13 @@ query search(\$id: String!) {
       telephone
     }
     values {
-      name 
-      val_curr
-      val_min 
+      name
+      val_min
       val_max
-      last_upd
+      graph_data {
+        data
+        time
+      }
     }
   }
 }
