@@ -1,14 +1,16 @@
-import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
-
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:quela/bloc/blocs.dart';
 import 'package:quela/models/doctor.dart';
 import 'package:quela/pages/doctor/patient_graph.dart';
 import 'package:quela/utils/hex_code.dart';
 
 class DetailsPage extends StatelessWidget {
   final PatientId patient;
+  final DoctorsBloc bloc;
 
-  DetailsPage({Key key, @required this.patient}) : assert(patient != null);
+  DetailsPage({Key key, @required this.patient, this.bloc})
+      : assert(patient != null);
 
   void _showPatientGraph(context, index) {
     showModalBottomSheet(
@@ -27,13 +29,15 @@ class DetailsPage extends StatelessWidget {
   }
 
   Widget _patientInfo(BuildContext context, PatientId patient) {
+    var test = patient.values[0];
+    print(test.graphData[test.graphData.length - 1].data);
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Padding(
           padding:
-              EdgeInsets.only(left: (MediaQuery.of(context).size.width / 10)),
+          EdgeInsets.only(left: (MediaQuery.of(context).size.width / 10)),
           child: InkWell(
             child: Icon(
               Icons.arrow_back,
@@ -394,34 +398,58 @@ class DetailsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.only(left: 40.0),
-            child: Container(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height / 2,
-              decoration: BoxDecoration(
-                color: HexColor("#214D70"),
+    return BlocBuilder(
+      bloc: this.bloc,
+      builder: (BuildContext context, DoctorState state) {
+        final List<PatientId> patientId =
+            (state as DoctorLoaded).doctor.patientId;
+
+        var dummyVar = this.patient;
+        patientId.forEach((patient) =>
+        patient.name == this.patient.name ? dummyVar = patient : patient);
+
+        return Scaffold(
+          body: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.only(left: 40.0),
+                child: Container(
+                  width: MediaQuery
+                      .of(context)
+                      .size
+                      .width,
+                  height: MediaQuery
+                      .of(context)
+                      .size
+                      .height / 2,
+                  decoration: BoxDecoration(
+                    color: HexColor("#214D70"),
+                  ),
+                  child: _patientInfo(context, dummyVar),
+                ),
               ),
-              child: _patientInfo(context, patient),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 40.0),
-            child: Container(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height / 2.2,
-              decoration: BoxDecoration(
-                color: HexColor("#679287"),
+              Padding(
+                padding: const EdgeInsets.only(left: 40.0),
+                child: Container(
+                  width: MediaQuery
+                      .of(context)
+                      .size
+                      .width,
+                  height: MediaQuery
+                      .of(context)
+                      .size
+                      .height / 2.2,
+                  decoration: BoxDecoration(
+                    color: HexColor("#679287"),
+                  ),
+                  child: _patientData(context, dummyVar),
+                ),
               ),
-              child: _patientData(context, patient),
-            ),
+            ],
           ),
-        ],
-      ),
+        );
+      },
     );
   }
 }

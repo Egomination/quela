@@ -50,7 +50,7 @@ class _DoctorPageState extends State<DoctorPage> {
             );
           }
           if (state is DoctorLoaded) {
-            Future.delayed(const Duration(minutes: 1), () {
+            Future.delayed(const Duration(seconds: 5), () {
               _bloc.dispatch(DoctorUpdate());
             });
             return DefaultTabController(

@@ -15,7 +15,7 @@ class DoctorDashboard extends StatelessWidget {
       builder: (BuildContext context, DoctorState state) {
         final Doctor doctor = (state as DoctorLoaded).doctor;
         return Scaffold(
-          body: DoctorInfoBuilder(doctor: doctor),
+          body: DoctorInfoBuilder(doctor: doctor, bloc: _bloc),
         );
       },
     );
@@ -24,8 +24,9 @@ class DoctorDashboard extends StatelessWidget {
 
 class DoctorInfoBuilder extends StatelessWidget {
   final Doctor doctor;
+  final DoctorsBloc bloc;
 
-  DoctorInfoBuilder({Key key, this.doctor}) : assert(doctor != null);
+  DoctorInfoBuilder({Key key, this.doctor, this.bloc}) : assert(doctor != null);
 
   Widget _imageNameBuilder(BuildContext context, {PatientId patient}) {
     return InkWell(
@@ -34,6 +35,7 @@ class DoctorInfoBuilder extends StatelessWidget {
             MaterialPageRoute(
               builder: (context) => DetailsPage(
                     patient: patient,
+                  bloc: this.bloc
                   ),
             ),
           ),
