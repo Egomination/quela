@@ -1,6 +1,5 @@
-import 'package:flutter/material.dart';
-
 import 'package:fcharts/fcharts.dart';
+import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:quela/models/doctor.dart';
 
@@ -13,8 +12,8 @@ class SimpleLineChart extends StatelessWidget {
 
   String dateFormatter(data) {
     DateTime time = DateTime.fromMillisecondsSinceEpoch(data * 1000);
-    //String date = DateFormat.MMMd().add_Hm().format(time);
-    String date = DateFormat.Hm().format(time);
+    String date = DateFormat.Md().add_Hm().format(time);
+    //String date = DateFormat.Hms().format(time);
     return date;
   }
 

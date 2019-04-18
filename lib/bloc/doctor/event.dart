@@ -8,3 +8,8 @@ class DoctorFetch extends DoctorEvents {
   @override
   String toString() => 'DoctorFetch';
 }
+
+class DoctorUpdate extends DoctorEvents {
+  @override
+  String toString() => 'DoctorUpdate';
+}

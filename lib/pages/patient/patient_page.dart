@@ -47,7 +47,7 @@ class _PatientPageState extends State<PatientPage> {
             );
           }
           if (state is PatientLoaded) {
-            Future.delayed(const Duration(seconds: 10), () {
+            Future.delayed(const Duration(minutes: 1), () {
               _bloc.dispatch(Update());
             });
             return DefaultTabController(
