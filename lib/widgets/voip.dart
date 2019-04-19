@@ -7,7 +7,7 @@ import 'package:flutter_webrtc/webrtc.dart';
 import 'package:quela/bloc/blocs.dart';
 import 'package:quela/models/doctor.dart';
 import 'package:quela/models/patient.dart';
-import 'package:quela/pages/doctor/dashboard_body.dart';
+import 'package:quela/pages/doctor/doctor_patient.dart';
 import 'package:quela/utils/hex_code.dart';
 import 'package:quela/widgets/voip_signaling.dart';
 
@@ -15,7 +15,7 @@ class VoipConnection extends StatefulWidget {
   static String tag = 'call';
 
   // Needs to be set in here.
-  final String ip = '192.168.1.108';
+  final String ip = 'rtcsw.herokuapp.com';
 
   final Patient patient;
   final Doctor doctor;
@@ -73,7 +73,7 @@ class _VoipConnectionState extends State<VoipConnection> {
 
   void _connect() async {
     if (_signaling == null) {
-      _signaling = Signaling('ws://' + serverIP + ':4442', _displayName)
+      _signaling = Signaling('ws://' + serverIP, _displayName)
         ..connect();
 
       _signaling.onStateChange = (SignalingState state) {
@@ -170,75 +170,73 @@ class _VoipConnectionState extends State<VoipConnection> {
             (entity is PatientId)
                 ? Container()
                 : Text(
-              "Hearth and Brain Specialist",
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontStyle: FontStyle.italic,
-                fontWeight: FontWeight.w400,
-                fontSize: 20.0,
-              ),
-            ),
+                    "Hearth and Brain Specialist",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontStyle: FontStyle.italic,
+                      fontWeight: FontWeight.w400,
+                      fontSize: 20.0,
+                    ),
+                  ),
           ],
         ),
         (entity is PatientId)
             ? Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            RaisedButton(
-              onPressed: () =>
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) =>
-                          DetailsPage(
-                            patient: entity,
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  RaisedButton(
+                    onPressed: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => DetailsPage(
+                                  patient: entity,
+                                ),
                           ),
+                        ),
+                    child: Container(
+                      width: 70.0,
+                      height: 70.0,
+                      child: Icon(
+                        Icons.dehaze,
+                        color: Colors.white,
+                      ),
                     ),
+                    shape: CircleBorder(),
+                    color: Colors.blue,
                   ),
-              child: Container(
-                width: 70.0,
-                height: 70.0,
-                child: Icon(
-                  Icons.dehaze,
-                  color: Colors.white,
-                ),
-              ),
-              shape: CircleBorder(),
-              color: Colors.blue,
-            ),
-            RaisedButton(
-              onPressed: isOnline
-                  ? () => _invitePeer(context, entity.id, false)
-                  : null,
-              child: Container(
-                width: 70.0,
-                height: 70.0,
-                child: Icon(
-                  Icons.call,
-                  color: Colors.white,
-                ),
-              ),
-              shape: CircleBorder(),
-              color: Colors.blue,
-            ),
-          ],
-        )
+                  RaisedButton(
+                    onPressed: isOnline
+                        ? () => _invitePeer(context, entity.id, false)
+                        : null,
+                    child: Container(
+                      width: 70.0,
+                      height: 70.0,
+                      child: Icon(
+                        Icons.call,
+                        color: Colors.white,
+                      ),
+                    ),
+                    shape: CircleBorder(),
+                    color: Colors.blue,
+                  ),
+                ],
+              )
             : RaisedButton(
-          onPressed: isOnline
-              ? () => _invitePeer(context, entity.id, false)
-              : null,
-          child: Container(
-            width: 70.0,
-            height: 70.0,
-            child: Icon(
-              Icons.call,
-              color: Colors.white,
-            ),
-          ),
-          shape: CircleBorder(),
-          color: Colors.blue,
-        )
+                onPressed: isOnline
+                    ? () => _invitePeer(context, entity.id, false)
+                    : null,
+                child: Container(
+                  width: 70.0,
+                  height: 70.0,
+                  child: Icon(
+                    Icons.call,
+                    color: Colors.white,
+                  ),
+                ),
+                shape: CircleBorder(),
+                color: Colors.blue,
+              )
       ],
     );
   }

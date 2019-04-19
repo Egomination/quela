@@ -15,7 +15,7 @@ class PatientsBloc extends Bloc<PatientEvents, PatientState> {
 
   @override
   Stream<PatientState> mapEventToState(event) async* {
-    if (event is Fetch) {
+    if (event is Fetch || event is Update) {
       try {
         final patient = await _handleApiCall();
         yield PatientLoaded(patient: patient);
@@ -30,19 +30,18 @@ class PatientsBloc extends Bloc<PatientEvents, PatientState> {
     // Linking api url
     HttpLink link = HttpLink(uri: "https://quela-api.herokuapp.com/");
     // Gql client
-    GraphQLClient client = GraphQLClient(
-      link: link,
-      cache: InMemoryCache(),
-    );
+    GraphQLClient client = GraphQLClient(link: link, cache: InMemoryCache());
     try {
       final QueryResult response = await client
           .query(
             QueryOptions(
               document: search,
               variables: <String, dynamic>{'id': uid},
+              //pollInterval: 1,
             ),
           )
           .timeout(const Duration(seconds: 10));
+      client.cache.reset();
 
       if (response.errors != null) {
         print(response.errors.toString());
@@ -82,11 +81,13 @@ query search(\$id: String!) {
       telephone
     }
     values {
-      name 
-      val_curr
-      val_min 
+      name
+      val_min
       val_max
-      last_upd
+      graph_data {
+        data
+        time
+      }
     }
   }
 }

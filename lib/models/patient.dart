@@ -122,32 +122,49 @@ class DoctorId {
 
 class Value {
   String name;
-  String valCurr;
   String valMin;
   String valMax;
-  int lastUpd;
+  List<GraphData> graphData;
 
   Value({
     this.name,
-    this.valCurr,
     this.valMin,
     this.valMax,
-    this.lastUpd,
+    this.graphData,
   });
 
   factory Value.fromJson(Map<String, dynamic> json) => new Value(
         name: json["name"],
-        valCurr: json["val_curr"],
         valMin: json["val_min"],
         valMax: json["val_max"],
-        lastUpd: json["last_upd"],
+        graphData: new List<GraphData>.from(
+            json["graph_data"].map((x) => GraphData.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
         "name": name,
-        "val_curr": valCurr,
         "val_min": valMin,
         "val_max": valMax,
-        "last_upd": lastUpd,
+        "graph_data": new List<dynamic>.from(graphData.map((x) => x.toJson())),
+      };
+}
+
+class GraphData {
+  int data;
+  int time;
+
+  GraphData({
+    this.data,
+    this.time,
+  });
+
+  factory GraphData.fromJson(Map<String, dynamic> json) => new GraphData(
+        data: json["data"],
+        time: json["time"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "data": data,
+        "time": time,
       };
 }

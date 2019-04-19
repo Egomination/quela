@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quela/bloc/blocs.dart';
@@ -48,7 +50,9 @@ class _DoctorPageState extends State<DoctorPage> {
             );
           }
           if (state is DoctorLoaded) {
-            print(state.doctor);
+            Future.delayed(const Duration(minutes: 1), () {
+              _bloc.dispatch(DoctorUpdate());
+            });
             return DefaultTabController(
               length: 2,
               child: Scaffold(
@@ -64,7 +68,7 @@ class _DoctorPageState extends State<DoctorPage> {
                   ],
                 ),
                 bottomNavigationBar: TabBar(
-                  //isScrollable: true,
+                  isScrollable: false,
                   labelColor: Colors.white,
                   tabs: [
                     Tab(

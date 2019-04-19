@@ -18,7 +18,7 @@ class DoctorsBloc extends Bloc<DoctorEvents, DoctorState> {
   /// It yields to the corresponding state depending on the event and its result
   @override
   Stream<DoctorState> mapEventToState(event) async* {
-    if (event is DoctorFetch) {
+    if (event is DoctorFetch || event is DoctorUpdate) {
       try {
         final _doctor = await _handleApiCall();
         yield DoctorLoaded(doctor: _doctor);
@@ -57,7 +57,7 @@ class DoctorsBloc extends Bloc<DoctorEvents, DoctorState> {
         print(response.errors.toString());
       }
 
-      print("Doctor Info: =>:  ${response.data['getPatient']}");
+      print("Doctor Info: =>:  ${response.data['getDoctor']}");
       return Doctor.fromJson(response.data['getDoctor']);
     } catch (e) {
       print(e.toString());
@@ -95,8 +95,10 @@ query search(\$id: String!){
         name
         val_min
         val_max
-        val_curr
-        last_upd
+        graph_data {
+          data
+          time
+        }
       }
     }
   }
