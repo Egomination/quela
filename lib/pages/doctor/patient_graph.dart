@@ -12,17 +12,17 @@ class SimpleLineChart extends StatelessWidget {
 
   String dateFormatter(data) {
     DateTime time = DateTime.fromMillisecondsSinceEpoch(data * 1000);
-    String date = DateFormat.Md().add_Hm().format(time);
-    //String date = DateFormat.Hms().format(time);
+    //String date = DateFormat.Md().add_Hm().format(time);
+    String date = DateFormat.Hms().format(time);
     return date;
   }
 
-  List<int> findMinMax(patient) {
+  List<int> findMinMax(patient, lenght) {
     // Thanks Obama for this great chart library
     // It allowed me to write such a good function
     int max = 0;
     int min = patient.values[type].graphData[0].data;
-    for (int i = 0; i < 5; i++) {
+    for (int i = 0; i <= lenght; i++) {
       if (patient.values[type].graphData[i].data > max) {
         max = patient.values[type].graphData[i].data;
       }
@@ -36,7 +36,7 @@ class SimpleLineChart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final int graphLength = patient.values[type].graphData.length - 1;
-    final List minMax = findMinMax(patient);
+    final List minMax = findMinMax(patient, graphLength);
     // X value -> Y value
     final myData = [
       [
