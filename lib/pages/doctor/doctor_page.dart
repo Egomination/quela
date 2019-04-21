@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quela/bloc/blocs.dart';
 import 'package:quela/pages/doctor/doctor_dashboard.dart';
-import 'package:quela/utils/hex_code.dart';
+import 'package:quela/theme.dart';
 import 'package:quela/widgets/voip.dart';
 
 /// Class that responsible from passing the corresponding bloc instances to its
@@ -81,7 +81,7 @@ class _DoctorPageState extends State<DoctorPage> {
                     ),
                   ],
                 ),
-                backgroundColor: HexColor("#0f1923"),
+                backgroundColor: Themes.mainThemeColor,
               ),
             );
           }

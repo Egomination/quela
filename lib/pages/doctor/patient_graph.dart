@@ -17,12 +17,12 @@ class SimpleLineChart extends StatelessWidget {
     return date;
   }
 
-  List<int> findMinMax(patient, lenght) {
+  List<int> findMinMax(patient, length) {
     // Thanks Obama for this great chart library
     // It allowed me to write such a good function
     int max = 0;
     int min = patient.values[type].graphData[0].data;
-    for (int i = 0; i <= lenght; i++) {
+    for (int i = 0; i <= length; i++) {
       if (patient.values[type].graphData[i].data > max) {
         max = patient.values[type].graphData[i].data;
       }

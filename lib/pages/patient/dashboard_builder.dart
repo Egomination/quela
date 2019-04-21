@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quela/bloc/blocs.dart';
 import 'package:quela/pages/patient/dashboard_body.dart';
 import 'package:quela/pages/patient/patient_info.dart';
-import 'package:quela/utils/hex_code.dart';
+import 'package:quela/theme.dart';
 
 class PatientDashboardBuilder extends StatelessWidget {
   @override
@@ -17,7 +17,7 @@ class PatientDashboardBuilder extends StatelessWidget {
         return Scaffold(
           //backgroundColor: Colors.white,
           appBar: AppBar(
-            backgroundColor: HexColor("#0f1923"),
+            backgroundColor: Themes.mainThemeColor,
             title: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[

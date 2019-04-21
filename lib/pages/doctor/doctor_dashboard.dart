@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quela/bloc/blocs.dart';
 import 'package:quela/models/doctor.dart';
 import 'package:quela/pages/doctor/doctor_patient.dart';
-import 'package:quela/utils/hex_code.dart';
+import 'package:quela/theme.dart';
 
 class DoctorDashboard extends StatelessWidget {
   @override
@@ -110,7 +110,7 @@ class DoctorInfoBuilder extends StatelessWidget {
           child: Text(
             "Dr. ${doctor.surname}",
             style: TextStyle(
-              color: HexColor("#214D70"),
+	            color: Themes.doctorsPatientViewTopColor,
               fontWeight: FontWeight.bold,
               fontSize: 32.0,
             ),
@@ -226,7 +226,7 @@ class DoctorInfoBuilder extends StatelessWidget {
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height / 2.28,
             decoration: BoxDecoration(
-              color: HexColor("#FF9A91"),
+	            color: Themes.doctorDashboardTopColor,
             ),
             child: _doctorInfoBuilder(context),
           ),
@@ -237,7 +237,7 @@ class DoctorInfoBuilder extends StatelessWidget {
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height / 2.37,
             decoration: BoxDecoration(
-              color: HexColor("#FFE0B9"),
+	            color: Themes.doctorDashboardBottomColor,
             ),
             child: _doctorNotes(context),
           ),
