@@ -1,9 +1,7 @@
-import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
-
 import 'package:quela/models/doctor.dart';
 import 'package:quela/pages/doctor/patient_graph.dart';
-import 'package:quela/utils/hex_code.dart';
+import 'package:quela/theme.dart';
 
 class DetailsPage extends StatelessWidget {
   final PatientId patient;
@@ -16,7 +14,7 @@ class DetailsPage extends StatelessWidget {
         builder: (BuildContext context) {
           return Container(
             decoration: BoxDecoration(
-              color: HexColor("#679287"),
+	            color: Themes.doctorPatientGraphColor,
             ),
             child: SimpleLineChart(
               patient: patient,
@@ -94,7 +92,7 @@ class DetailsPage extends StatelessWidget {
           child: Text(
             "${patient.illness}",
             style: TextStyle(
-              color: HexColor("#FFE0B9"),
+	            color: Themes.doctorPatientIllnessColor,
               fontSize: 17.0,
               fontWeight: FontWeight.w400,
             ),
@@ -118,7 +116,7 @@ class DetailsPage extends StatelessWidget {
             Text(
               "${patient.roomNo}",
               style: TextStyle(
-                color: HexColor("#FF9A91"),
+	              color: Themes.doctorPatientRoomColor,
                 fontSize: 17.0,
                 fontWeight: FontWeight.w400,
               ),
@@ -230,7 +228,7 @@ class DetailsPage extends StatelessWidget {
           child: Text(
             "Vital Data",
             style: TextStyle(
-              color: HexColor("#FFE0B9"),
+	            color: Themes.patientVitalData,
               fontSize: 20.0,
               fontWeight: FontWeight.w300,
             ),
@@ -404,7 +402,7 @@ class DetailsPage extends StatelessWidget {
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height / 2,
               decoration: BoxDecoration(
-                color: HexColor("#214D70"),
+	              color: Themes.doctorsPatientViewTopColor,
               ),
               child: _patientInfo(context, patient),
             ),
@@ -415,7 +413,7 @@ class DetailsPage extends StatelessWidget {
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height / 2.2,
               decoration: BoxDecoration(
-                color: HexColor("#679287"),
+	              color: Themes.doctorPatientBottomColor,
               ),
               child: _patientData(context, patient),
             ),

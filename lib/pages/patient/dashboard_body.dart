@@ -1,10 +1,10 @@
 import 'dart:convert' show utf8;
 
-import 'package:flutter/material.dart';
 import 'package:flip_card/flip_card.dart';
+import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:quela/models/patient.dart';
-import 'package:quela/utils/hex_code.dart';
+import 'package:quela/theme.dart';
 
 class ScreenBuilder extends StatelessWidget {
   final Patient patient;
@@ -82,7 +82,7 @@ class CardBuilder extends StatelessWidget {
     String date = DateFormat.yMMMd().add_Hm().format(time);
     return Card(
       elevation: 0.0,
-      color: HexColor("#eaeaea"),
+      color: Themes.patientCardBackgroundWhite,
       child: FlipCard(
         direction: FlipDirection.VERTICAL,
         front: Container(

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:quela/utils/hex_code.dart';
+import 'package:quela/theme.dart';
 
 class PatientInfo extends StatelessWidget {
   final dynamic person;
@@ -14,7 +14,7 @@ class PatientInfo extends StatelessWidget {
       height: 140.0,
       width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
-        color: HexColor("#15202b"),
+        color: Themes.patientInfoBarColor,
         shape: BoxShape.rectangle,
       ),
       child: Row(

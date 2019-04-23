@@ -8,7 +8,7 @@ import 'package:quela/bloc/blocs.dart';
 import 'package:quela/models/doctor.dart';
 import 'package:quela/models/patient.dart';
 import 'package:quela/pages/doctor/doctor_patient.dart';
-import 'package:quela/utils/hex_code.dart';
+import 'package:quela/theme.dart';
 import 'package:quela/widgets/voip_signaling.dart';
 
 class VoipConnection extends StatefulWidget {
@@ -248,7 +248,7 @@ class _VoipConnectionState extends State<VoipConnection> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Users on VOIP Server'),
-        backgroundColor: HexColor("#0f1923"),
+        backgroundColor: Themes.mainThemeColor,
         actions: <Widget>[
           IconButton(
             icon: const Icon(Icons.settings),
