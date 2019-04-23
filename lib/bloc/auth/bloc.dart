@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:meta/meta.dart';
 import 'package:bloc/bloc.dart';
+import 'package:meta/meta.dart';
 import 'package:quela/bloc/auth/auth.dart';
 import 'package:quela/bloc/auth/event.dart';
 import 'package:quela/bloc/auth/state.dart';
@@ -16,13 +16,12 @@ class AuthBloc extends Bloc<AuthEvents, AuthStates> {
 
   @override
   Stream<AuthStates> mapEventToState(
-    AuthStates currentState,
     AuthEvents event,
   ) async* {
     if (event is AppStarted) {
       final bool hasToken = await auth.hasToken();
 
-      if (hasToken) {
+      if (!hasToken) {
         final String type = await auth.getType();
         if (type == "patient") {
           yield PatientAuthenticated();

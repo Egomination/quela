@@ -1,14 +1,11 @@
-import 'package:flutter/material.dart';
 import 'package:bloc/bloc.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import 'package:quela/bloc/auth/auth.dart';
-import 'package:quela/bloc/auth/auth_block.dart';
-import 'package:quela/bloc/auth/event.dart';
-import 'package:quela/bloc/auth/state.dart';
+import 'package:quela/bloc/blocs.dart';
+import 'package:quela/pages/doctor/doctor_page.dart';
 import 'package:quela/pages/login/login_page.dart';
-import 'package:quela/pages/login/mock_main.dart';
 import 'package:quela/pages/patient/patient_page.dart';
+import 'package:quela/pages/staff/staff_page.dart';
 
 class SimpleBlocDelegate extends BlocDelegate {
   @override
@@ -33,6 +30,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   AuthBloc authBloc;
+
   Auth get auth => widget.auth;
 
   @override
@@ -60,24 +58,21 @@ class _MyAppState extends State<MyApp> {
         home: BlocBuilder<AuthEvents, AuthStates>(
           bloc: authBloc,
           builder: (BuildContext context, AuthStates state) {
-            /*if (state is BeforeAuth) {
-              return SplashPage();
-            }*/
             if (state is PatientAuthenticated) {
               return PatientPage();
             }
             if (state is StaffAuthenticated) {
-              return MockMain();
+              return StaffPage();
             }
             if (state is DoctorAuthenticated) {
-              return MockMain();
+              return DoctorPage();
             }
             if (state is Unauthenticated) {
               return LoginPage(auth: auth);
             }
             if (state is Loading) {
               // NOTE: We could use a better loading design here
-              return CircularProgressIndicator();
+              return Scaffold(body: Center(child: CircularProgressIndicator()));
             }
           },
         ),

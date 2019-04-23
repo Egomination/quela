@@ -1,20 +1,73 @@
 import 'dart:convert';
 
-Patient patientFromJson(String str) {
+Doctor doctorFromJson(String str) {
   final jsonData = json.decode(str);
-  return Patient.fromJson(jsonData);
+  return Doctor.fromJson(jsonData);
 }
 
-String patientToJson(Patient data) {
+String doctorToJson(Doctor data) {
   final dyn = data.toJson();
   return json.encode(dyn);
 }
 
-class Patient {
-  String tc;
+class Doctor {
   String name;
   String surname;
   String email;
+  String proficiency;
+  String profilePic;
+  String gender;
+  int age;
+  String hospitalName;
+  String telephone;
+  List<PatientId> patientId;
+
+  Doctor({
+    this.name,
+    this.surname,
+    this.email,
+    this.proficiency,
+    this.profilePic,
+    this.patientId,
+    this.gender,
+    this.age,
+    this.hospitalName,
+    this.telephone,
+  });
+
+  factory Doctor.fromJson(Map<String, dynamic> json) => new Doctor(
+        name: json["name"],
+        surname: json["surname"],
+        email: json["email"],
+        proficiency: json["proficiency"],
+        profilePic: json["profile_pic"],
+        gender: json["gender"],
+        age: json["age"],
+        hospitalName: json["hospital_name"],
+        telephone: json["telephone"],
+        patientId: new List<PatientId>.from(
+            json["patientID"].map((x) => PatientId.fromJson(x))),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "name": name,
+        "surname": surname,
+        "email": email,
+        "proficiency": proficiency,
+        "profile_pic": profilePic,
+        "gender": gender,
+        "age": age,
+        "hospital_name": hospitalName,
+        "telephone": telephone,
+        "patientID": new List<dynamic>.from(patientId.map((x) => x.toJson())),
+      };
+}
+
+class PatientId {
+  String id;
+  String name;
+  String surname;
+  String tc;
   String profilePic;
   String roomNo;
   String illness;
@@ -23,14 +76,13 @@ class Patient {
   String weight;
   String height;
   String telephone;
-  List<DoctorId> doctorId;
   List<Value> values;
 
-  Patient({
-    this.tc,
+  PatientId({
+    this.id,
     this.name,
     this.surname,
-    this.email,
+    this.tc,
     this.profilePic,
     this.roomNo,
     this.illness,
@@ -39,15 +91,14 @@ class Patient {
     this.weight,
     this.height,
     this.telephone,
-    this.doctorId,
     this.values,
   });
 
-  factory Patient.fromJson(Map<String, dynamic> json) => new Patient(
-        tc: json["TC"],
+  factory PatientId.fromJson(Map<String, dynamic> json) => new PatientId(
+        id: json["id"],
         name: json["name"],
         surname: json["surname"],
-        email: json["email"],
+        tc: json["TC"],
         profilePic: json["profile_pic"],
         roomNo: json["room_no"],
         illness: json["illness"],
@@ -56,17 +107,15 @@ class Patient {
         weight: json["weight"],
         height: json["height"],
         telephone: json["telephone"],
-        doctorId: new List<DoctorId>.from(
-            json["doctorID"].map((x) => DoctorId.fromJson(x))),
         values:
             new List<Value>.from(json["values"].map((x) => Value.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
-        "TC": tc,
+        "id": id,
         "name": name,
         "surname": surname,
-        "email": email,
+        "TC": tc,
         "profile_pic": profilePic,
         "room_no": roomNo,
         "illness": illness,
@@ -75,48 +124,7 @@ class Patient {
         "weight": weight,
         "height": height,
         "telephone": telephone,
-        "doctorID": new List<dynamic>.from(doctorId.map((x) => x.toJson())),
         "values": new List<dynamic>.from(values.map((x) => x.toJson())),
-      };
-}
-
-class DoctorId {
-  String id;
-  String name;
-  String surname;
-  String proficiency;
-  String profilePic;
-  String gender;
-  String telephone;
-
-  DoctorId({
-    this.id,
-    this.name,
-    this.surname,
-    this.proficiency,
-    this.profilePic,
-    this.gender,
-    this.telephone,
-  });
-
-  factory DoctorId.fromJson(Map<String, dynamic> json) => new DoctorId(
-        id: json["id"],
-        name: json["name"],
-        surname: json["surname"],
-        proficiency: json["proficiency"],
-        profilePic: json["profile_pic"],
-        gender: json["gender"],
-        telephone: json["telephone"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "name": name,
-        "surname": surname,
-        "proficiency": proficiency,
-        "profile_pic": profilePic,
-        "gender": gender,
-        "telephone": telephone,
       };
 }
 
