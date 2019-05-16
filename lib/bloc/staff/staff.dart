@@ -1,7 +1,7 @@
 import 'dart:async';
 
+import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:meta/meta.dart';
-import 'package:flutter_graphql/flutter_graphql.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class Staff {
@@ -32,7 +32,7 @@ class Staff {
       String email, String profilePic) async {
     HttpLink link = HttpLink(uri: "https://quela-api.herokuapp.com/");
     GraphQLClient client = GraphQLClient(
-      link: link,
+      link: link as Link,
       cache: InMemoryCache(),
     );
     final QueryResult response = await client
@@ -87,7 +87,7 @@ class Staff {
   Future<void> patientDataUpdater(String id, String value, String field) async {
     HttpLink link = HttpLink(uri: "https://quela-api.herokuapp.com/");
     GraphQLClient client = GraphQLClient(
-      link: link,
+      link: link as Link,
       cache: InMemoryCache(),
     );
     final QueryResult response = await client

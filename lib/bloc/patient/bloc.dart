@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:flutter_graphql/flutter_graphql.dart';
+import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:quela/bloc/auth/auth.dart';
 import 'package:quela/bloc/patient/event.dart';
 import 'package:quela/bloc/patient/state.dart';
@@ -30,7 +30,8 @@ class PatientsBloc extends Bloc<PatientEvents, PatientState> {
     // Linking api url
     HttpLink link = HttpLink(uri: "https://quela-api.herokuapp.com/");
     // Gql client
-    GraphQLClient client = GraphQLClient(link: link, cache: InMemoryCache());
+    GraphQLClient client =
+        GraphQLClient(link: link as Link, cache: InMemoryCache());
     try {
       final QueryResult response = await client
           .query(
