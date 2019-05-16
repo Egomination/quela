@@ -36,36 +36,17 @@ class SimpleLineChart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final int graphLength = patient.values[type].graphData.length - 1;
+    final List<List<dynamic>> myData = [];
     final List minMax = findMinMax(patient, graphLength);
-    // X value -> Y value
-    final myData = [
-      [
-        patient.values[type].graphData[graphLength - 4].time,
-        patient.values[type].graphData[graphLength - 4].data
-      ],
-      [
-        patient.values[type].graphData[graphLength - 3].time,
-        patient.values[type].graphData[graphLength - 3].data
-      ],
-      [
-        patient.values[type].graphData[graphLength - 2].time,
-        patient.values[type].graphData[graphLength - 2].data
-      ],
-      [
-        patient.values[type].graphData[graphLength - 1].time,
-        patient.values[type].graphData[graphLength - 1].data
-      ],
-      [
-        patient.values[type].graphData[graphLength].time,
-        patient.values[type].graphData[graphLength].data
-      ],
-    ];
+    for (var data in patient.values[type].graphData) {
+      myData.add([data.time, data.data]);
+    }
 
     return LineChart(
       lines: [
-        Line<List, String, int>(
+        Line<List, int, int>(
           data: myData,
-          xFn: (datum) => dateFormatter(datum[0]),
+          xFn: (datum) => datum[0],
           yFn: (datum) => datum[1],
           xAxis: ChartAxis(),
           yAxis: ChartAxis(

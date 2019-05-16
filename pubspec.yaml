@@ -9,7 +9,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  flutter_graphql: ^1.0.0-rc.3
+  graphql_flutter: ^1.0.0+4
   firebase_auth: ^0.8.3
   flutter_webrtc: ^0.1.6
   flutter_bloc: ^0.9.0
@@ -20,6 +20,7 @@ dependencies:
   equatable: ^0.2.3
   bloc: ^0.11.0
   intl: ^0.15.8
+  mockito: ^4.0.0
 
 dev_dependencies:
   flutter_test:
